@@ -1,0 +1,78 @@
+import React, { useState, useRef, useEffect } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Globe, ChevronDown, Check } from 'lucide-react';
+import { useLandingTheme } from '../hooks/useLandingTheme';
+
+export const LanguageSwitcher = () => {
+    const { language, setLanguage, availableLanguages } = useLanguage();
+    const { isDark } = useLandingTheme();
+    const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    const currentLang = availableLanguages.find(l => l.code === language);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    return (
+        <div className="relative" ref={dropdownRef}>
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all border ${isDark
+                    ? 'bg-white/5 border-white/10 hover:bg-white/10 text-gray-200'
+                    : 'bg-gray-100 border-gray-200 hover:bg-gray-200 text-gray-700'
+                    }`}
+            >
+                <span className="text-lg leading-none">{currentLang?.flag}</span>
+                <span className="text-sm font-medium uppercase hidden sm:block">{language}</span>
+                <ChevronDown size={14} className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+            </button>
+
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                        transition={{ duration: 0.2 }}
+                        className={`absolute top-full mt-2 right-0 w-48 rounded-xl shadow-xl border overflow-hidden z-50 ${isDark
+                            ? 'bg-[#1a1a2e] border-white/10'
+                            : 'bg-white border-gray-200'
+                            }`}
+                    >
+                        <div className="p-1">
+                            {availableLanguages.map((lang) => (
+                                <button
+                                    key={lang.code}
+                                    onClick={() => {
+                                        setLanguage(lang.code);
+                                        setIsOpen(false);
+                                    }}
+                                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm transition-colors ${language === lang.code
+                                        ? isDark ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-50 text-blue-600'
+                                        : isDark ? 'hover:bg-white/5 text-gray-300' : 'hover:bg-gray-50 text-gray-700'
+                                        }`}
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <span className="text-lg">{lang.flag}</span>
+                                        <span className="font-medium">{lang.name}</span>
+                                    </div>
+                                    {language === lang.code && <Check size={14} />}
+                                </button>
+                            ))}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
+    );
+};

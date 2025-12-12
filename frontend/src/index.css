@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  :root {
+    /* Light Mode Tokens (Slate-50 based) */
+    --background: 248 250 252;
+    /* slate-50 */
+    --surface: 255 255 255;
+    /* white */
+    --primary: 37 99 235;
+    /* blue-600 */
+
+    /* Secondary: Dark (Slate-900) so 10% opacity is a visible grey tint */
+    --secondary: 15 23 42;
+
+    /* Glass: White background with high opacity */
+    --glass: 255 255 255;
+    --glass-opacity: 0.75;
+
+    /* Border: Light Grey (Slate-200) */
+    --glass-border: 226 232 240;
+
+    --text-main: 15 23 42;
+    /* slate-900 */
+    --text-muted: 51 65 85;
+    /* slate-700 - Even darker for better visibility */
+
+    color-scheme: light;
+  }
+
+  .dark {
+    /* Dark Mode Tokens (Midnight based) */
+    --background: 2 6 23;
+    /* midnight-950 */
+    --surface: 15 23 42;
+    /* midnight-900 */
+    --primary: 37 99 235;
+    /* blue-600 */
+
+    /* Secondary: Light (Slate-200) so 10% opacity is a visible white tint */
+    --secondary: 226 232 240;
+
+    /* Glass: White background with very low opacity */
+    --glass: 255 255 255;
+    --glass-opacity: 0.05;
+
+    /* Border: Dark Grey (Slate-800) */
+    --glass-border: 30 41 59;
+
+    --text-main: 255 255 255;
+    --text-muted: 148 163 184;
+    /* slate-400 */
+
+    color-scheme: dark;
+  }
+
+  /* Smooth theme transition for color and background properties */
+  * {
+    transition-property: color, background-color, background, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 3s;
+  }
+
+  /* Exclude transitions for elements with their own animations */
+  *:where([class*="animate-"], [class*="transition-"], [class*="duration-"]) {
+    transition-duration: 0s !important;
+  }
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  @apply bg-main text-[rgb(var(--text-main))] antialiased selection:bg-blue-500/30;
+
+  /* Subtle mesh gradient overlay */
+  background-image:
+    radial-gradient(at 0% 0%, rgb(var(--primary) / 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.1) 0px, transparent 50%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+/* Hide scrollbar on mobile for cleaner look */
+@media (max-width: 768px) {
+
+  html,
+  body {
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE/Edge */
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
+  }
+}
+
+/* Arabic Font Configuration */
+:root[lang="ar"] h1,
+:root[lang="ar"] h2,
+:root[lang="ar"] h3,
+:root[lang="ar"] h4,
+:root[lang="ar"] h5,
+:root[lang="ar"] h6,
+:root[lang="ar"] button,
+:root[lang="ar"] a[class*="button"],
+:root[lang="ar"] [role="button"] {
+  font-family: 'Beiruti', sans-serif !important;
+}
+
+/* Arabic Alignment Overrides */
+:root[lang="ar"] .text-left {
+  text-align: right !important;
+}
+
+:root[lang="ar"] [style*="text-align: left"],
+:root[lang="ar"] [style*="text-align:left"] {
+  text-align: right !important;
+}
+
+:root[lang="ar"] [dir="ltr"] {
+  direction: rtl !important;
+}
+
+.glass-card {
+  background-color: rgb(var(--glass) / var(--glass-opacity));
+  @apply border border-glass-border backdrop-blur-xl rounded-2xl shadow-xl;
+}
+
+.glass-btn {
+  @apply px-4 py-2 rounded-lg bg-primary hover:bg-blue-500 text-white transition-all shadow-lg hover:shadow-blue-500/20 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-500/20 rounded-full hover:bg-gray-500/40;
+}

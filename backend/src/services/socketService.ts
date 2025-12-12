@@ -1,0 +1,128 @@
+import { Server as HttpServer } from 'http';
+import { Server, Socket } from 'socket.io';
+import { DefaultEventsMap } from 'socket.io/dist/typed-events';
+import { User } from '../models/User';
+
+let io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>;
+
+export const initSocket = (httpServer: HttpServer) => {
+    io = new Server(httpServer, {
+        cors: {
+            origin: "*", // Allow all for dev, restrict in prod
+            methods: ["GET", "POST"]
+        }
+    });
+
+    io.on('connection', (socket: Socket) => {
+        console.log('Client connected:', socket.id);
+
+        socket.on('join_user', async (userId: string) => {
+            if (userId) {
+                console.log(`User ${userId} joined room user_${userId}`);
+                socket.join(`user_${userId}`);
+
+                // Update user status to ONLINE
+                try {
+                    const { UserStatus } = await import('../models/UserStatus');
+                    await UserStatus.findOneAndUpdate(
+                        { userId },
+                        { status: 'ONLINE', socketId: socket.id, lastSeen: new Date() },
+                        { upsert: true }
+                    );
+
+                    // Update User model lastSeen
+                    await User.findByIdAndUpdate(userId, { lastSeen: new Date() });
+
+                    // Broadcast status change
+                    io.emit('user_status_changed', { userId, status: 'ONLINE', lastSeen: new Date() });
+                } catch (err) {
+                    console.error('Failed to update user status', err);
+                }
+            }
+        });
+
+        socket.on('change_status', async ({ userId, status }: { userId: string, status: string }) => {
+            try {
+                const { UserStatus } = await import('../models/UserStatus');
+                await UserStatus.findOneAndUpdate(
+                    { userId },
+                    { status, lastSeen: new Date() },
+                    { upsert: true }
+                );
+
+                await User.findByIdAndUpdate(userId, { lastSeen: new Date() });
+
+                io.emit('user_status_changed', { userId, status, lastSeen: new Date() });
+            } catch (err) {
+                console.error('Failed to change user status', err);
+            }
+        });
+
+        socket.on('join_chat', (conversationId: string) => {
+            // console.log(`Socket ${socket.id} joining room chat_${conversationId}`);
+            socket.join(`chat_${conversationId}`);
+        });
+
+        socket.on('leave_chat', (conversationId: string) => {
+            socket.leave(`chat_${conversationId}`);
+        });
+
+        socket.on('join_project', (projectId: string) => {
+            console.log(`Socket ${socket.id} joining room project_${projectId}`);
+            socket.join(`project_${projectId}`);
+        });
+
+        socket.on('leave_project', (projectId: string) => {
+            socket.leave(`project_${projectId}`);
+        });
+
+        // ... inside disconnect ...
+        socket.on('disconnect', async () => {
+            // Update user status to OFFLINE
+            try {
+                const { UserStatus } = await import('../models/UserStatus');
+                const userStatus = await UserStatus.findOne({ socketId: socket.id });
+                if (userStatus) {
+                    const now = new Date();
+                    await UserStatus.findByIdAndUpdate(userStatus._id, {
+                        status: 'OFFLINE',
+                        lastSeen: now
+                    });
+
+                    await User.findByIdAndUpdate(userStatus.userId, { lastSeen: now });
+
+                    io.emit('user_status_changed', { userId: userStatus.userId, status: 'OFFLINE', lastSeen: now });
+                }
+            } catch (err) {
+                console.error('Failed to update user status on disconnect', err);
+            }
+            // console.log('Client disconnected:', socket.id);
+        });
+    });
+
+    return io;
+};
+
+export const getIO = () => {
+    if (!io) {
+        throw new Error('Socket.io not initialized!');
+    }
+    return io;
+};
+
+// Helper to send notification to a specific user
+export const notifyUser = (userId: string, notification: any) => {
+    if (io) {
+        io.to(`user_${userId}`).emit('notification', notification);
+    }
+};
+
+// Helper to notify a role (e.g. all ADMINs)
+// Requires advanced room logic or finding all users of a role
+// For simplicity, we can rely on iterating users or having role-based rooms if implemented.
+export const notifyRole = (role: string, notification: any) => {
+    // Implementation would require users to join room `role_${role}`
+    if (io) {
+        io.to(`role_${role}`).emit('notification', notification);
+    }
+}

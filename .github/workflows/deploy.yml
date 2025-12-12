@@ -1,0 +1,39 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            # 1. Update Code
+            cd /var/www/translation-system
+            git fetch --all
+            git reset --hard origin/main
+            
+            # 2. Build Backend
+            cd backend
+            npm install
+            npm run build
+            cp .env dist/.env 2>/dev/null || :
+            pm2 restart translation-backend
+            
+            # 3. Build Frontend
+            cd ../frontend
+            npm install
+            npm run build
+            cp -r dist/* /var/www/html/ 2>/dev/null || :
+            
+            # 4. Save PM2 state
+            pm2 save

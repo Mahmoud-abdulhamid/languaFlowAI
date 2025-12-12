@@ -1,0 +1,2835 @@
+PS D:\4x-trading-bot-main> python monitor_with_trading.py --mode detailed
+[2025-11-08 02:30:10,734] INFO: 🚀 CUDA optimizations enabled: benchmark=True, TF32=True
+[2025-11-08 02:30:12,574] INFO: ✅ Mixed Precision Training (FP16) enabled for faster training
+[2025-11-08 02:30:12,575] INFO: ⚠️  Triton not available on Windows, skipping torch.compile for stability
+[2025-11-08 02:30:12,577] INFO: تم تحميل 0 ذاكرة نمط و 0 ذاكرة استراتيجية
+[2025-11-08 02:30:12,578] INFO: Paper Trading Engine initialized
+[2025-11-08 02:30:12,579] INFO: Trading System Monitor initialized
+============================================================
+🚀 Starting Trading System Monitor
+============================================================
+This will:
+  - Monitor system health
+  - Execute paper trades
+  - Track performance
+
+📺 Display Mode: DETAILED
+   Update Interval: 60s
+   ✅ Instant notifications for trades enabled
+
+Press Ctrl+C to stop
+
+[2025-11-08 02:30:12,584] INFO: 🔍 Prediction evaluation started
+[2025-11-08 02:30:12,584] INFO: Trading System Monitor started
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:31:12
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.02 hours
+🔮 Total Predictions: 20
+📝 Total Trades: 0
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 0
+   Open Positions: 0
+   Win Rate: 0.0%
+   Prediction Accuracy: 0.0%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 0 (0.0%)
+   High (0.65-0.75): 0 (0.0%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 20 (100.0%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:32:12
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.03 hours
+🔮 Total Predictions: 30
+📝 Total Trades: 0
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 0
+   Open Positions: 0
+   Win Rate: 0.0%
+   Prediction Accuracy: 0.0%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 0 (0.0%)
+   High (0.65-0.75): 0 (0.0%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 30 (100.0%)
+============================================================
+[2025-11-08 02:33:02,594] INFO: 📝 Paper Trade: BUY USDCUSDT @ 1.0005 (Qty: 199.900050, Confidence: 0.898)
+[2025-11-08 02:33:02,594] INFO: 📝 Trade executed: BUY USDCUSDT @ 1.0005 (Confidence: 0.898)
+
+🟢 [02:33:02] NEW TRADE: BUY USDCUSDT @ $1.0005 (Conf: 89.8%)
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:33:12
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.05 hours
+🔮 Total Predictions: 49
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 0.0%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (2.0%)
+   High (0.65-0.75): 1 (2.0%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 48 (96.0%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:34:12
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.07 hours
+🔮 Total Predictions: 60
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 0.0%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (1.7%)
+   High (0.65-0.75): 1 (1.7%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 58 (96.7%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:35:12
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.08 hours
+🔮 Total Predictions: 75
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 0.0%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (1.3%)
+   High (0.65-0.75): 1 (1.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 73 (97.3%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:36:12
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.10 hours
+🔮 Total Predictions: 90
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 60.0%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (1.1%)
+   High (0.65-0.75): 1 (1.1%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 88 (97.8%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:37:12
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.12 hours
+🔮 Total Predictions: 100
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 56.7%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (1.0%)
+   High (0.65-0.75): 1 (1.0%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 98 (98.0%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:38:12
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.13 hours
+🔮 Total Predictions: 120
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 60.0%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.8%)
+   High (0.65-0.75): 2 (1.7%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 117 (97.5%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:39:12
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.15 hours
+🔮 Total Predictions: 130
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 66.1%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.8%)
+   High (0.65-0.75): 2 (1.5%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 127 (97.7%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:40:12
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.17 hours
+🔮 Total Predictions: 150
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 68.6%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.7%)
+   High (0.65-0.75): 2 (1.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 147 (98.0%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:41:12
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.18 hours
+🔮 Total Predictions: 160
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 61.3%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.6%)
+   High (0.65-0.75): 2 (1.2%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 157 (98.1%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:42:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.20 hours
+🔮 Total Predictions: 173
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 51.0%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.6%)
+   High (0.65-0.75): 2 (1.1%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 171 (98.3%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:43:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.22 hours
+🔮 Total Predictions: 190
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 47.3%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.5%)
+   High (0.65-0.75): 2 (1.1%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 187 (98.4%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:44:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.23 hours
+🔮 Total Predictions: 200
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 41.5%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.5%)
+   High (0.65-0.75): 2 (1.0%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 197 (98.5%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:45:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.25 hours
+🔮 Total Predictions: 220
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 40.0%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.5%)
+   High (0.65-0.75): 2 (0.9%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 217 (98.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:46:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.27 hours
+🔮 Total Predictions: 230
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 38.6%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.4%)
+   High (0.65-0.75): 2 (0.9%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 227 (98.7%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:47:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.28 hours
+🔮 Total Predictions: 245
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 38.8%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.4%)
+   High (0.65-0.75): 2 (0.8%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 242 (98.8%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:48:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.30 hours
+🔮 Total Predictions: 260
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 38.3%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.4%)
+   High (0.65-0.75): 2 (0.8%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 257 (98.8%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:49:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.32 hours
+🔮 Total Predictions: 270
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 37.5%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.4%)
+   High (0.65-0.75): 2 (0.7%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 267 (98.9%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:50:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.33 hours
+🔮 Total Predictions: 288
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 37.1%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.3%)
+   High (0.65-0.75): 2 (0.7%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 285 (99.0%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:51:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.35 hours
+🔮 Total Predictions: 300
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 37.0%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.3%)
+   High (0.65-0.75): 2 (0.7%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 297 (99.0%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:52:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.37 hours
+🔮 Total Predictions: 310
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 38.8%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.3%)
+   High (0.65-0.75): 2 (0.6%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 307 (99.0%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:53:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.38 hours
+🔮 Total Predictions: 330
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 40.2%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.3%)
+   High (0.65-0.75): 2 (0.6%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 327 (99.1%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:54:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.40 hours
+🔮 Total Predictions: 340
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 40.4%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.3%)
+   High (0.65-0.75): 2 (0.6%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 337 (99.1%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:55:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.42 hours
+🔮 Total Predictions: 352
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 42.9%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.3%)
+   High (0.65-0.75): 2 (0.6%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 349 (99.1%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:56:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.43 hours
+🔮 Total Predictions: 370
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.1%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.3%)
+   High (0.65-0.75): 2 (0.5%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 367 (99.2%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:57:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.45 hours
+🔮 Total Predictions: 380
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 46.8%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.3%)
+   High (0.65-0.75): 2 (0.5%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 377 (99.2%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:58:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.47 hours
+🔮 Total Predictions: 399
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 48.0%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.3%)
+   High (0.65-0.75): 2 (0.5%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 396 (99.2%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 02:59:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.48 hours
+🔮 Total Predictions: 410
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 48.8%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.2%)
+   High (0.65-0.75): 2 (0.5%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 407 (99.3%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:00:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.50 hours
+🔮 Total Predictions: 420
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 50.9%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.2%)
+   High (0.65-0.75): 2 (0.5%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 418 (99.3%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:01:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.52 hours
+🔮 Total Predictions: 440
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 51.4%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.2%)
+   High (0.65-0.75): 2 (0.5%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 437 (99.3%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:02:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.53 hours
+🔮 Total Predictions: 450
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 50.3%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.2%)
+   High (0.65-0.75): 2 (0.4%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 447 (99.3%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:03:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.55 hours
+🔮 Total Predictions: 466
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 49.2%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.2%)
+   High (0.65-0.75): 2 (0.4%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 463 (99.4%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:04:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.57 hours
+🔮 Total Predictions: 480
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 48.5%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.2%)
+   High (0.65-0.75): 2 (0.4%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 477 (99.4%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:05:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.58 hours
+🔮 Total Predictions: 490
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 46.4%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.2%)
+   High (0.65-0.75): 2 (0.4%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 487 (99.4%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:06:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.60 hours
+🔮 Total Predictions: 510
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 45.3%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.2%)
+   High (0.65-0.75): 2 (0.4%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 507 (99.4%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:07:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.62 hours
+🔮 Total Predictions: 520
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 43.8%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.2%)
+   High (0.65-0.75): 2 (0.4%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 517 (99.4%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:08:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.63 hours
+🔮 Total Predictions: 538
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 42.7%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.2%)
+   High (0.65-0.75): 2 (0.4%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 535 (99.4%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:09:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.65 hours
+🔮 Total Predictions: 550
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 42.1%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.2%)
+   High (0.65-0.75): 2 (0.4%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 547 (99.5%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:10:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.67 hours
+🔮 Total Predictions: 561
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 41.6%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.2%)
+   High (0.65-0.75): 2 (0.4%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 558 (99.5%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:11:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.68 hours
+🔮 Total Predictions: 580
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 42.2%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.2%)
+   High (0.65-0.75): 3 (0.5%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 576 (99.3%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:12:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.70 hours
+🔮 Total Predictions: 590
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 43.7%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.2%)
+   High (0.65-0.75): 3 (0.5%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 586 (99.3%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:13:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.72 hours
+🔮 Total Predictions: 608
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 43.8%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.2%)
+   High (0.65-0.75): 3 (0.5%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 604 (99.3%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:14:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.73 hours
+🔮 Total Predictions: 620
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 43.8%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.2%)
+   High (0.65-0.75): 3 (0.5%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 616 (99.4%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:15:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.75 hours
+🔮 Total Predictions: 631
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.1%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.2%)
+   High (0.65-0.75): 3 (0.5%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 627 (99.4%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:16:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.77 hours
+🔮 Total Predictions: 650
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 43.9%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.2%)
+   High (0.65-0.75): 3 (0.5%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 646 (99.4%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:17:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.78 hours
+🔮 Total Predictions: 660
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 43.2%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.2%)
+   High (0.65-0.75): 3 (0.5%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 656 (99.4%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:18:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.80 hours
+🔮 Total Predictions: 678
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 42.8%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.4%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 674 (99.4%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:19:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.82 hours
+🔮 Total Predictions: 690
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 42.3%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.4%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 686 (99.4%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:20:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.83 hours
+🔮 Total Predictions: 701
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 42.2%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.4%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 697 (99.4%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:21:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.85 hours
+🔮 Total Predictions: 720
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 41.7%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.4%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 716 (99.4%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:22:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.87 hours
+🔮 Total Predictions: 730
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 41.2%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.4%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 726 (99.5%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:23:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.88 hours
+🔮 Total Predictions: 748
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 41.3%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.4%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 744 (99.5%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:24:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.90 hours
+🔮 Total Predictions: 760
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 42.3%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.4%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 756 (99.5%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:25:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.92 hours
+🔮 Total Predictions: 771
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 42.3%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.4%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 767 (99.5%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:26:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.93 hours
+🔮 Total Predictions: 790
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 42.2%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.4%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 786 (99.5%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:27:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.95 hours
+🔮 Total Predictions: 800
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 42.1%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.4%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 796 (99.5%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:28:13
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.97 hours
+🔮 Total Predictions: 819
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 42.0%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.4%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 815 (99.5%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:29:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 0.98 hours
+🔮 Total Predictions: 830
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 42.1%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.4%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 826 (99.5%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:30:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.00 hours
+🔮 Total Predictions: 841
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 42.5%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.4%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 837 (99.5%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:31:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.02 hours
+🔮 Total Predictions: 860
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 43.4%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 856 (99.5%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:32:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.03 hours
+🔮 Total Predictions: 870
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 43.8%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 866 (99.5%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:33:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.05 hours
+🔮 Total Predictions: 888
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.3%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 884 (99.5%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:34:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.07 hours
+🔮 Total Predictions: 900
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.4%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 896 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:35:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.08 hours
+🔮 Total Predictions: 911
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.8%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 907 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:36:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.10 hours
+🔮 Total Predictions: 930
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.6%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 926 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:37:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.12 hours
+🔮 Total Predictions: 940
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.6%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 936 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:38:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.13 hours
+🔮 Total Predictions: 958
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.4%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 954 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:39:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.15 hours
+🔮 Total Predictions: 970
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.4%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 966 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:40:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.17 hours
+🔮 Total Predictions: 982
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 43.8%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 978 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:41:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.18 hours
+🔮 Total Predictions: 1000
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 43.5%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 996 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:42:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.20 hours
+🔮 Total Predictions: 1010
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 42.7%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 1 (0.1%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1006 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:43:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.22 hours
+🔮 Total Predictions: 1030
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 42.8%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.2%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1025 (99.5%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:44:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.23 hours
+🔮 Total Predictions: 1040
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 43.0%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.2%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1035 (99.5%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:45:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.25 hours
+🔮 Total Predictions: 1050
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 43.4%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.2%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1045 (99.5%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:46:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.27 hours
+🔮 Total Predictions: 1070
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 43.5%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.2%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1065 (99.5%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:47:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.28 hours
+🔮 Total Predictions: 1080
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 43.8%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.2%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1075 (99.5%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:48:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.30 hours
+🔮 Total Predictions: 1096
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.0%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.2%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1091 (99.5%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:49:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.32 hours
+🔮 Total Predictions: 1110
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.4%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.2%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1105 (99.5%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:50:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.33 hours
+🔮 Total Predictions: 1120
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.4%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.2%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1115 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:51:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.35 hours
+🔮 Total Predictions: 1140
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.3%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.2%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1135 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:52:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.37 hours
+🔮 Total Predictions: 1150
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.4%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.2%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1145 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:53:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.38 hours
+🔮 Total Predictions: 1169
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.2%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.2%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1164 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:54:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.40 hours
+🔮 Total Predictions: 1180
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.3%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.2%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1175 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:55:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.42 hours
+🔮 Total Predictions: 1194
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.4%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.2%)
+   High (0.65-0.75): 3 (0.3%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1189 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:56:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.43 hours
+🔮 Total Predictions: 1210
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.6%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.2%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1205 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:57:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.45 hours
+🔮 Total Predictions: 1220
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.9%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.2%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1215 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:58:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.47 hours
+🔮 Total Predictions: 1239
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 45.3%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.2%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1234 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 03:59:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.48 hours
+🔮 Total Predictions: 1250
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 45.6%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.2%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1245 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:00:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.50 hours
+🔮 Total Predictions: 1264
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 45.3%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.2%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1259 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:01:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.52 hours
+🔮 Total Predictions: 1280
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 45.2%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.2%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1275 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:02:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.53 hours
+🔮 Total Predictions: 1290
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 45.1%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.2%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1285 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:03:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.55 hours
+🔮 Total Predictions: 1309
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 45.0%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.2%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1304 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:04:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.57 hours
+🔮 Total Predictions: 1320
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.8%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.2%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1315 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:05:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.58 hours
+🔮 Total Predictions: 1333
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.6%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.2%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1328 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:06:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.60 hours
+🔮 Total Predictions: 1350
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.4%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.1%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1345 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:07:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.62 hours
+🔮 Total Predictions: 1360
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.3%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.1%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 0 (0.0%)
+   Low (<0.55): 1355 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:08:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.63 hours
+🔮 Total Predictions: 1380
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.9%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.1%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 1 (0.1%)
+   Low (<0.55): 1374 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:09:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.65 hours
+🔮 Total Predictions: 1390
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 45.1%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.1%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 1 (0.1%)
+   Low (<0.55): 1384 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:10:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.67 hours
+🔮 Total Predictions: 1404
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 45.6%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.1%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 1 (0.1%)
+   Low (<0.55): 1398 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:11:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.68 hours
+🔮 Total Predictions: 1420
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 45.4%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.1%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 1 (0.1%)
+   Low (<0.55): 1414 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:12:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.70 hours
+🔮 Total Predictions: 1430
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.9%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.1%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 1 (0.1%)
+   Low (<0.55): 1424 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:13:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.72 hours
+🔮 Total Predictions: 1450
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.7%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.1%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 1 (0.1%)
+   Low (<0.55): 1444 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:14:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.73 hours
+🔮 Total Predictions: 1460
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.6%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.1%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 1 (0.1%)
+   Low (<0.55): 1454 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:15:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.75 hours
+🔮 Total Predictions: 1475
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.2%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.1%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 1 (0.1%)
+   Low (<0.55): 1469 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:16:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.77 hours
+🔮 Total Predictions: 1490
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.1%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.1%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 1 (0.1%)
+   Low (<0.55): 1484 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:17:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.78 hours
+🔮 Total Predictions: 1500
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 43.8%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.1%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 1 (0.1%)
+   Low (<0.55): 1494 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:18:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.80 hours
+🔮 Total Predictions: 1520
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.1%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.1%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 1 (0.1%)
+   Low (<0.55): 1514 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:19:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.82 hours
+🔮 Total Predictions: 1530
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 44.0%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.1%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 1 (0.1%)
+   Low (<0.55): 1524 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:20:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.83 hours
+🔮 Total Predictions: 1544
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 43.7%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.1%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 1 (0.1%)
+   Low (<0.55): 1538 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:21:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.85 hours
+🔮 Total Predictions: 1560
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 43.6%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.1%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 1 (0.1%)
+   Low (<0.55): 1554 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:22:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.87 hours
+🔮 Total Predictions: 1570
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 43.2%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.1%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 1 (0.1%)
+   Low (<0.55): 1564 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:23:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.88 hours
+🔮 Total Predictions: 1589
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 43.1%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.1%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 1 (0.1%)
+   Low (<0.55): 1583 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:24:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.90 hours
+🔮 Total Predictions: 1600
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 43.0%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.1%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 1 (0.1%)
+   Low (<0.55): 1594 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:25:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.92 hours
+🔮 Total Predictions: 1612
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 43.0%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.1%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 1 (0.1%)
+   Low (<0.55): 1606 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:26:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.93 hours
+🔮 Total Predictions: 1630
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 43.0%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.1%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 1 (0.1%)
+   Low (<0.55): 1624 (99.6%)
+============================================================
+
+============================================================
+📊 TRADING SYSTEM STATUS
+============================================================
+⏰ Time: 2025-11-08 04:27:14
+🟢 Status: HEALTHY
+⏱️  Uptime: 1.95 hours
+🔮 Total Predictions: 1640
+📝 Total Trades: 1
+
+💰 PAPER TRADING:
+   Balance: $10,000.00
+   Return: +0.00%
+   Trades: 1
+   Open Positions: 1
+   Win Rate: 0.0%
+   Prediction Accuracy: 43.1%
+
+🎯 CONFIDENCE DISTRIBUTION:
+   Very High (>0.75): 2 (0.1%)
+   High (0.65-0.75): 3 (0.2%)
+   Medium (0.55-0.65): 1 (0.1%)
+   Low (<0.55): 1634 (99.6%)
+============================================================

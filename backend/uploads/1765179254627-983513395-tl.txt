@@ -1,0 +1,1331 @@
+========================================
+   Advanced AI Trading System v1.0.5
+   Event-Driven Scalping Trading
+========================================
+
+­ƒöº Setting up the system...
+🚀 Preparing Advanced AI Trading System
+==================================================
+🔍 Checking Python package requirements...
+✅ torch
+✅ numpy
+✅ aiohttp
+✅ sklearn
+✅ joblib
+✅ All requirements are satisfied
+🔧 Preparing trained model...
+✅ Copied model to: models/continuous_learning_model.pth
+✅ Created latest model copy: models/latest_model.pth
+📊 Model size: 0.06 MB
+
+✅ Model setup completed successfully
+✅ Created sample config file: user_config.json
+
+🎉 Setup completed!
+
+📋 Next steps:
+1️⃣  python main.py --mode test-data
+2️⃣  python main.py --mode single-prediction
+3️⃣  python main.py --mode continuous
+
+💡 For help:
+   python main.py --mode help
+
+­ƒº¬ Testing the system...
+🚀 Starting full system test
+==================================================
+
+📁 Testing file structure...
+✅ Directory exists: json_data
+✅ Directory exists: logs
+✅ Directory exists: models
+✅ Directory exists: trades
+✅ File exists: main.py
+✅ File exists: config.json
+✅ File exists: requirements.txt
+✅ File structure test: PASSED
+
+🤖 Testing AI predictor...
+✅ Feature extraction OK: 50 features
+✅ Prediction generated: DOWN with confidence 0.444
+✅ AI predictor test: PASSED
+
+💰 Testing smart paper trading...
+🔄 Restored previous session: Balance $168.11, 52 open positions, 22 total trades
+📋 Trading Config: Max Positions=30, Max Exposure=50.0%
+❌ Paper trading test: FAILED
+🔍 Testing data fetch from Binance...
+✅ Retrieved 5 pairs: ['PEPEUSDT', 'BTTCUSDT', 'BONKUSDT', 'SHIBUSDT', 'FLOKIUSDT']
+✅ Retrieved 50 candles for PEPEUSDT
+   Last price: 0.000005
+✅ Data fetch test: PASSED
+
+==================================================
+📊 Test summary: 3/4 tests passed
+⚠️  Some tests failed. Check logs above
+
+ÔÜí Starting AI Trading System...
+ÔÜá´©Å  To stop: Press Ctrl+C
+
+­ƒôè System Configuration:
+   - 1-minute candles (scalping optimized)
+   - 35% confidence threshold (aggressive)
+   - Tighter SL/TP (0.8%/1.2%)
+   - Max 15 positions
+   - 2-hour max hold time
+   - Event-driven execution (no sleep)
+   - Real-time market response
+
+­ƒÜÇ Choose mode:
+   [1] Aggressive Mode (35% confidence)
+   [2] Scalping Mode (55% confidence)
+   [3] Conservative Mode (65% confidence)
+
+Enter your choice (1-3): 1
+Starting Aggressive Mode...
+
+╔══════════════════════════════════════════════════════════════╗
+║                    Advanced AI Trading System                  ║
+║                  Advanced AI Trading System                  ║
+║                                                              ║
+║  🤖 Advanced AI with continuous learning                      ║
+║  📊 Analysis of 50 top crypto pairs                           ║
+║  🎯 High-precision predictions with confidence scoring        ║
+║  💰 Smart paper trading with multi-layer SL/TP                ║
+║  🏆 Reward/Penalty system for continuous learning             ║
+╚══════════════════════════════════════════════════════════════╝
+
+2025-11-14 09:05:26,750 - INFO - Starting continuous mode...
+2025-11-14 09:05:26,753 - INFO - Loaded unified configuration from all sources
+🔄 Restored previous session: Balance $168.11, 52 open positions, 22 total trades
+💰 Initial balance: $1,000.00
+🎯 Confidence threshold: 35.00%
+🔔 Mode: Subscription (event-driven, no sleep)
+📊 Number of pairs: 50
+
+🔄 Starting continuous run... (Press Ctrl+C to stop)
+
+🚀 Initializing trading system...
+============================================================
+🔍 Fetching top 50 trading pairs from Binance...
+   ✅ Found 50 active pairs
+   Top 10: PEPEUSDT, BTTCUSDT, BONKUSDT, SHIBUSDT, FLOKIUSDT, 1000SATSUSDT, LUNCUSDT, XECUSDT, NEIROUSDT, WINUSDT
+
+📡 Fetching initial market data (200 candles per pair)...
+   ✅ Data loaded for 50 pairs
+
+🤖 Initializing AI model...
+   Extracting features from 50 pairs...
+   Scaler fitted with 50 feature sets
+   ✅ AI model ready with fitted scaler
+
+✅ System initialization complete!
+============================================================
+📊 Starting continuous trading loop...
+
+
+🔔 SUBSCRIPTION MODE ACTIVE
+   System will run automatically on each new candle
+   No sleep/waiting - pure event-driven trading!
+   Config watcher is monitoring config.json for changes
+   Press Ctrl+C to stop
+
+🕐 Initializing candle tracking...
+🔍 Config watcher started - monitoring config.json and user_config.json
+   ✅ Tracking 50 symbols
+📡 Subscribed to 50 symbols (1m candles)
+🔔 Will trigger on new candle (checking every 5s)
+⏱️  Expected new candle every ~60s
+
+
+🔔 NEW CANDLE DETECTED! (6 symbols updated)
+   Symbols: DOGEUSDT, TURBOUSDT, SPELLUSDT, WINUSDT, MBLUSDT...
+
+============================================================
+🔄 Cycle started at 09:06:00
+============================================================
+📡 Fetching market data...
+🤖 Generating AI predictions...
+   Generated 50 predictions (current cycle)
+
+   📊 Confidence Distribution:
+      🔥 Very High (≥75%): 0 predictions
+      ✅ High (65-75%):    0 predictions
+      ⚠️  Medium (55-65%):  0 predictions  [TRADEABLE]
+      ❌ Low (<55%):       50 predictions
+💼 Checking for trading opportunities...
+   ℹ️  No trades met criteria (confidence < 35%)
+📊 Updating 30 open positions...
+🎓 Evaluating past predictions...
+
+💰 Performance Summary:
+   Balance: $168.11 | Total Portfolio: $1005.78
+   P&L: $-831.89 | Return: -83.19%
+   Win Rate: 81.8% | Wins: 18 | Losses: 1
+   Open Positions: 30 | Exposure: 83.3%
+
+🧠 AI Learning Stats:
+   Accuracy: 0.0% | Total Predictions: 50
+   Rewards: 0 | Penalties: 0
+
+⏱️  Cycle completed in 2.1s
+🔔 Waiting for next candle...
+
+
+🔔 NEW CANDLE DETECTED! (34 symbols updated)
+   Symbols: CKBUSDT, USUALUSDT, FUNUSDT, BTTCUSDT, PUMPUSDT...
+
+============================================================
+🔄 Cycle started at 09:06:08
+============================================================
+📡 Fetching market data...
+🤖 Generating AI predictions...
+   Generated 50 predictions (current cycle)
+
+   📊 Confidence Distribution:
+      🔥 Very High (≥75%): 0 predictions
+      ✅ High (65-75%):    0 predictions
+      ⚠️  Medium (55-65%):  0 predictions  [TRADEABLE]
+      ❌ Low (<55%):       50 predictions
+💼 Checking for trading opportunities...
+   ℹ️  No trades met criteria (confidence < 35%)
+📊 Updating 30 open positions...
+💰 Closed BUY position on FLOKIUSDT: 1174442.06 @ 0.000056 -> 0.000056
+   P&L: 0.41 | Reason: REVERSAL_PATTERN
+   Balance: 168.11 -> 234.04
+🎓 Evaluating past predictions...
+
+💰 Performance Summary:
+   Balance: $234.04 | Total Portfolio: $1005.73
+   P&L: $-765.96 | Return: -76.60%
+   Win Rate: 82.6% | Wins: 19 | Losses: 1
+   Open Positions: 29 | Exposure: 76.7%
+
+🧠 AI Learning Stats:
+   Accuracy: 0.0% | Total Predictions: 100
+   Rewards: 0 | Penalties: 0
+
+⏱️  Cycle completed in 1.5s
+🔔 Waiting for next candle...
+
+
+🔔 NEW CANDLE DETECTED! (1 symbols updated)
+   Symbols: RSRUSDT
+
+============================================================
+🔄 Cycle started at 09:07:00
+============================================================
+📡 Fetching market data...
+🤖 Generating AI predictions...
+   Generated 50 predictions (current cycle)
+
+   📊 Confidence Distribution:
+      🔥 Very High (≥75%): 0 predictions
+      ✅ High (65-75%):    0 predictions
+      ⚠️  Medium (55-65%):  0 predictions  [TRADEABLE]
+      ❌ Low (<55%):       50 predictions
+💼 Checking for trading opportunities...
+   ℹ️  No trades met criteria (confidence < 35%)
+📊 Updating 29 open positions...
+💰 Closed BUY position on PEPEUSDT: 5571989.43 @ 0.000005 -> 0.000005
+   P&L: -0.28 | Reason: STOP_LOSS
+   Balance: 234.04 -> 263.77
+💰 Closed BUY position on BONKUSDT: 2109396.62 @ 0.000012 -> 0.000011
+   P&L: -0.21 | Reason: STOP_LOSS
+   Balance: 263.77 -> 287.85
+🎓 Evaluating past predictions...
+
+💰 Performance Summary:
+   Balance: $287.85 | Total Portfolio: $1004.12
+   P&L: $-712.15 | Return: -71.21%
+   Win Rate: 76.0% | Wins: 19 | Losses: 3
+   Open Positions: 27 | Exposure: 71.3%
+
+🧠 AI Learning Stats:
+   Accuracy: 0.0% | Total Predictions: 150
+   Rewards: 0 | Penalties: 0
+
+⏱️  Cycle completed in 2.1s
+🔔 Waiting for next candle...
+
+
+🔔 NEW CANDLE DETECTED! (39 symbols updated)
+   Symbols: CKBUSDT, USUALUSDT, FUNUSDT, BTTCUSDT, PUMPUSDT...
+
+============================================================
+🔄 Cycle started at 09:07:08
+============================================================
+📡 Fetching market data...
+🤖 Generating AI predictions...
+   Generated 50 predictions (current cycle)
+
+   📊 Confidence Distribution:
+      🔥 Very High (≥75%): 0 predictions
+      ✅ High (65-75%):    0 predictions
+      ⚠️  Medium (55-65%):  0 predictions  [TRADEABLE]
+      ❌ Low (<55%):       50 predictions
+💼 Checking for trading opportunities...
+   ℹ️  No trades met criteria (confidence < 35%)
+📊 Updating 27 open positions...
+💰 Closed BUY position on BOMEUSDT: 27552.75 @ 0.000829 -> 0.000833
+   P&L: 0.11 | Reason: REVERSAL_PATTERN
+   Balance: 287.85 -> 310.78
+🎓 Evaluating past predictions...
+
+💰 Performance Summary:
+   Balance: $310.78 | Total Portfolio: $1005.42
+   P&L: $-689.22 | Return: -68.92%
+   Win Rate: 76.9% | Wins: 20 | Losses: 3
+   Open Positions: 26 | Exposure: 69.1%
+
+🧠 AI Learning Stats:
+   Accuracy: 0.0% | Total Predictions: 200
+   Rewards: 0 | Penalties: 0
+
+⏱️  Cycle completed in 1.6s
+🔔 Waiting for next candle...
+
+
+🔔 NEW CANDLE DETECTED! (40 symbols updated)
+   Symbols: CKBUSDT, USUALUSDT, FUNUSDT, BTTCUSDT, PUMPUSDT...
+
+============================================================
+🔄 Cycle started at 09:08:06
+============================================================
+📡 Fetching market data...
+🤖 Generating AI predictions...
+   Generated 50 predictions (current cycle)
+
+   📊 Confidence Distribution:
+      🔥 Very High (≥75%): 0 predictions
+      ✅ High (65-75%):    0 predictions
+      ⚠️  Medium (55-65%):  0 predictions  [TRADEABLE]
+      ❌ Low (<55%):       50 predictions
+💼 Checking for trading opportunities...
+   ℹ️  No trades met criteria (confidence < 35%)
+📊 Updating 26 open positions...
+💰 Closed BUY position on PEPEUSDT: 18761726.08 @ 0.000005 -> 0.000005
+   P&L: 0.56 | Reason: REVERSAL_PATTERN
+   Balance: 310.78 -> 411.24
+💰 Closed BUY position on PEPEUSDT: 2220017.18 @ 0.000005 -> 0.000005
+   P&L: 0.02 | Reason: REVERSAL_PATTERN
+   Balance: 411.24 -> 423.13
+💰 Closed BUY position on PEPEUSDT: 3516378.67 @ 0.000005 -> 0.000005
+   P&L: 0.04 | Reason: REVERSAL_PATTERN
+   Balance: 423.13 -> 441.96
+💰 Closed BUY position on PEPEUSDT: 2186722.06 @ 0.000005 -> 0.000005
+   P&L: 0.00 | Reason: REVERSAL_PATTERN
+   Balance: 441.96 -> 453.67
+💰 Closed BUY position on BTTCUSDT: 23971761.66 @ 0.000000 -> 0.000000
+   P&L: 0.24 | Reason: TAKE_PROFIT
+   Balance: 453.67 -> 464.44
+💰 Closed BUY position on PEPEUSDT: 2880544.18 @ 0.000005 -> 0.000005
+   P&L: -0.03 | Reason: REVERSAL_PATTERN
+   Balance: 464.44 -> 479.87
+💰 Closed BUY position on BTTCUSDT: 61424357.80 @ 0.000000 -> 0.000000
+   P&L: 0.61 | Reason: TAKE_PROFIT
+   Balance: 479.87 -> 507.48
+💰 Closed BUY position on PEPEUSDT: 6274716.05 @ 0.000005 -> 0.000005
+   P&L: 0.00 | Reason: REVERSAL_PATTERN
+   Balance: 507.48 -> 541.08
+💰 Closed BUY position on BTTCUSDT: 68786061.34 @ 0.000000 -> 0.000000
+   P&L: 0.69 | Reason: TAKE_PROFIT
+   Balance: 541.08 -> 572.00
+💰 Closed BUY position on PEPEUSDT: 6198578.69 @ 0.000005 -> 0.000005
+   P&L: -0.06 | Reason: REVERSAL_PATTERN
+   Balance: 572.00 -> 605.19
+💰 Closed BUY position on BTTCUSDT: 68078186.70 @ 0.000000 -> 0.000000
+   P&L: 0.68 | Reason: TAKE_PROFIT
+   Balance: 605.19 -> 635.80
+💰 Closed BUY position on PEPEUSDT: 4311902.44 @ 0.000005 -> 0.000005
+   P&L: 0.04 | Reason: REVERSAL_PATTERN
+   Balance: 635.80 -> 658.89
+💰 Closed BUY position on BTTCUSDT: 47180689.49 @ 0.000000 -> 0.000000
+   P&L: 0.47 | Reason: TAKE_PROFIT
+   Balance: 658.89 -> 680.10
+🎓 Evaluating past predictions...
+   Updated model with 50 evaluations
+
+💰 Performance Summary:
+   Balance: $680.10 | Total Portfolio: $1007.95
+   P&L: $-319.90 | Return: -31.99%
+   Win Rate: 74.4% | Wins: 29 | Losses: 5
+   Open Positions: 13 | Exposure: 32.5%
+
+🧠 AI Learning Stats:
+   Accuracy: 8.0% | Total Predictions: 250
+   Rewards: 20 | Penalties: 30
+
+⏱️  Cycle completed in 2.4s
+🔔 Waiting for next candle...
+
+
+🔔 NEW CANDLE DETECTED! (40 symbols updated)
+   Symbols: CKBUSDT, USUALUSDT, FUNUSDT, BTTCUSDT, PUMPUSDT...
+
+============================================================
+🔄 Cycle started at 09:09:05
+============================================================
+📡 Fetching market data...
+🤖 Generating AI predictions...
+   Generated 50 predictions (current cycle)
+
+   📊 Confidence Distribution:
+      🔥 Very High (≥75%): 0 predictions
+      ✅ High (65-75%):    0 predictions
+      ⚠️  Medium (55-65%):  0 predictions  [TRADEABLE]
+      ❌ Low (<55%):       50 predictions
+💼 Checking for trading opportunities...
+   ℹ️  No trades met criteria (confidence < 35%)
+📊 Updating 13 open positions...
+💰 Closed BUY position on FLOKIUSDT: 390794.88 @ 0.000056 -> 0.000056
+   P&L: -0.20 | Reason: STOP_LOSS
+   Balance: 680.10 -> 701.94
+💰 Closed BUY position on FLOKIUSDT: 386704.71 @ 0.000056 -> 0.000056
+   P&L: -0.20 | Reason: STOP_LOSS
+   Balance: 701.94 -> 723.55
+🎓 Evaluating past predictions...
+   Updated model with 50 evaluations
+
+💰 Performance Summary:
+   Balance: $723.55 | Total Portfolio: $1007.03
+   P&L: $-276.45 | Return: -27.65%
+   Win Rate: 70.7% | Wins: 29 | Losses: 7
+   Open Positions: 11 | Exposure: 28.2%
+
+🧠 AI Learning Stats:
+   Accuracy: 11.7% | Total Predictions: 300
+   Rewards: 35 | Penalties: 65
+
+⏱️  Cycle completed in 2.1s
+🔔 Waiting for next candle...
+
+
+🔔 NEW CANDLE DETECTED! (40 symbols updated)
+   Symbols: CKBUSDT, USUALUSDT, FUNUSDT, BTTCUSDT, PUMPUSDT...
+
+============================================================
+🔄 Cycle started at 09:10:03
+============================================================
+📡 Fetching market data...
+🤖 Generating AI predictions...
+   Generated 50 predictions (current cycle)
+
+   📊 Confidence Distribution:
+      🔥 Very High (≥75%): 0 predictions
+      ✅ High (65-75%):    3 predictions
+      ⚠️  Medium (55-65%):  6 predictions  [TRADEABLE]
+      ❌ Low (<55%):       41 predictions
+
+   🎯 High Confidence Direction Breakdown:
+      📈 UP: 0 | 📉 DOWN: 2 | ➡️  SIDEWAYS: 7
+
+   🏆 Top 3 Predictions:
+      1. OOKIUSDT: ➡️ SIDEWAYS (conf: 65.7%, decision: HOLD)
+      2. AMBUSDT: ➡️ SIDEWAYS (conf: 65.5%, decision: HOLD)
+      3. EPXUSDT: ➡️ SIDEWAYS (conf: 65.2%, decision: HOLD)
+💼 Checking for trading opportunities...
+
+   🔔 NEW TRADE: SELL PEPEUSDT
+      Entry: $0.000005
+      Quantity: 8610726.675317
+      SL: $0.000005 | TP: $0.000005
+      Confidence: 46.6%
+
+   🔔 NEW TRADE: SELL BTTCUSDT
+      Entry: $0.000000
+      Quantity: 130204115.559748
+      SL: $0.000000 | TP: $0.000000
+      Confidence: 58.2%
+
+   🔔 NEW TRADE: SELL BONKUSDT
+      Entry: $0.000011
+      Quantity: 4055683.690103
+      SL: $0.000012 | TP: $0.000011
+      Confidence: 46.8%
+
+   🔔 NEW TRADE: SELL SHIBUSDT
+      Entry: $0.000009
+      Quantity: 5022063.910280
+      SL: $0.000009 | TP: $0.000009
+      Confidence: 46.7%
+
+   🔔 NEW TRADE: SELL FLOKIUSDT
+      Entry: $0.000056
+      Quantity: 837957.134273
+      SL: $0.000057 | TP: $0.000053
+      Confidence: 47.4%
+
+   🔔 NEW TRADE: SELL 1000SATSUSDT
+      Entry: $0.000021
+      Quantity: 2290484.806798
+      SL: $0.000021 | TP: $0.000019
+      Confidence: 47.4%
+
+   🔔 NEW TRADE: SELL LUNCUSDT
+      Entry: $0.000033
+      Quantity: 1463551.482598
+      SL: $0.000033 | TP: $0.000031
+      Confidence: 48.2%
+
+   🔔 NEW TRADE: SELL XECUSDT
+      Entry: $0.000013
+      Quantity: 3495362.815386
+      SL: $0.000014 | TP: $0.000013
+      Confidence: 47.4%
+
+   🔔 NEW TRADE: SELL NEIROUSDT
+      Entry: $0.000148
+      Quantity: 310417.467285
+      SL: $0.000150 | TP: $0.000141
+      Confidence: 46.4%
+
+   🔔 NEW TRADE: SELL WINUSDT
+      Entry: $0.000034
+      Quantity: 1523807.057155
+      SL: $0.000035 | TP: $0.000033
+      Confidence: 52.7%
+
+   🔔 NEW TRADE: SELL DOGSUSDT
+      Entry: $0.000047
+      Quantity: 984793.461477
+      SL: $0.000047 | TP: $0.000044
+      Confidence: 46.4%
+
+   🔔 NEW TRADE: SELL PUMPUSDT
+      Entry: $0.003690
+      Quantity: 12542.494691
+      SL: $0.003735 | TP: $0.003505
+      Confidence: 46.7%
+
+   🔔 NEW TRADE: SELL HMSTRUSDT
+      Entry: $0.000288
+      Quantity: 159101.222593
+      SL: $0.000292 | TP: $0.000274
+      Confidence: 46.3%
+
+   🔔 NEW TRADE: SELL 1MBABYDOGEUSDT
+      Entry: $0.000775
+      Quantity: 59510.656432
+      SL: $0.000785 | TP: $0.000736
+      Confidence: 46.6%
+
+   🔔 NEW TRADE: SELL BOMEUSDT
+      Entry: $0.000832
+      Quantity: 55838.154204
+      SL: $0.000842 | TP: $0.000790
+      Confidence: 46.9%
+
+   🔔 NEW TRADE: SELL SPELLUSDT
+      Entry: $0.000288
+      Quantity: 160795.166296
+      SL: $0.000291 | TP: $0.000273
+      Confidence: 46.7%
+
+   🔔 NEW TRADE: SELL PENGUUSDT
+      Entry: $0.013346
+      Quantity: 3478.061458
+      SL: $0.013509 | TP: $0.012679
+      Confidence: 46.9%
+
+   🔔 NEW TRADE: SELL NOTUSDT
+      Entry: $0.000692
+      Quantity: 66358.355936
+      SL: $0.000701 | TP: $0.000657
+      Confidence: 46.4%
+
+   🔔 NEW TRADE: SELL MEMEUSDT
+      Entry: $0.001437
+      Quantity: 32237.408968
+      SL: $0.001455 | TP: $0.001365
+      Confidence: 46.8%
+   ✅ Executed 19 new trades
+📊 Updating 30 open positions...
+🎓 Evaluating past predictions...
+   Updated model with 50 evaluations
+
+💰 Performance Summary:
+   Balance: $722.65 | Total Portfolio: $1006.20
+   P&L: $-277.35 | Return: -27.74%
+   Win Rate: 70.7% | Wins: 29 | Losses: 7
+   Open Positions: 30 | Exposure: 28.2%
+
+🧠 AI Learning Stats:
+   Accuracy: 16.6% | Total Predictions: 350
+   Rewards: 58 | Penalties: 92
+
+⏱️  Cycle completed in 3.0s
+🔔 Waiting for next candle...
+
+
+🔔 NEW CANDLE DETECTED! (40 symbols updated)
+   Symbols: CKBUSDT, USUALUSDT, FUNUSDT, BTTCUSDT, PUMPUSDT...
+
+============================================================
+🔄 Cycle started at 09:11:03
+============================================================
+📡 Fetching market data...
+🤖 Generating AI predictions...
+   Generated 50 predictions (current cycle)
+
+   📊 Confidence Distribution:
+      🔥 Very High (≥75%): 9 predictions
+      ✅ High (65-75%):    0 predictions
+      ⚠️  Medium (55-65%):  13 predictions  [TRADEABLE]
+      ❌ Low (<55%):       28 predictions
+
+   🎯 High Confidence Direction Breakdown:
+      📈 UP: 0 | 📉 DOWN: 12 | ➡️  SIDEWAYS: 10
+
+   🏆 Top 3 Predictions:
+      1. BETAUSDT: ➡️ SIDEWAYS (conf: 84.4%, decision: HOLD)
+      2. TROYUSDT: ➡️ SIDEWAYS (conf: 84.4%, decision: HOLD)
+      3. KDAUSDT: ➡️ SIDEWAYS (conf: 84.1%, decision: HOLD)
+💼 Checking for trading opportunities...
+   ℹ️  No trades met criteria (confidence < 35%)
+📊 Updating 30 open positions...
+💰 Closed BUY position on BONKUSDT: 7116168.80 @ 0.000011 -> 0.000011
+   P&L: 0.36 | Reason: REVERSAL_PATTERN
+   Balance: 722.65 -> 803.91
+💰 Closed BUY position on BONKUSDT: 934282.78 @ 0.000011 -> 0.000011
+   P&L: -0.01 | Reason: REVERSAL_PATTERN
+   Balance: 803.91 -> 814.57
+💰 Closed BUY position on BONKUSDT: 1328233.73 @ 0.000011 -> 0.000011
+   P&L: -0.05 | Reason: REVERSAL_PATTERN
+   Balance: 814.57 -> 829.74
+💰 Closed BUY position on BONKUSDT: 2374564.40 @ 0.000011 -> 0.000011
+   P&L: -0.09 | Reason: REVERSAL_PATTERN
+   Balance: 829.74 -> 856.85
+💰 Closed BUY position on BONKUSDT: 2348080.71 @ 0.000011 -> 0.000011
+   P&L: -0.12 | Reason: REVERSAL_PATTERN
+   Balance: 856.85 -> 883.67
+💰 Closed BUY position on BONKUSDT: 1630146.34 @ 0.000011 -> 0.000011
+   P&L: -0.05 | Reason: REVERSAL_PATTERN
+   Balance: 883.67 -> 902.28
+💰 Closed SELL position on PEPEUSDT: 8610726.68 @ 0.000005 -> 0.000005
+   P&L: 0.00 | Reason: REVERSAL_PATTERN
+   Balance: 902.28 -> 856.08
+🎓 Evaluating past predictions...
+   Updated model with 50 evaluations
+
+💰 Performance Summary:
+   Balance: $856.08 | Total Portfolio: $1017.31
+   P&L: $-143.92 | Return: -14.39%
+   Win Rate: 62.5% | Wins: 30 | Losses: 12
+   Open Positions: 23 | Exposure: 15.8%
+
+🧠 AI Learning Stats:
+   Accuracy: 19.2% | Total Predictions: 400
+   Rewards: 77 | Penalties: 123
+
+⏱️  Cycle completed in 2.9s
+🔔 Waiting for next candle...
+
+
+🔔 NEW CANDLE DETECTED! (40 symbols updated)
+   Symbols: CKBUSDT, USUALUSDT, FUNUSDT, BTTCUSDT, PUMPUSDT...
+
+============================================================
+🔄 Cycle started at 09:12:02
+============================================================
+📡 Fetching market data...
+🤖 Generating AI predictions...
+   Generated 50 predictions (current cycle)
+
+   📊 Confidence Distribution:
+      🔥 Very High (≥75%): 0 predictions
+      ✅ High (65-75%):    3 predictions
+      ⚠️  Medium (55-65%):  11 predictions  [TRADEABLE]
+      ❌ Low (<55%):       36 predictions
+
+   🎯 High Confidence Direction Breakdown:
+      📈 UP: 0 | 📉 DOWN: 5 | ➡️  SIDEWAYS: 9
+
+   🏆 Top 3 Predictions:
+      1. LINAUSDT: ➡️ SIDEWAYS (conf: 66.8%, decision: HOLD)
+      2. LEVERUSDT: ➡️ SIDEWAYS (conf: 65.8%, decision: HOLD)
+      3. REEFUSDT: ➡️ SIDEWAYS (conf: 65.7%, decision: HOLD)
+💼 Checking for trading opportunities...
+
+   🔔 NEW TRADE: SELL PEPEUSDT
+      Entry: $0.000005
+      Quantity: 11022421.689195
+      SL: $0.000005 | TP: $0.000005
+      Confidence: 50.4%
+
+   🔔 NEW TRADE: SELL BTTCUSDT
+      Entry: $0.000000
+      Quantity: 126297512.440134
+      SL: $0.000000 | TP: $0.000000
+      Confidence: 48.5%
+
+   🔔 NEW TRADE: SELL BONKUSDT
+      Entry: $0.000011
+      Quantity: 5166729.328542
+      SL: $0.000012 | TP: $0.000011
+      Confidence: 50.4%
+
+   🔔 NEW TRADE: SELL SHIBUSDT
+      Entry: $0.000009
+      Quantity: 6409252.774583
+      SL: $0.000009 | TP: $0.000009
+      Confidence: 50.4%
+
+   🔔 NEW TRADE: SELL FLOKIUSDT
+      Entry: $0.000056
+      Quantity: 1083358.906749
+      SL: $0.000057 | TP: $0.000053
+      Confidence: 51.9%
+
+   🔔 NEW TRADE: SELL 1000SATSUSDT
+      Entry: $0.000021
+      Quantity: 2990729.247799
+      SL: $0.000021 | TP: $0.000019
+      Confidence: 52.4%
+
+   🔔 NEW TRADE: SELL LUNCUSDT
+      Entry: $0.000033
+      Quantity: 2010877.437362
+      SL: $0.000033 | TP: $0.000031
+      Confidence: 56.0%
+   ✅ Executed 7 new trades
+📊 Updating 30 open positions...
+💰 Closed BUY position on 1000SATSUSDT: 963524.82 @ 0.000021 -> 0.000021
+   P&L: -0.08 | Reason: REVERSAL_PATTERN
+   Balance: 855.66 -> 875.41
+💰 Closed BUY position on 1000SATSUSDT: 953609.22 @ 0.000021 -> 0.000021
+   P&L: -0.08 | Reason: REVERSAL_PATTERN
+   Balance: 875.41 -> 894.96
+💰 Closed SELL position on BTTCUSDT: 130204115.56 @ 0.000000 -> 0.000000
+   P&L: -1.30 | Reason: STOP_LOSS
+   Balance: 894.96 -> 836.31
+💰 Closed SELL position on SHIBUSDT: 5022063.91 @ 0.000009 -> 0.000009
+   P&L: 0.00 | Reason: REVERSAL_PATTERN
+   Balance: 836.31 -> 789.96
+💰 Closed SELL position on 1000SATSUSDT: 2290484.81 @ 0.000021 -> 0.000021
+   P&L: -0.05 | Reason: REVERSAL_PATTERN
+   Balance: 789.96 -> 742.91
+💰 Closed SELL position on HMSTRUSDT: 159101.22 @ 0.000288 -> 0.000287
+   P&L: 0.16 | Reason: REVERSAL_PATTERN
+   Balance: 742.91 -> 697.20
+💰 Closed SELL position on 1MBABYDOGEUSDT: 59510.66 @ 0.000775 -> 0.000775
+   P&L: -0.01 | Reason: REVERSAL_PATTERN
+   Balance: 697.20 -> 651.02
+💰 Closed SELL position on PEPEUSDT: 11022421.69 @ 0.000005 -> 0.000005
+   P&L: 0.00 | Reason: REVERSAL_PATTERN
+   Balance: 651.02 -> 591.89
+💰 Closed SELL position on SHIBUSDT: 6409252.77 @ 0.000009 -> 0.000009
+   P&L: 0.00 | Reason: REVERSAL_PATTERN
+   Balance: 591.89 -> 532.73
+💰 Closed SELL position on 1000SATSUSDT: 2990729.25 @ 0.000021 -> 0.000021
+   P&L: 0.00 | Reason: REVERSAL_PATTERN
+   Balance: 532.73 -> 471.30
+🎓 Evaluating past predictions...
+   Updated model with 50 evaluations
+
+💰 Performance Summary:
+   Balance: $471.30 | Total Portfolio: $1388.69
+   P&L: $-528.70 | Return: -52.87%
+   Win Rate: 53.4% | Wins: 31 | Losses: 17
+   Open Positions: 20 | Exposure: 66.1%
+
+🧠 AI Learning Stats:
+   Accuracy: 22.4% | Total Predictions: 450
+   Rewards: 101 | Penalties: 149
+
+⏱️  Cycle completed in 3.1s
+🔔 Waiting for next candle...
+
+
+🔔 NEW CANDLE DETECTED! (18 symbols updated)
+   Symbols: DOGEUSDT, TURBOUSDT, FUNUSDT, MEMEUSDT, BTTCUSDT...
+
+============================================================
+🔄 Cycle started at 09:13:01
+============================================================
+📡 Fetching market data...
+🤖 Generating AI predictions...
+   Generated 50 predictions (current cycle)
+
+   📊 Confidence Distribution:
+      🔥 Very High (≥75%): 8 predictions
+      ✅ High (65-75%):    1 predictions
+      ⚠️  Medium (55-65%):  6 predictions  [TRADEABLE]
+      ❌ Low (<55%):       35 predictions
+
+   🎯 High Confidence Direction Breakdown:
+      📈 UP: 0 | 📉 DOWN: 6 | ➡️  SIDEWAYS: 9
+
+   🏆 Top 3 Predictions:
+      1. TROYUSDT: ➡️ SIDEWAYS (conf: 79.9%, decision: HOLD)
+      2. BETAUSDT: ➡️ SIDEWAYS (conf: 79.9%, decision: HOLD)
+      3. KDAUSDT: ➡️ SIDEWAYS (conf: 79.7%, decision: HOLD)
+💼 Checking for trading opportunities...
+
+   🔔 NEW TRADE: SELL PEPEUSDT
+      Entry: $0.000005
+      Quantity: 6125986.114760
+      SL: $0.000005 | TP: $0.000005
+      Confidence: 50.9%
+
+   🔔 NEW TRADE: SELL BTTCUSDT
+      Entry: $0.000000
+      Quantity: 90069106.114205
+      SL: $0.000000 | TP: $0.000000
+      Confidence: 64.1%
+
+   🔔 NEW TRADE: SELL BONKUSDT
+      Entry: $0.000011
+      Quantity: 2852313.547547
+      SL: $0.000012 | TP: $0.000011
+      Confidence: 50.6%
+
+   🔔 NEW TRADE: SELL SHIBUSDT
+      Entry: $0.000009
+      Quantity: 3548098.157332
+      SL: $0.000009 | TP: $0.000009
+      Confidence: 50.7%
+
+   🔔 NEW TRADE: SELL FLOKIUSDT
+      Entry: $0.000056
+      Quantity: 601032.387244
+      SL: $0.000057 | TP: $0.000053
+      Confidence: 52.3%
+
+   🔔 NEW TRADE: SELL 1000SATSUSDT
+      Entry: $0.000020
+      Quantity: 1806523.857758
+      SL: $0.000021 | TP: $0.000019
+      Confidence: 57.3%
+
+   🔔 NEW TRADE: SELL LUNCUSDT
+      Entry: $0.000033
+      Quantity: 1064084.129697
+      SL: $0.000033 | TP: $0.000031
+      Confidence: 53.9%
+
+   🔔 NEW TRADE: SELL XECUSDT
+      Entry: $0.000013
+      Quantity: 2522946.167578
+      SL: $0.000014 | TP: $0.000013
+      Confidence: 52.6%
+
+   🔔 NEW TRADE: SELL NEIROUSDT
+      Entry: $0.000148
+      Quantity: 213317.126957
+      SL: $0.000150 | TP: $0.000141
+      Confidence: 49.0%
+
+   🔔 NEW TRADE: SELL WINUSDT
+      Entry: $0.000034
+      Quantity: 1063049.856420
+      SL: $0.000035 | TP: $0.000033
+      Confidence: 56.5%
+   ✅ Executed 10 new trades
+📊 Updating 30 open positions...
+💰 Closed SELL position on PUMPUSDT: 12542.49 @ 0.003690 -> 0.003689
+   P&L: 0.01 | Reason: REVERSAL_PATTERN
+   Balance: 470.96 -> 424.64
+💰 Closed SELL position on PENGUUSDT: 3478.06 @ 0.013346 -> 0.013352
+   P&L: -0.02 | Reason: REVERSAL_PATTERN
+   Balance: 424.64 -> 378.16
+💰 Closed SELL position on BTTCUSDT: 126297512.44 @ 0.000000 -> 0.000000
+   P&L: 1.26 | Reason: REVERSAL_PATTERN
+   Balance: 378.16 -> 322.53
+💰 Closed SELL position on PEPEUSDT: 6125986.11 @ 0.000005 -> 0.000005
+   P&L: 0.00 | Reason: REVERSAL_PATTERN
+   Balance: 322.53 -> 289.66
+💰 Closed SELL position on BTTCUSDT: 90069106.11 @ 0.000000 -> 0.000000
+   P&L: 0.00 | Reason: REVERSAL_PATTERN
+   Balance: 289.66 -> 249.99
+💰 Closed SELL position on SHIBUSDT: 3548098.16 @ 0.000009 -> 0.000009
+   P&L: 0.00 | Reason: REVERSAL_PATTERN
+   Balance: 249.99 -> 217.24
+🎓 Evaluating past predictions...
+   Updated model with 50 evaluations
+
+💰 Performance Summary:
+   Balance: $217.24 | Total Portfolio: $1225.40
+   P&L: $-782.76 | Return: -78.28%
+   Win Rate: 51.6% | Wins: 33 | Losses: 18
+   Open Positions: 24 | Exposure: 82.3%
+
+🧠 AI Learning Stats:
+   Accuracy: 26.4% | Total Predictions: 500
+   Rewards: 132 | Penalties: 168
+
+⏱️  Cycle completed in 3.3s
+🔔 Waiting for next candle...
+
+
+🔔 NEW CANDLE DETECTED! (22 symbols updated)
+   Symbols: CKBUSDT, USUALUSDT, PUMPUSDT, BANANAS31USDT, HOTUSDT...
+
+============================================================
+🔄 Cycle started at 09:13:10
+============================================================
+📡 Fetching market data...
+🤖 Generating AI predictions...
+   Generated 50 predictions (current cycle)
+
+   📊 Confidence Distribution:
+      🔥 Very High (≥75%): 9 predictions
+      ✅ High (65-75%):    0 predictions
+      ⚠️  Medium (55-65%):  1 predictions  [TRADEABLE]
+      ❌ Low (<55%):       40 predictions
+
+   🎯 High Confidence Direction Breakdown:
+      📈 UP: 0 | 📉 DOWN: 1 | ➡️  SIDEWAYS: 9
+
+   🏆 Top 3 Predictions:
+      1. BETAUSDT: ➡️ SIDEWAYS (conf: 88.5%, decision: HOLD)
+      2. TROYUSDT: ➡️ SIDEWAYS (conf: 88.5%, decision: HOLD)
+      3. KDAUSDT: ➡️ SIDEWAYS (conf: 88.2%, decision: HOLD)
+💼 Checking for trading opportunities...
+
+   🔔 NEW TRADE: SELL PEPEUSDT
+      Entry: $0.000005
+      Quantity: 2543386.416334
+      SL: $0.000005 | TP: $0.000005
+      Confidence: 46.0%
+
+   🔔 NEW TRADE: SELL BTTCUSDT
+      Entry: $0.000000
+      Quantity: 41268625.919014
+      SL: $0.000000 | TP: $0.000000
+      Confidence: 62.5%
+
+   🔔 NEW TRADE: SELL BONKUSDT
+      Entry: $0.000011
+      Quantity: 1196928.783124
+      SL: $0.000012 | TP: $0.000011
+      Confidence: 46.1%
+
+   🔔 NEW TRADE: SELL SHIBUSDT
+      Entry: $0.000009
+      Quantity: 1481527.152346
+      SL: $0.000009 | TP: $0.000009
+      Confidence: 46.0%
+
+   🔔 NEW TRADE: SELL FLOKIUSDT
+      Entry: $0.000056
+      Quantity: 244862.907003
+      SL: $0.000057 | TP: $0.000053
+      Confidence: 46.3%
+
+   🔔 NEW TRADE: SELL 1000SATSUSDT
+      Entry: $0.000021
+      Quantity: 683238.438027
+      SL: $0.000021 | TP: $0.000020
+      Confidence: 47.3%
+   ✅ Executed 6 new trades
+📊 Updating 30 open positions...
+💰 Closed SELL position on BTTCUSDT: 41268625.92 @ 0.000000 -> 0.000000
+   P&L: 0.00 | Reason: REVERSAL_PATTERN
+   Balance: 217.16 -> 198.98
+🎓 Evaluating past predictions...
+   Updated model with 50 evaluations
+
+💰 Performance Summary:
+   Balance: $198.98 | Total Portfolio: $1277.98
+   P&L: $-801.02 | Return: -80.10%
+   Win Rate: 50.8% | Wins: 33 | Losses: 18
+   Open Positions: 29 | Exposure: 84.4%
+
+🧠 AI Learning Stats:
+   Accuracy: 25.8% | Total Predictions: 550
+   Rewards: 142 | Penalties: 208
+
+⏱️  Cycle completed in 3.0s
+🔔 Waiting for next candle...
+
+
+🔔 NEW CANDLE DETECTED! (40 symbols updated)
+   Symbols: CKBUSDT, USUALUSDT, FUNUSDT, BTTCUSDT, PUMPUSDT...
+
+============================================================
+🔄 Cycle started at 09:14:04
+============================================================
+📡 Fetching market data...
+🤖 Generating AI predictions...
+   Generated 50 predictions (current cycle)
+
+   📊 Confidence Distribution:
+      🔥 Very High (≥75%): 9 predictions
+      ✅ High (65-75%):    0 predictions
+      ⚠️  Medium (55-65%):  0 predictions  [TRADEABLE]
+      ❌ Low (<55%):       41 predictions
+
+   🎯 High Confidence Direction Breakdown:
+      📈 UP: 0 | 📉 DOWN: 0 | ➡️  SIDEWAYS: 9
+
+   🏆 Top 3 Predictions:
+      1. BETAUSDT: ➡️ SIDEWAYS (conf: 90.6%, decision: HOLD)
+      2. TROYUSDT: ➡️ SIDEWAYS (conf: 90.5%, decision: HOLD)
+      3. KDAUSDT: ➡️ SIDEWAYS (conf: 90.3%, decision: HOLD)
+💼 Checking for trading opportunities...
+
+   🔔 NEW TRADE: SELL PEPEUSDT
+      Entry: $0.000005
+      Quantity: 2313420.558826
+      SL: $0.000005 | TP: $0.000005
+      Confidence: 45.8%
+   ✅ Executed 1 new trades
+📊 Updating 30 open positions...
+🎓 Evaluating past predictions...
+   Updated model with 50 evaluations
+
+💰 Performance Summary:
+   Balance: $198.97 | Total Portfolio: $1292.56
+   P&L: $-801.03 | Return: -80.10%
+   Win Rate: 50.8% | Wins: 33 | Losses: 18
+   Open Positions: 30 | Exposure: 84.6%
+
+🧠 AI Learning Stats:
+   Accuracy: 25.2% | Total Predictions: 600
+   Rewards: 151 | Penalties: 249
+
+⏱️  Cycle completed in 3.1s
+🔔 Waiting for next candle...
+
+
+🔔 NEW CANDLE DETECTED! (40 symbols updated)
+   Symbols: CKBUSDT, USUALUSDT, FUNUSDT, BTTCUSDT, PUMPUSDT...
+
+============================================================
+🔄 Cycle started at 09:15:04
+============================================================
+📡 Fetching market data...
+🤖 Generating AI predictions...
+   Generated 50 predictions (current cycle)
+
+   📊 Confidence Distribution:
+      🔥 Very High (≥75%): 10 predictions
+      ✅ High (65-75%):    0 predictions
+      ⚠️  Medium (55-65%):  0 predictions  [TRADEABLE]
+      ❌ Low (<55%):       40 predictions
+
+   🎯 High Confidence Direction Breakdown:
+      📈 UP: 0 | 📉 DOWN: 0 | ➡️  SIDEWAYS: 10
+
+   🏆 Top 3 Predictions:
+      1. BETAUSDT: ➡️ SIDEWAYS (conf: 90.6%, decision: HOLD)
+      2. TROYUSDT: ➡️ SIDEWAYS (conf: 90.5%, decision: HOLD)
+      3. KDAUSDT: ➡️ SIDEWAYS (conf: 90.4%, decision: HOLD)
+💼 Checking for trading opportunities...
+   ℹ️  No trades met criteria (confidence < 35%)
+📊 Updating 30 open positions...
+💰 Closed BUY position on FLOKIUSDT: 219021.46 @ 0.000056 -> 0.000056
+   P&L: 0.01 | Reason: REVERSAL_PATTERN
+   Balance: 198.97 -> 211.30
+🎓 Evaluating past predictions...
+   Updated model with 50 evaluations
+
+💰 Performance Summary:
+   Balance: $211.30 | Total Portfolio: $1292.52
+   P&L: $-788.70 | Return: -78.87%
+   Win Rate: 51.5% | Wins: 34 | Losses: 18
+   Open Positions: 29 | Exposure: 83.7%
+
+🧠 AI Learning Stats:
+   Accuracy: 24.8% | Total Predictions: 650
+   Rewards: 161 | Penalties: 289
+
+⏱️  Cycle completed in 2.6s
+🔔 Waiting for next candle...
+
+
+🔔 NEW CANDLE DETECTED! (40 symbols updated)
+   Symbols: CKBUSDT, USUALUSDT, FUNUSDT, BTTCUSDT, PUMPUSDT...
+
+============================================================
+🔄 Cycle started at 09:16:02
+============================================================
+📡 Fetching market data...
+🤖 Generating AI predictions...
+   Generated 50 predictions (current cycle)
+
+   📊 Confidence Distribution:
+      🔥 Very High (≥75%): 9 predictions
+      ✅ High (65-75%):    0 predictions
+      ⚠️  Medium (55-65%):  0 predictions  [TRADEABLE]
+      ❌ Low (<55%):       41 predictions
+
+   🎯 High Confidence Direction Breakdown:
+      📈 UP: 0 | 📉 DOWN: 0 | ➡️  SIDEWAYS: 9
+
+   🏆 Top 3 Predictions:
+      1. BETAUSDT: ➡️ SIDEWAYS (conf: 91.0%, decision: HOLD)
+      2. TROYUSDT: ➡️ SIDEWAYS (conf: 91.0%, decision: HOLD)
+      3. KDAUSDT: ➡️ SIDEWAYS (conf: 90.8%, decision: HOLD)
+💼 Checking for trading opportunities...
+
+   🔔 NEW TRADE: SELL PEPEUSDT
+      Entry: $0.000005
+      Quantity: 2452741.898583
+      SL: $0.000005 | TP: $0.000005
+      Confidence: 45.7%
+   ✅ Executed 1 new trades
+📊 Updating 30 open positions...
+💰 Closed SELL position on FLOKIUSDT: 837957.13 @ 0.000056 -> 0.000056
+   P&L: -0.28 | Reason: REVERSAL_PATTERN
+   Balance: 211.29 -> 164.00
+💰 Closed SELL position on LUNCUSDT: 1463551.48 @ 0.000033 -> 0.000033
+   P&L: -0.20 | Reason: REVERSAL_PATTERN
+   Balance: 164.00 -> 115.97
+🎓 Evaluating past predictions...
+   Updated model with 50 evaluations
+
+💰 Performance Summary:
+   Balance: $115.97 | Total Portfolio: $1101.78
+   P&L: $-884.03 | Return: -88.40%
+   Win Rate: 50.0% | Wins: 34 | Losses: 20
+   Open Positions: 28 | Exposure: 89.5%
+
+🧠 AI Learning Stats:
+   Accuracy: 24.4% | Total Predictions: 700
+   Rewards: 171 | Penalties: 329
+
+⏱️  Cycle completed in 2.7s
+🔔 Waiting for next candle...
+
+
+🔔 NEW CANDLE DETECTED! (39 symbols updated)
+   Symbols: CKBUSDT, USUALUSDT, FUNUSDT, BTTCUSDT, PUMPUSDT...
+
+============================================================
+🔄 Cycle started at 09:17:01
+============================================================
+📡 Fetching market data...
+🤖 Generating AI predictions...
+   Generated 50 predictions (current cycle)
+
+   📊 Confidence Distribution:
+      🔥 Very High (≥75%): 41 predictions
+      ✅ High (65-75%):    0 predictions
+      ⚠️  Medium (55-65%):  1 predictions  [TRADEABLE]
+      ❌ Low (<55%):       8 predictions
+
+   🎯 High Confidence Direction Breakdown:
+      📈 UP: 41 | 📉 DOWN: 0 | ➡️  SIDEWAYS: 1
+
+   🏆 Top 3 Predictions:
+      1. PEPEUSDT: 📈 UP (conf: 95.0%, decision: BUY)
+      2. BTTCUSDT: 📈 UP (conf: 95.0%, decision: BUY)
+      3. BONKUSDT: 📈 UP (conf: 95.0%, decision: BUY)
+💼 Checking for trading opportunities...
+
+   🔔 NEW TRADE: BUY PEPEUSDT
+      Entry: $0.000005
+      Quantity: 2155666.822813
+      SL: $0.000005 | TP: $0.000005
+      Confidence: 95.0%
+
+   🔔 NEW TRADE: BUY BTTCUSDT
+      Entry: $0.000000
+      Quantity: 23192397.794018
+      SL: $0.000000 | TP: $0.000000
+      Confidence: 95.0%
+   ✅ Executed 2 new trades
+📊 Updating 30 open positions...
+💰 Closed SELL position on NOTUSDT: 66358.36 @ 0.000692 -> 0.000698
+   P&L: -0.40 | Reason: REVERSAL_PATTERN
+   Balance: 93.92 -> 47.55
+💰 Closed SELL position on FLOKIUSDT: 1083358.91 @ 0.000056 -> 0.000056
+   P&L: -0.25 | Reason: REVERSAL_PATTERN
+   Balance: 47.55 -> -13.58
+💰 Closed SELL position on LUNCUSDT: 2010877.44 @ 0.000033 -> 0.000033
+   P&L: -0.32 | Reason: REVERSAL_PATTERN
+   Balance: -13.58 -> -79.54
+💰 Closed SELL position on FLOKIUSDT: 601032.39 @ 0.000056 -> 0.000056
+   P&L: -0.14 | Reason: REVERSAL_PATTERN
+   Balance: -79.54 -> -113.45
+💰 Closed SELL position on LUNCUSDT: 1064084.13 @ 0.000033 -> 0.000033
+   P&L: -0.12 | Reason: REVERSAL_PATTERN
+   Balance: -113.45 -> -148.36
+💰 Closed SELL position on PEPEUSDT: 2543386.42 @ 0.000005 -> 0.000005
+   P&L: 0.00 | Reason: REVERSAL_PATTERN
+   Balance: -148.36 -> -162.05
+💰 Closed SELL position on FLOKIUSDT: 244862.91 @ 0.000056 -> 0.000056
+   P&L: -0.02 | Reason: REVERSAL_PATTERN
+   Balance: -162.05 -> -175.87
+💰 Closed SELL position on PEPEUSDT: 2313420.56 @ 0.000005 -> 0.000005
+   P&L: 0.02 | Reason: REVERSAL_PATTERN
+   Balance: -175.87 -> -188.33
+💰 Closed SELL position on PEPEUSDT: 2452741.90 @ 0.000005 -> 0.000005
+   P&L: 0.02 | Reason: REVERSAL_PATTERN
+   Balance: -188.33 -> -201.54
+💰 Closed BUY position on PEPEUSDT: 2155666.82 @ 0.000005 -> 0.000005
+   P&L: 0.00 | Reason: REVERSAL_PATTERN
+   Balance: -201.54 -> -189.95
+💰 Closed BUY position on BTTCUSDT: 23192397.79 @ 0.000000 -> 0.000000
+   P&L: 0.00 | Reason: REVERSAL_PATTERN
+   Balance: -189.95 -> -179.53
+🎓 Evaluating past predictions...
+   Updated model with 50 evaluations
+
+💰 Performance Summary:
+   Balance: $-179.53 | Total Portfolio: $523.87
+   P&L: $-1179.53 | Return: -117.95%
+   Win Rate: 45.6% | Wins: 36 | Losses: 26
+   Open Positions: 19 | Exposure: 100.0%
+
+🧠 AI Learning Stats:
+   Accuracy: 24.3% | Total Predictions: 750
+   Rewards: 182 | Penalties: 368
+
+⏱️  Cycle completed in 3.7s
+🔔 Waiting for next candle...
+
+
+🔔 NEW CANDLE DETECTED! (1 symbols updated)
+   Symbols: PENGUUSDT
+
+============================================================
+🔄 Cycle started at 09:17:11
+============================================================
+📡 Fetching market data...
+🤖 Generating AI predictions...
+   Generated 50 predictions (current cycle)
+
+   📊 Confidence Distribution:
+      🔥 Very High (≥75%): 39 predictions
+      ✅ High (65-75%):    0 predictions
+      ⚠️  Medium (55-65%):  1 predictions  [TRADEABLE]
+      ❌ Low (<55%):       10 predictions
+
+   🎯 High Confidence Direction Breakdown:
+      📈 UP: 39 | 📉 DOWN: 0 | ➡️  SIDEWAYS: 1
+
+   🏆 Top 3 Predictions:
+      1. PEPEUSDT: 📈 UP (conf: 95.0%, decision: BUY)
+      2. BONKUSDT: 📈 UP (conf: 95.0%, decision: BUY)
+      3. SHIBUSDT: 📈 UP (conf: 95.0%, decision: BUY)
+💼 Checking for trading opportunities...
+   ℹ️  No trades met criteria (confidence < 35%)
+📊 Updating 19 open positions...
+💰 Closed SELL position on BONKUSDT: 4055683.69 @ 0.000011 -> 0.000011
+   P&L: -0.24 | Reason: REVERSAL_PATTERN
+   Balance: -179.53 -> -226.17
+💰 Closed SELL position on BONKUSDT: 5166729.33 @ 0.000011 -> 0.000011
+   P&L: -0.26 | Reason: REVERSAL_PATTERN
+   Balance: -226.17 -> -285.60
+💰 Closed SELL position on BONKUSDT: 2852313.55 @ 0.000011 -> 0.000011
+   P&L: -0.14 | Reason: REVERSAL_PATTERN
+   Balance: -285.60 -> -318.40
+💰 Closed SELL position on BONKUSDT: 1196928.78 @ 0.000011 -> 0.000011
+   P&L: -0.04 | Reason: REVERSAL_PATTERN
+   Balance: -318.40 -> -332.17
+🎓 Evaluating past predictions...
+   Updated model with 50 evaluations
+
+💰 Performance Summary:
+   Balance: $-332.17 | Total Portfolio: $218.48
+   P&L: $-1332.17 | Return: -133.22%
+   Win Rate: 43.4% | Wins: 36 | Losses: 30
+   Open Positions: 15 | Exposure: 100.0%
+
+🧠 AI Learning Stats:
+   Accuracy: 26.9% | Total Predictions: 800
+   Rewards: 215 | Penalties: 385
+
+⏱️  Cycle completed in 3.6s
+🔔 Waiting for next candle...
+
+
+🔔 NEW CANDLE DETECTED! (40 symbols updated)
+   Symbols: CKBUSDT, USUALUSDT, FUNUSDT, BTTCUSDT, PUMPUSDT...
+
+============================================================
+🔄 Cycle started at 09:18:04
+============================================================
+📡 Fetching market data...
+🤖 Generating AI predictions...
+   Generated 50 predictions (current cycle)
+
+   📊 Confidence Distribution:
+      🔥 Very High (≥75%): 39 predictions
+      ✅ High (65-75%):    0 predictions
+      ⚠️  Medium (55-65%):  0 predictions  [TRADEABLE]
+      ❌ Low (<55%):       11 predictions
+
+   🎯 High Confidence Direction Breakdown:
+      📈 UP: 39 | 📉 DOWN: 0 | ➡️  SIDEWAYS: 0
+
+   🏆 Top 3 Predictions:
+      1. PEPEUSDT: 📈 UP (conf: 95.0%, decision: BUY)
+      2. BONKUSDT: 📈 UP (conf: 95.0%, decision: BUY)
+      3. SHIBUSDT: 📈 UP (conf: 95.0%, decision: BUY)
+💼 Checking for trading opportunities...
+   ℹ️  No trades met criteria (confidence < 35%)
+📊 Updating 15 open positions...
+💰 Closed SELL position on DOGSUSDT: 984793.46 @ 0.000047 -> 0.000047
+   P&L: -0.30 | Reason: REVERSAL_PATTERN
+   Balance: -332.17 -> -378.50
+💰 Closed SELL position on 1000SATSUSDT: 1806523.86 @ 0.000020 -> 0.000021
+   P&L: -0.13 | Reason: REVERSAL_PATTERN
+   Balance: -378.50 -> -415.66
+💰 Closed SELL position on 1000SATSUSDT: 683238.44 @ 0.000021 -> 0.000021
+   P&L: 0.02 | Reason: REVERSAL_PATTERN
+   Balance: -415.66 -> -429.72
+🎓 Evaluating past predictions...
+   Updated model with 50 evaluations
+
+💰 Performance Summary:
+   Balance: $-429.72 | Total Portfolio: $23.58
+   P&L: $-1429.72 | Return: -142.97%
+   Win Rate: 43.0% | Wins: 37 | Losses: 32
+   Open Positions: 12 | Exposure: 100.0%
+
+🧠 AI Learning Stats:
+   Accuracy: 28.1% | Total Predictions: 850
+   Rewards: 239 | Penalties: 411
+
+⏱️  Cycle completed in 3.4s
+🔔 Waiting for next candle...
+
+
+🔔 NEW CANDLE DETECTED! (40 symbols updated)
+   Symbols: CKBUSDT, USUALUSDT, FUNUSDT, BTTCUSDT, PUMPUSDT...
+
+============================================================
+🔄 Cycle started at 09:19:02
+============================================================
+📡 Fetching market data...
+🤖 Generating AI predictions...
+   Generated 50 predictions (current cycle)
+
+   📊 Confidence Distribution:
+      🔥 Very High (≥75%): 39 predictions
+      ✅ High (65-75%):    0 predictions
+      ⚠️  Medium (55-65%):  1 predictions  [TRADEABLE]
+      ❌ Low (<55%):       10 predictions
+
+   🎯 High Confidence Direction Breakdown:
+      📈 UP: 39 | 📉 DOWN: 0 | ➡️  SIDEWAYS: 1
+
+   🏆 Top 3 Predictions:
+      1. PEPEUSDT: 📈 UP (conf: 95.0%, decision: BUY)
+      2. BONKUSDT: 📈 UP (conf: 95.0%, decision: BUY)
+      3. SHIBUSDT: 📈 UP (conf: 95.0%, decision: BUY)
+💼 Checking for trading opportunities...
+   ℹ️  No trades met criteria (confidence < 35%)
+📊 Updating 12 open positions...
+💰 Closed SELL position on SHIBUSDT: 1481527.15 @ 0.000009 -> 0.000009
+   P&L: -0.01 | Reason: REVERSAL_PATTERN
+   Balance: -429.72 -> -443.44
+🎓 Evaluating past predictions...
+   Updated model with 50 evaluations
+
+💰 Performance Summary:
+   Balance: $-443.44 | Total Portfolio: $-4.00
+   P&L: $-1443.44 | Return: -144.34%
+   Win Rate: 42.5% | Wins: 37 | Losses: 33
+   Open Positions: 11 | Exposure: 0.0%
+
+🧠 AI Learning Stats:
+   Accuracy: 30.7% | Total Predictions: 900
+   Rewards: 276 | Penalties: 424
+
+⏱️  Cycle completed in 3.4s
+🔔 Waiting for next candle...

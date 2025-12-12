@@ -1,0 +1,3 @@
+This is a sample text file for translation testing.
+It has multiple lines.
+Third line here.

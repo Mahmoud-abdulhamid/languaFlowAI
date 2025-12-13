@@ -64,8 +64,8 @@ router.post('/upload',
             const settings = await SystemSetting.find({
                 key: { $in: ['chat_max_file_size', 'chat_allowed_file_types'] }
             });
-            const maxSizeMB = settings.find(s => s.key === 'chat_max_file_size')?.value || 5;
-            const allowedTypes = settings.find(s => s.key === 'chat_allowed_file_types')?.value || ['jpg', 'png', 'pdf', 'docx', 'webm', 'mp3', 'm4a', 'ogg'];
+            const maxSizeMB = settings.find(s => s.key === 'chat_max_file_size')?.value || 10;
+            const allowedTypes = settings.find(s => s.key === 'chat_allowed_file_types')?.value || ['jpg', 'jpeg', 'png', 'gif', 'webp', 'pdf', 'docx', 'doc', 'webm', 'mp3', 'm4a', 'ogg', 'heic', 'heif'];
 
             const validFiles: any[] = [];
             const invalidFiles: any[] = [];

@@ -13,6 +13,15 @@ interface User {
     isOnline?: boolean;
 }
 
+unreadCount ?: number;
+pinnedMessages ?: Message[]; // populated or IDs? usually IDs if not populated by default, but new endpoint returns populated
+}
+
+interface Reaction {
+    user: string; // ID
+    emoji: string;
+}
+
 interface Message {
     _id: string;
     conversationId: string;
@@ -20,7 +29,7 @@ interface Message {
     content: string;
     type: 'TEXT' | 'IMAGE' | 'FILE' | 'SYSTEM';
     attachments: string[];
-    readBy: string[]; // IDs
+    readBy: string[];
     status?: 'SENT' | 'DELIVERED' | 'READ';
     deletedFor?: string[];
     isDeletedForEveryone?: boolean;
@@ -31,18 +40,9 @@ interface Message {
         description: string;
         image: string;
     };
-}
-
-interface Conversation {
-    _id: string;
-    participants: User[];
-    type: 'DIRECT' | 'GROUP';
-    name?: string;
-    groupAvatar?: string;
-    admins?: string[];
-    lastMessage?: Message;
-    updatedAt: string;
-    unreadCount?: number;
+    replyTo?: Message; // populated
+    reactions?: Reaction[];
+    starredBy?: string[];
 }
 
 interface ChatStore {
@@ -87,6 +87,17 @@ interface ChatStore {
     notification: { visible: boolean; data: any };
     showNotification: (data: any) => void;
     hideNotification: () => void;
+
+    // Advanced Features
+    pinnedMessages: Message[]; // Current conversation's pinned messages (or we keep in activeConversation)
+    starredMessages: Message[];
+    replyingTo: Message | null;
+    setReplyingTo: (msg: Message | null) => void;
+
+    pinMessage: (messageId: string) => Promise<void>;
+    starMessage: (messageId: string) => Promise<void>;
+    reactToMessage: (messageId: string, emoji: string) => Promise<void>;
+    fetchStarredMessages: () => Promise<void>;
 }
 
 export const useChatStore = create<ChatStore>((set, get) => ({
@@ -102,6 +113,10 @@ export const useChatStore = create<ChatStore>((set, get) => ({
     notification: { visible: false, data: null },
     highlightMessageId: null,
     setHighlightMessageId: (id) => set({ highlightMessageId: id }),
+    starredMessages: [],
+    pinnedMessages: [], // redundant if in activeConversation, but useful for UI state
+    replyingTo: null,
+    setReplyingTo: (msg) => set({ replyingTo: msg }),
 
     showNotification: (data: any) => {
         set({ notification: { visible: true, data } });
@@ -313,7 +328,7 @@ export const useChatStore = create<ChatStore>((set, get) => ({
                     set({
                         messages: messages.map(m =>
                             m._id === messageId
-                                ? { ...m, content: '', attachments: [], isDeletedForEveryone: true }
+                                ? { ...m, content: '', attachments: [], isDeletedForEveryone: true, reactions: [], replyTo: undefined }
                                 : m
                         )
                     });
@@ -454,18 +469,17 @@ export const useChatStore = create<ChatStore>((set, get) => ({
     },
 
     sendMessage: async (content, type = 'TEXT', attachments = []) => {
-        const { activeConversation, messages } = get();
+        const { activeConversation, replyingTo } = get();
         if (!activeConversation) return;
 
-        // Optimistic UI could happen here
         try {
-            const res = await api.post(`/chats/conversations/${activeConversation._id}/messages`, {
-                content, type, attachments
-            });
-            // Socket will handle the incoming message for real-time consistency, 
-            // but we can append immediately to feel instant? 
-            // Better rely on socket for source of truth or deduplicate.
-            // For now, rely on socket event which comes back fast.
+            const payload: any = { content, type, attachments };
+            if (replyingTo) {
+                payload.replyTo = replyingTo._id;
+            }
+
+            await api.post(`/chats/conversations/${activeConversation._id}/messages`, payload);
+            set({ replyingTo: null }); // Clear reply after sending
         } catch (error) {
             console.error('Failed to send message', error);
         }
@@ -586,9 +600,63 @@ export const useChatStore = create<ChatStore>((set, get) => ({
         });
         const totalUnread = updatedConvs.reduce((acc, c) => acc + (c.unreadCount || 0), 0);
         set({ conversations: updatedConvs, totalUnreadCount: totalUnread });
-        // Call API to persist read status
         try {
             api.post(`/chats/conversations/${convId}/read`);
         } catch (e) { console.error('Failed to mark read', e); }
+    },
+
+    pinMessage: async (messageId) => {
+        const { activeConversation } = get();
+        if (!activeConversation) return;
+        try {
+            const res = await api.post(`/chats/conversations/${activeConversation._id}/pin/${messageId}`);
+            // Socket handles update, but optimistic:
+            const newPinned = res.data;
+            set(state => ({
+                activeConversation: state.activeConversation
+                    ? { ...state.activeConversation, pinnedMessages: newPinned }
+                    : null
+            }));
+        } catch (e) { console.error(e); throw e; }
+    },
+
+    starMessage: async (messageId) => {
+        try {
+            const res = await api.post(`/messages/${messageId}/star`);
+            const { isStarred } = res.data;
+            const userId = useAuthStore.getState().user?.id;
+            if (!userId) return;
+
+            // Optimistic update in messages list
+            set(state => ({
+                messages: state.messages.map(m => {
+                    if (m._id === messageId) {
+                        let newStarred = m.starredBy || [];
+                        if (isStarred) {
+                            if (!newStarred.includes(userId)) newStarred = [...newStarred, userId];
+                        } else {
+                            newStarred = newStarred.filter(id => id !== userId);
+                        }
+                        return { ...m, starredBy: newStarred };
+                    }
+                    return m;
+                })
+            }));
+        } catch (e) { console.error(e); }
+    },
+
+    reactToMessage: async (messageId, emoji) => {
+        try {
+            await api.post(`/messages/${messageId}/react`, { emoji });
+            // Socket handles UI
+        } catch (e) { console.error(e); }
+    },
+
+    fetchStarredMessages: async () => {
+        set({ isLoading: true });
+        try {
+            const res = await api.get('/chats/messages/starred');
+            set({ starredMessages: res.data });
+        } catch (e) { console.error(e); } finally { set({ isLoading: false }); }
     }
 }));

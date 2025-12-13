@@ -6,6 +6,7 @@ const conversationSchema = new mongoose.Schema({
     name: { type: String }, // For group chats
     groupAvatar: { type: String },
     lastMessage: { type: mongoose.Schema.Types.ObjectId, ref: 'Message' },
+    pinnedMessages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }],
     admins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], // For group admins
     leftParticipants: [{
         user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },

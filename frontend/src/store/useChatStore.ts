@@ -131,10 +131,13 @@ export const useChatStore = create<ChatStore>((set, get) => ({
 
         socketInstance.on('connect', () => {
             console.log('Chat Socket Connected');
-            const user = useAuthStore.getState().user;
-            if (user) {
-                socketInstance.emit('join_user', user.id);
+            const currentUserId = useAuthStore.getState().user?.id;
+            if (currentUserId) {
+                socketInstance.emit('join_user', currentUserId);
             }
+            // Re-join all loaded conversations on reconnect
+            const loadedConvs = get().conversations;
+            loadedConvs.forEach(c => socketInstance.emit('join_chat', c._id));
         });
 
         socketInstance.on('new_message', (message: Message) => {
@@ -318,6 +321,21 @@ export const useChatStore = create<ChatStore>((set, get) => ({
                     set({ messages: messages.filter(m => m._id !== messageId) });
                 }
             }
+
+            // Update Conversation List (if it was the last message)
+            set({
+                conversations: conversations.map(c => {
+                    if (c._id === conversationId && c.lastMessage?._id === messageId) {
+                        return {
+                            ...c,
+                            lastMessage: deleteForEveryone
+                                ? { ...c.lastMessage!, content: '', attachments: [], isDeletedForEveryone: true }
+                                : c.lastMessage // If deleted for self only, list might typically stay or show previous (complex), but for now assuming we want to see the update
+                        };
+                    }
+                    return c;
+                })
+            });
         });
 
         socketInstance.on('group_updated', (updatedConv: Conversation) => {

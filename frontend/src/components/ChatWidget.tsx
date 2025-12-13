@@ -211,16 +211,14 @@ export const ChatWidget = () => {
 
             const audioUrl = uploadRes.data.urls[0];
 
-            // Send as VOICE message with metadata
-            await api.post(`/chats/conversations/${activeConversation._id}/messages`, {
-                content: '',
-                type: 'VOICE',
-                attachments: [audioUrl],
-                voiceMetadata: {
-                    duration,
-                    waveform
-                }
-            });
+            // Send using chat store's sendMessage function
+            // Store metadata in message content as JSON for now
+            const metadata = { duration, waveform };
+            await sendMessage(
+                JSON.stringify(metadata), // Temporary: store metadata in content
+                'VOICE' as any,
+                [audioUrl]
+            );
 
             setIsUploading(false);
             toast.success('Voice note sent!');
@@ -587,12 +585,20 @@ export const ChatWidget = () => {
 
                                                                                     // Render based on message type
                                                                                     if (msg.type === 'VOICE') {
+                                                                                        // Parse metadata from content
+                                                                                        let metadata = { duration: 0, waveform: [] };
+                                                                                        try {
+                                                                                            metadata = JSON.parse(msg.content || '{}');
+                                                                                        } catch (e) {
+                                                                                            console.warn('Failed to parse voice metadata');
+                                                                                        }
+
                                                                                         return (
                                                                                             <VoicePlayer
                                                                                                 key={i}
                                                                                                 audioUrl={fullUrl}
-                                                                                                duration={(msg as any).voiceMetadata?.duration || 0}
-                                                                                                waveform={(msg as any).voiceMetadata?.waveform || []}
+                                                                                                duration={metadata.duration || 0}
+                                                                                                waveform={metadata.waveform || []}
                                                                                                 isMe={isMe}
                                                                                             />
                                                                                         );

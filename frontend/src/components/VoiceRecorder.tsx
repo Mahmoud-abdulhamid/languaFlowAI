@@ -161,12 +161,7 @@ export const VoiceRecorder = ({ onSend, onCancel }: VoiceRecorderProps) => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
-                drag="x"
-                dragConstraints={{ left: -150, right: 0 }}
-                dragElastic={0.2}
-                onPan={handlePan}
-                onPanEnd={handlePanEnd}
-                className="fixed bottom-20 left-4 right-4 bg-surface/95 backdrop-blur-xl border border-glass-border rounded-2xl p-4 shadow-2xl z-[10000]"
+                className="absolute bottom-0 left-0 right-0 bg-surface/95 backdrop-blur-xl border-t border-glass-border p-4 shadow-2xl z-[100]"
             >
                 <div className="flex items-center gap-3">
                     {/* Mic Icon with Pulse */}
@@ -196,37 +191,24 @@ export const VoiceRecorder = ({ onSend, onCancel }: VoiceRecorderProps) => {
                         {formatTime(duration)}
                     </div>
 
+                    {/* Cancel Button */}
+                    <button
+                        onClick={() => stopRecording(false)}
+                        className="bg-red-500/10 hover:bg-red-500/20 p-3 rounded-full transition-colors"
+                        title="Cancel"
+                    >
+                        <X size={18} className="text-red-500" />
+                    </button>
+
                     {/* Send Button */}
                     <button
                         onClick={() => stopRecording(true)}
                         className="bg-blue-600 hover:bg-blue-500 p-3 rounded-full transition-colors"
+                        title="Send"
                     >
                         <Send size={18} className="text-white" />
                     </button>
                 </div>
-
-                {/* Slide to Cancel Indicator */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: cancelProgress > 0.1 ? 1 : 0.5 }}
-                    className="flex items-center justify-center gap-2 mt-2 text-xs text-muted"
-                >
-                    <motion.div
-                        animate={{ x: [-5, 5, -5] }}
-                        transition={{ repeat: Infinity, duration: 1.5 }}
-                    >
-                        ←
-                    </motion.div>
-                    <span>Slide to cancel</span>
-                    {cancelProgress > 0 && (
-                        <div className="ml-2 w-20 h-1 bg-surface rounded-full overflow-hidden">
-                            <div
-                                className="h-full bg-red-500 transition-all"
-                                style={{ width: `${cancelProgress * 100}%` }}
-                            />
-                        </div>
-                    )}
-                </motion.div>
             </motion.div>
         </AnimatePresence>
     );

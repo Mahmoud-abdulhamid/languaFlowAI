@@ -101,13 +101,6 @@ router.post('/upload',
 
 router.get('/colleagues', searchColleagues);
 
-// React, Pin, Star
-import { pinMessage, starMessage, getStarredMessages, reactToMessage } from '../controllers/chatController';
-router.post('/conversations/:conversationId/pin/:messageId', protect, pinMessage);
-router.post('/messages/:messageId/star', protect, starMessage);
-router.get('/messages/starred', protect, getStarredMessages); // Must be before /:messageId routes if generic, but here specific enough
-router.post('/messages/:messageId/react', protect, reactToMessage);
-
 router.post('/conversations/:conversationId/read', protect, markAsRead);
 router.delete('/messages/:messageId', protect, deleteMessage);
 

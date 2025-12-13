@@ -332,7 +332,11 @@ export const ChatWidget = () => {
                                                         <span className="text-[10px] text-muted">Online</span>
                                                     </>
                                                 ) : (
-                                                    <span className="text-[10px] text-muted">Offline</span>
+                                                    <span className="text-[10px] text-muted">
+                                                        {getChatAvatar(activeConversation)?.lastSeen
+                                                            ? `Last seen ${format(new Date(getChatAvatar(activeConversation).lastSeen), 'MMM d, HH:mm')}`
+                                                            : 'Offline'}
+                                                    </span>
                                                 )}
                                             </div>
                                         )}

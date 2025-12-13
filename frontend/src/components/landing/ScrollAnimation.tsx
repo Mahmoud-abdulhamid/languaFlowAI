@@ -17,18 +17,12 @@ export const ScrollAnimation = ({ children, className = "", delay = 0 }: ScrollA
     // OR simply use the 'md:' prefix in parent classes if we wanted to hide it.
     // But here we want to remove the EFFECT.
 
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-
-    if (isMobile) {
-        return <div className={className}>{children}</div>;
-    }
-
     return (
         <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 50, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay }}
+            transition={{ duration: 0.8, ease: "easeOut", delay }}
             className={className}
         >
             {children}

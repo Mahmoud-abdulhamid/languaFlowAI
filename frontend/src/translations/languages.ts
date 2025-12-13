@@ -2,7 +2,7 @@
 export const translations = {
     en: {
         dir: 'ltr',
-        flag: '🇬🇧',
+        flag: 'https://flagcdn.com/w40/gb.png',
         name: 'English',
         nav: {
             features: 'Features',
@@ -180,7 +180,7 @@ export const translations = {
     },
     ar: {
         dir: 'rtl',
-        flag: '🇪🇬',
+        flag: 'https://flagcdn.com/w40/eg.png',
         name: 'العربية',
         nav: {
             features: 'المميزات',
@@ -358,7 +358,7 @@ export const translations = {
     },
     fr: {
         dir: 'ltr',
-        flag: '🇫🇷',
+        flag: 'https://flagcdn.com/w40/fr.png',
         name: 'Français',
         nav: {
             features: 'Fonctionnalités',
@@ -536,7 +536,7 @@ export const translations = {
     },
     de: {
         dir: 'ltr',
-        flag: '🇩🇪',
+        flag: 'https://flagcdn.com/w40/de.png',
         name: 'Deutsch',
         nav: {
             features: 'Funktionen',
@@ -714,7 +714,7 @@ export const translations = {
     },
     es: {
         dir: 'ltr',
-        flag: '🇪🇸',
+        flag: 'https://flagcdn.com/w40/es.png',
         name: 'Español',
         nav: {
             features: 'Características',

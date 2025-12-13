@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Globe, ChevronDown, Check } from 'lucide-react';
+import { Globe, ChevronDown, Check, X } from 'lucide-react';
 import { useLandingTheme } from '../hooks/useLandingTheme';
 
 export const LanguageSwitcher = () => {
@@ -32,7 +32,7 @@ export const LanguageSwitcher = () => {
                     : 'bg-gray-100 border-gray-200 hover:bg-gray-200 text-gray-700'
                     }`}
             >
-                <span className="text-lg leading-none">{currentLang?.flag}</span>
+                <img src={currentLang?.flag} alt={language} className="w-5 h-auto rounded-sm shadow-sm" />
                 <span className="text-sm font-medium uppercase hidden sm:block">{language}</span>
                 <ChevronDown size={14} className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
             </button>
@@ -44,11 +44,17 @@ export const LanguageSwitcher = () => {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ duration: 0.2 }}
-                        className={`absolute top-full mt-2 right-0 w-48 rounded-xl shadow-xl border overflow-hidden z-50 ${isDark
+                        className={`fixed inset-0 w-full h-full sm:absolute sm:inset-auto sm:top-full sm:mt-2 sm:right-0 sm:w-48 sm:rounded-xl shadow-xl border overflow-hidden z-50 flex flex-col ${isDark
                             ? 'bg-[#1a1a2e] border-white/10'
                             : 'bg-white border-gray-200'
                             }`}
                     >
+                        <div className="flex sm:hidden justify-between items-center p-4 border-b border-gray-200 dark:border-gray-800">
+                            <h3 className="font-bold text-lg">Select Language</h3>
+                            <button onClick={() => setIsOpen(false)} className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
+                                <X size={24} />
+                            </button>
+                        </div>
                         <div className="p-1">
                             {availableLanguages.map((lang) => (
                                 <button
@@ -63,7 +69,7 @@ export const LanguageSwitcher = () => {
                                         }`}
                                 >
                                     <div className="flex items-center gap-3">
-                                        <span className="text-lg">{lang.flag}</span>
+                                        <img src={lang.flag} alt={lang.name} className="w-5 h-auto rounded-sm shadow-sm" />
                                         <span className="font-medium">{lang.name}</span>
                                     </div>
                                     {language === lang.code && <Check size={14} />}

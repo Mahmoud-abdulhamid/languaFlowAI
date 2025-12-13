@@ -493,7 +493,15 @@ export const ChatWidget = () => {
                                                                     )}
                                                                     <span className="truncate">
                                                                         {conv.lastMessage?.sender._id === user?.id ? 'You: ' : ''}
-                                                                        {conv.lastMessage?.type === 'IMAGE' ? '📷 Image' : conv.lastMessage?.content}
+                                                                        {conv.lastMessage?.type === 'IMAGE' ? '📷 Image' : (() => {
+                                                                            try {
+                                                                                const parsed = JSON.parse(conv.lastMessage?.content || '{}');
+                                                                                if (parsed.isVoice) return '🎤 Voice Note';
+                                                                            } catch (e) {
+                                                                                // ignore
+                                                                            }
+                                                                            return conv.lastMessage?.content;
+                                                                        })()}
                                                                     </span>
                                                                 </>
                                                             )}
@@ -796,7 +804,7 @@ export const ChatWidget = () => {
                                                 <button
                                                     type="submit"
                                                     disabled={(!msgInput.trim() && selectedFiles.length === 0) || isUploading}
-                                                    className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 disabled:opacity-50 transition-all flex items-center justify-center"
+                                                    className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 disabled:opacity-50 transition-all flex items-center justify-center shrink-0 min-w-[36px]"
                                                 >
                                                     {isUploading ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Send size={16} />}
                                                 </button>

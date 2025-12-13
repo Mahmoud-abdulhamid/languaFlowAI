@@ -633,7 +633,16 @@ export const ChatWidget = () => {
                                                                                 })}
                                                                             </div>
                                                                         )}
-                                                                        {msg.content && <p className="whitespace-pre-wrap break-words">{msg.content}</p>}
+                                                                        {/* Text Content - hide if it's voice metadata */}
+                                                                        {msg.content && (() => {
+                                                                            try {
+                                                                                const parsed = JSON.parse(msg.content);
+                                                                                if (parsed.isVoice) return null; // Don't show JSON metadata
+                                                                            } catch (e) {
+                                                                                // Not JSON, show as text
+                                                                            }
+                                                                            return <p className="whitespace-pre-wrap break-words">{msg.content}</p>;
+                                                                        })()}
 
                                                                         {/* Link Preview */}
                                                                         {(msg as any).linkMetadata && (

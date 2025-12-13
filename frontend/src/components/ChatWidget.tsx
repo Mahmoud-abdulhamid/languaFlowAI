@@ -429,15 +429,28 @@ export const ChatWidget = () => {
                                                             Typing...
                                                         </p>
                                                     ) : (
-                                                        <p className={`text-xs truncate ${conv.unreadCount ? 'font-bold text-foreground' : 'text-muted'}`}>
+                                                        <p className={`text-xs truncate ${conv.unreadCount ? 'font-bold text-foreground' : 'text-muted'} flex items-center gap-1`}>
                                                             {(conv as any).matchedMessage ? (
                                                                 <span className="text-blue-500 font-medium italic">
                                                                     Found: {(conv as any).matchedMessage.content}
                                                                 </span>
                                                             ) : (
                                                                 <>
-                                                                    {conv.lastMessage?.sender._id === user?.id ? 'You: ' : ''}
-                                                                    {conv.lastMessage?.type === 'IMAGE' ? '📷 Image' : conv.lastMessage?.content}
+                                                                    {conv.lastMessage?.sender._id === user?.id && (
+                                                                        <span className="shrink-0">
+                                                                            {conv.lastMessage?.status === 'READ' ? (
+                                                                                <CheckCheck size={12} className="text-purple-500 inline" />
+                                                                            ) : conv.lastMessage?.status === 'DELIVERED' ? (
+                                                                                <CheckCheck size={12} className="text-gray-400 inline" />
+                                                                            ) : (
+                                                                                <Check size={12} className="text-gray-400 inline" />
+                                                                            )}
+                                                                        </span>
+                                                                    )}
+                                                                    <span className="truncate">
+                                                                        {conv.lastMessage?.sender._id === user?.id ? 'You: ' : ''}
+                                                                        {conv.lastMessage?.type === 'IMAGE' ? '📷 Image' : conv.lastMessage?.content}
+                                                                    </span>
                                                                 </>
                                                             )}
                                                         </p>
@@ -459,6 +472,26 @@ export const ChatWidget = () => {
                                     {/* Messages Area */}
                                     <div className="flex-1 overflow-y-auto p-4 space-y-3 custom-scrollbar flex flex-col">
                                         {messages.map((msg, idx) => {
+                                            // Date Separator Logic
+                                            const currentDate = new Date(msg.createdAt);
+                                            const prevDate = idx > 0 ? new Date(messages[idx - 1].createdAt) : null;
+                                            const showDateSeparator = !prevDate ||
+                                                currentDate.toDateString() !== prevDate.toDateString();
+
+                                            const getDateLabel = (date: Date) => {
+                                                const today = new Date();
+                                                const yesterday = new Date(today);
+                                                yesterday.setDate(yesterday.getDate() - 1);
+
+                                                if (date.toDateString() === today.toDateString()) {
+                                                    return 'Today';
+                                                } else if (date.toDateString() === yesterday.toDateString()) {
+                                                    return 'Yesterday';
+                                                } else {
+                                                    return format(date, 'MMM d, yyyy');
+                                                }
+                                            };
+
                                             if (msg.type === 'SYSTEM') {
                                                 return (
                                                     <div key={msg._id} className="flex justify-center my-2">
@@ -470,112 +503,123 @@ export const ChatWidget = () => {
                                             }
                                             const isMe = msg.sender._id === user?.id;
                                             return (
-                                                <motion.div
-                                                    key={msg._id}
-                                                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                                                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                                                    id={`msg-${msg._id}`}
-                                                    className={`flex items-end gap-2 group ${isMe ? 'flex-row-reverse' : ''} ${highlightMessageId === msg._id ? 'bg-blue-500/10 p-2 -mx-2 rounded-lg transition-all duration-1000' : ''}`}
-                                                >
-                                                    {!isMe && activeConversation?.type === 'GROUP' && <UserAvatar user={msg.sender} size="xs" />}
-
-                                                    <div className={`flex flex-col ${isMe ? 'items-end' : 'items-start'} max-w-[85%]`}>
-                                                        <div className={`px-3 py-2 rounded-2xl shadow-sm text-[15px] ${isMe
-                                                            ? 'bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-br-sm'
-                                                            : 'bg-surface border border-glass-border text-foreground rounded-bl-sm'
-                                                            }`}>
-                                                            {msg.isDeletedForEveryone ? (
-                                                                <span className="italic opacity-50 text-xs flex items-center gap-1"><Trash2 size={12} /> Message deleted</span>
-                                                            ) : (
-                                                                <>
-                                                                    {/* Attachments */}
-                                                                    {msg.attachments && msg.attachments.length > 0 && (
-                                                                        <div className="mb-2 space-y-2">
-                                                                            {msg.attachments.map((url, i) => {
-                                                                                // Fix: Remove /api/v1 from base URL to get server root for uploads
-                                                                                const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:4000/api/v1';
-                                                                                const serverRoot = apiBase.replace('/api/v1', '');
-                                                                                const fullUrl = url.startsWith('http') ? url : `${serverRoot}${url}`;
-
-                                                                                return msg.type === 'IMAGE' ? (
-                                                                                    <img
-                                                                                        key={i}
-                                                                                        src={fullUrl}
-                                                                                        alt="Attachment"
-                                                                                        onClick={() => setViewingImage(fullUrl)}
-                                                                                        className="rounded-lg max-w-full max-h-[200px] object-cover border border-white/20 cursor-pointer hover:opacity-90 transition-opacity"
-                                                                                    />
-                                                                                ) : (
-                                                                                    <a
-                                                                                        key={i}
-                                                                                        href={fullUrl}
-                                                                                        target="_blank"
-                                                                                        rel="noopener noreferrer"
-                                                                                        className="flex items-center gap-2 bg-black/20 p-2 rounded-lg hover:bg-black/30 transition-colors"
-                                                                                    >
-                                                                                        <FileText size={16} />
-                                                                                        <span className="truncate text-xs underline">View File</span>
-                                                                                    </a>
-                                                                                );
-                                                                            })}
-                                                                        </div>
-                                                                    )}
-                                                                    {msg.content && <p className="whitespace-pre-wrap break-words">{msg.content}</p>}
-
-                                                                    {/* Link Preview */}
-                                                                    {(msg as any).linkMetadata && (
-                                                                        <a
-                                                                            href={(msg as any).linkMetadata.url}
-                                                                            target="_blank"
-                                                                            rel="noopener noreferrer"
-                                                                            className={`block mt-2 rounded-lg overflow-hidden border transition-colors max-w-[250px] ${isMe ? 'bg-black/20 border-white/10 hover:bg-black/30' : 'bg-secondary/50 border-glass-border hover:bg-secondary/70'}`}
-                                                                        >
-                                                                            {(msg as any).linkMetadata.image && (
-                                                                                <img src={(msg as any).linkMetadata.image} alt={(msg as any).linkMetadata.title} className="w-full h-32 object-cover" />
-                                                                            )}
-                                                                            <div className="p-2">
-                                                                                <h4 className="text-xs font-bold truncate">{(msg as any).linkMetadata.title || (msg as any).linkMetadata.url}</h4>
-                                                                                {(msg as any).linkMetadata.description && (
-                                                                                    <p className="text-[10px] opacity-70 line-clamp-2">{(msg as any).linkMetadata.description}</p>
-                                                                                )}
-                                                                            </div>
-                                                                        </a>
-                                                                    )}
-                                                                </>
-                                                            )}
-                                                        </div>
-
-                                                        <div className={`text-[10px] mt-1 flex items-center gap-1 ${isMe ? 'justify-end' : 'justify-start ml-1'}`}>
-                                                            <span className="text-gray-500 dark:text-gray-400">
-                                                                {format(new Date(msg.createdAt), 'HH:mm')}
+                                                <>
+                                                    {/* Date Separator */}
+                                                    {showDateSeparator && (
+                                                        <div className="flex justify-center my-4">
+                                                            <span className="bg-surface/80 backdrop-blur-sm text-muted px-3 py-1 rounded-full text-[11px] font-medium border border-glass-border shadow-sm">
+                                                                {getDateLabel(currentDate)}
                                                             </span>
-
-                                                            {/* Admin/Self Delete Action */}
-                                                            {!msg.isDeletedForEveryone && (isMe || (activeConversation?.type === 'GROUP' && activeConversation.admins?.includes(user?.id || ''))) && (
-                                                                <button
-                                                                    onClick={(e) => {
-                                                                        e.stopPropagation();
-                                                                        if (confirm('Delete this message for everyone?')) {
-                                                                            deleteMessage(msg._id, true);
-                                                                        }
-                                                                    }}
-                                                                    className="opacity-0 group-hover:opacity-100 text-red-500 hover:bg-red-500/10 p-0.5 rounded transition-all ml-1"
-                                                                    title="Delete for everyone"
-                                                                >
-                                                                    <Trash2 size={12} />
-                                                                </button>
-                                                            )}
-
-                                                            {isMe && (
-                                                                <span>
-                                                                    {msg.status === 'READ' ? <CheckCheck size={12} className="text-purple-500" /> :
-                                                                        msg.status === 'DELIVERED' ? <CheckCheck size={12} className="text-gray-400" /> :
-                                                                            <Check size={12} className="text-gray-400" />}
-                                                                </span>
-                                                            )}
                                                         </div>
-                                                    </div>
-                                                </motion.div>
+                                                    )}
+
+                                                    <motion.div
+                                                        key={msg._id}
+                                                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                                                        id={`msg-${msg._id}`}
+                                                        className={`flex items-end gap-2 group ${isMe ? 'flex-row-reverse' : ''} ${highlightMessageId === msg._id ? 'bg-blue-500/10 p-2 -mx-2 rounded-lg transition-all duration-1000' : ''}`}
+                                                    >
+                                                        {!isMe && activeConversation?.type === 'GROUP' && <UserAvatar user={msg.sender} size="xs" />}
+
+                                                        <div className={`flex flex-col ${isMe ? 'items-end' : 'items-start'} max-w-[85%]`}>
+                                                            <div className={`px-3 py-2 rounded-2xl shadow-sm text-[15px] ${isMe
+                                                                ? 'bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-br-sm'
+                                                                : 'bg-surface border border-glass-border text-foreground rounded-bl-sm'
+                                                                }`}>
+                                                                {msg.isDeletedForEveryone ? (
+                                                                    <span className="italic opacity-50 text-xs flex items-center gap-1"><Trash2 size={12} /> Message deleted</span>
+                                                                ) : (
+                                                                    <>
+                                                                        {/* Attachments */}
+                                                                        {msg.attachments && msg.attachments.length > 0 && (
+                                                                            <div className="mb-2 space-y-2">
+                                                                                {msg.attachments.map((url, i) => {
+                                                                                    // Fix: Remove /api/v1 from base URL to get server root for uploads
+                                                                                    const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:4000/api/v1';
+                                                                                    const serverRoot = apiBase.replace('/api/v1', '');
+                                                                                    const fullUrl = url.startsWith('http') ? url : `${serverRoot}${url}`;
+
+                                                                                    return msg.type === 'IMAGE' ? (
+                                                                                        <img
+                                                                                            key={i}
+                                                                                            src={fullUrl}
+                                                                                            alt="Attachment"
+                                                                                            onClick={() => setViewingImage(fullUrl)}
+                                                                                            className="rounded-lg max-w-full max-h-[200px] object-cover border border-white/20 cursor-pointer hover:opacity-90 transition-opacity"
+                                                                                        />
+                                                                                    ) : (
+                                                                                        <a
+                                                                                            key={i}
+                                                                                            href={fullUrl}
+                                                                                            target="_blank"
+                                                                                            rel="noopener noreferrer"
+                                                                                            className="flex items-center gap-2 bg-black/20 p-2 rounded-lg hover:bg-black/30 transition-colors"
+                                                                                        >
+                                                                                            <FileText size={16} />
+                                                                                            <span className="truncate text-xs underline">View File</span>
+                                                                                        </a>
+                                                                                    );
+                                                                                })}
+                                                                            </div>
+                                                                        )}
+                                                                        {msg.content && <p className="whitespace-pre-wrap break-words">{msg.content}</p>}
+
+                                                                        {/* Link Preview */}
+                                                                        {(msg as any).linkMetadata && (
+                                                                            <a
+                                                                                href={(msg as any).linkMetadata.url}
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className={`block mt-2 rounded-lg overflow-hidden border transition-colors max-w-[250px] ${isMe ? 'bg-black/20 border-white/10 hover:bg-black/30' : 'bg-secondary/50 border-glass-border hover:bg-secondary/70'}`}
+                                                                            >
+                                                                                {(msg as any).linkMetadata.image && (
+                                                                                    <img src={(msg as any).linkMetadata.image} alt={(msg as any).linkMetadata.title} className="w-full h-32 object-cover" />
+                                                                                )}
+                                                                                <div className="p-2">
+                                                                                    <h4 className="text-xs font-bold truncate">{(msg as any).linkMetadata.title || (msg as any).linkMetadata.url}</h4>
+                                                                                    {(msg as any).linkMetadata.description && (
+                                                                                        <p className="text-[10px] opacity-70 line-clamp-2">{(msg as any).linkMetadata.description}</p>
+                                                                                    )}
+                                                                                </div>
+                                                                            </a>
+                                                                        )}
+                                                                    </>
+                                                                )}
+                                                            </div>
+
+                                                            <div className={`text-[10px] mt-1 flex items-center gap-1 ${isMe ? 'justify-end' : 'justify-start ml-1'}`}>
+                                                                <span className="text-gray-500 dark:text-gray-400">
+                                                                    {format(new Date(msg.createdAt), 'HH:mm')}
+                                                                </span>
+
+                                                                {/* Admin/Self Delete Action */}
+                                                                {!msg.isDeletedForEveryone && (isMe || (activeConversation?.type === 'GROUP' && activeConversation.admins?.includes(user?.id || ''))) && (
+                                                                    <button
+                                                                        onClick={(e) => {
+                                                                            e.stopPropagation();
+                                                                            if (confirm('Delete this message for everyone?')) {
+                                                                                deleteMessage(msg._id, true);
+                                                                            }
+                                                                        }}
+                                                                        className="opacity-0 group-hover:opacity-100 text-red-500 hover:bg-red-500/10 p-0.5 rounded transition-all ml-1"
+                                                                        title="Delete for everyone"
+                                                                    >
+                                                                        <Trash2 size={12} />
+                                                                    </button>
+                                                                )}
+
+                                                                {isMe && (
+                                                                    <span>
+                                                                        {msg.status === 'READ' ? <CheckCheck size={12} className="text-purple-500" /> :
+                                                                            msg.status === 'DELIVERED' ? <CheckCheck size={12} className="text-gray-400" /> :
+                                                                                <Check size={12} className="text-gray-400" />}
+                                                                    </span>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    </motion.div>
+                                                </>
                                             );
                                         })}
                                         <div ref={messagesEndRef} />

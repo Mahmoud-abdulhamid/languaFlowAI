@@ -270,20 +270,16 @@ export const sendMessage = async (req: AuthRequest, res: Response) => {
         }
 
         const { conversationId } = req.params;
-        const { content, type, attachments, replyTo } = req.body; // Added replyTo
-        const userId = req.user?.id;
-
-        if (!content && (!attachments || attachments.length === 0)) {
-            return res.status(400).json({ message: 'Message content or attachment required' });
-        }
+        const { content, type = 'TEXT', attachments = [] } = req.body;
+        const senderId = req.user.id;
 
         const conversation = await Conversation.findOne({
             _id: conversationId,
-            participants: userId
+            participants: senderId
         });
 
         if (!conversation) {
-            return res.status(404).json({ message: 'Conversation not found' });
+            return res.status(403).json({ message: 'Conversation not found or access denied' });
         }
 
         let linkMetadata = undefined;
@@ -295,56 +291,43 @@ export const sendMessage = async (req: AuthRequest, res: Response) => {
             }
         }
 
-        // Create new message
-        const newMessage = new Message({
+        const newMessage = await Message.create({
             conversationId,
-            sender: userId,
+            sender: senderId,
             content,
-            type: type || 'TEXT',
+            type,
             attachments,
-            readBy: [userId], // Sender has read it
+            readBy: [senderId],
             status: 'SENT',
-            replyTo, // Optional reply
             linkMetadata
         });
 
-        await newMessage.save();
+        const populatedMsg = await newMessage.populate('sender', 'name email role avatar');
 
-        // Populate sender details AND replyTo if exists
-        await newMessage.populate('sender', 'name email role avatar');
-        if (replyTo) {
-            await newMessage.populate('replyTo', 'content type sender attachments');
-        }
-
-        conversation.lastMessage = newMessage._id as any;
-        conversation.updatedAt = new Date();
-        await conversation.save();
-
-        // Update unread count for other participants (Client-side usually calculates based on last read, 
-        // but if we track unread count in DB, we'd increment here. 
-        // Current model doesn't seem to persist unreadCount per user in the convo doc, 
-        // usually calculated or stored in a separate UserConversation model. 
-        // Assuming client/socket handles it or logic exists elsewhere.)
-
-        // Emit socket event
-        const io = getIO();
-        io.to(`chat_${conversationId}`).emit('new_message', newMessage);
-
-        // Notify offline users or those not in chat
-        conversation.participants.forEach((participantId: any) => {
-            if (participantId.toString() !== userId) {
-                notifyUser(participantId.toString(), {
-                    type: 'NEW_MESSAGE',
-                    message: newMessage,
-                    conversationId
-                });
-            }
+        // Update Conversation lastMessage
+        await Conversation.findByIdAndUpdate(conversationId, {
+            lastMessage: newMessage._id,
+            updatedAt: new Date()
         });
 
-        res.status(201).json(newMessage);
+        // Socket Emit
+        try {
+            const io = getIO();
+            // Emit to room `chat_{conversationId}` (Legacy/Active room support)
+            io.to(`chat_${conversationId}`).emit('new_message', populatedMsg);
+
+            // Emit to ALL participants via personal rooms to ensure delivery (Notification support)
+            conversation.participants.forEach((pId: any) => {
+                io.to(`user_${pId.toString()}`).emit('new_message', populatedMsg);
+            });
+
+        } catch (err) {
+            console.error('Socket emit failed', err);
+        }
+
+        res.status(201).json(populatedMsg);
     } catch (error: any) {
-        console.error(error);
-        res.status(500).json({ message: 'Error sending message' });
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -474,190 +457,44 @@ export const searchConversations = async (req: AuthRequest, res: Response) => {
 export const deleteMessage = async (req: AuthRequest, res: Response) => {
     try {
         const { messageId } = req.params;
-        const userId = req.user?.id;
-        const { deleteForEveryone } = req.body; // Boolean
+        const { deleteForEveryone } = req.body;
+        const userId = req.user.id;
 
         const message = await Message.findById(messageId);
-        if (!message) {
-            return res.status(404).json({ message: 'Message not found' });
-        }
+        if (!message) return res.status(404).json({ message: 'Message not found' });
 
-        // Check if user is sender
-        if (message.sender.toString() !== userId) {
-            // If deleting for everyone, ONLY sender can do it (or admin)
-            // Also check if the user is an admin of the conversation
+        if (deleteForEveryone) {
+            // Check if sender, global admin, or group admin
             const conversation = await Conversation.findById(message.conversationId);
             const isGroupAdmin = conversation?.admins?.some(a => a.toString() === userId);
 
-            if (deleteForEveryone && req.user.role !== 'ADMIN' && !isGroupAdmin) {
-                return res.status(403).json({ message: 'Not authorized to delete this message for everyone' });
+            if (message.sender.toString() !== userId && req.user.role !== 'ADMIN' && !isGroupAdmin) {
+                return res.status(403).json({ message: 'Not authorized to delete for everyone' });
             }
-            // If just for self, it's allowed
-        }
 
-        const io = getIO();
-
-        if (deleteForEveryone) {
-            // Soft delete / mark as deleted
             message.isDeletedForEveryone = true;
             message.content = ''; // Clear content
             message.attachments = [];
             await message.save();
 
+            const io = getIO();
             io.to(`chat_${message.conversationId}`).emit('message_deleted', {
                 messageId,
                 conversationId: message.conversationId,
                 deleteForEveryone: true
             });
+
         } else {
-            // Delete for self only -> Add to deletedFor array
-            if (!message.deletedFor.includes(userId as any)) {
-                message.deletedFor.push(userId as any);
+            // Delete for me
+            if (!message.deletedFor.includes(userId)) {
+                message.deletedFor.push(userId);
                 await message.save();
             }
-
-            // Notify user specifically (optional, frontend handles it usually)
-            // But emit event so frontend can update lists without refresh
-            io.to(`user_${userId}`).emit('message_deleted', {
-                messageId,
-                conversationId: message.conversationId,
-                deleteForEveryone: false
-            });
         }
 
-        res.json({ message: 'Message deleted' });
+        res.json({ success: true });
     } catch (error: any) {
-        console.error(error);
-        res.status(500).json({ message: 'Error deleting message' });
-    }
-};
-
-// --- New Features ---
-
-export const pinMessage = async (req: AuthRequest, res: Response) => {
-    try {
-        const { conversationId, messageId } = req.params;
-        const userId = req.user?.id;
-
-        const conversation = await Conversation.findOne({ _id: conversationId, participants: userId });
-        if (!conversation) return res.status(404).json({ message: 'Conversation not found' });
-
-        const isPinned = conversation.pinnedMessages?.includes(messageId as any);
-
-        if (isPinned) {
-            // Unpin
-            conversation.pinnedMessages = conversation.pinnedMessages.filter(id => id.toString() !== messageId);
-        } else {
-            // Pin (Check limit 3)
-            if (conversation.pinnedMessages && conversation.pinnedMessages.length >= 3) {
-                return res.status(400).json({ message: 'Max 3 pinned messages allowed' });
-            }
-            if (!conversation.pinnedMessages) conversation.pinnedMessages = [];
-            conversation.pinnedMessages.push(messageId as any);
-        }
-
-        await conversation.save();
-        await conversation.populate('pinnedMessages'); // return populated for UI
-
-        const io = getIO();
-        io.to(`chat_${conversationId}`).emit('conversation_updated', conversation);
-        io.to(`chat_${conversationId}`).emit('message_pinned', { conversationId, pinnedMessages: conversation.pinnedMessages });
-
-        res.json(conversation.pinnedMessages);
-    } catch (error: any) {
-        console.error(error);
-        res.status(500).json({ message: 'Error pinning message' });
-    }
-};
-
-export const starMessage = async (req: AuthRequest, res: Response) => {
-    try {
-        const { messageId } = req.params;
-        const userId = req.user?.id;
-
-        const message = await Message.findById(messageId);
-        if (!message) return res.status(404).json({ message: 'Message not found' });
-
-        // Check if user has access to this message (participant in conv)
-        // Ideally we check conversation participants, but for speed assuming logged in users can star messages they can see.
-        // Strict check:
-        const conversation = await Conversation.findOne({ _id: message.conversationId, participants: userId });
-        if (!conversation) return res.status(403).json({ message: 'Access denied' });
-
-        const isStarred = message.starredBy?.includes(userId as any);
-
-        if (isStarred) {
-            message.starredBy = message.starredBy.filter(id => id.toString() !== userId);
-        } else {
-            if (!message.starredBy) message.starredBy = [];
-            message.starredBy.push(userId as any);
-        }
-
-        await message.save();
-        // Don't necessarily need to emit socket for PRIVATE star, but return state
-        res.json({ messageId, isStarred: !isStarred });
-    } catch (error: any) {
-        console.error(error);
-        res.status(500).json({ message: 'Error starring message' });
-    }
-};
-
-export const getStarredMessages = async (req: AuthRequest, res: Response) => {
-    try {
-        const userId = req.user?.id;
-        const messages = await Message.find({ starredBy: userId })
-            .populate('sender', 'name avatar')
-            .populate('conversationId', 'name type participants groupAvatar') // Essential to know context
-            .sort({ createdAt: -1 });
-
-        res.json(messages);
-    } catch (error: any) {
-        console.error(error);
-        res.status(500).json({ message: 'Error fetching starred messages' });
-    }
-};
-
-export const reactToMessage = async (req: AuthRequest, res: Response) => {
-    try {
-        const { messageId } = req.params;
-        const { emoji } = req.body;
-        const userId = req.user?.id;
-
-        const message = await Message.findById(messageId);
-        if (!message) return res.status(404).json({ message: 'Message not found' });
-
-        if (!message.reactions) message.reactions = [];
-
-        // Check if user already reacted with THIS emoji
-        const existingIndex = message.reactions.findIndex(r => r.user.toString() === userId && r.emoji === emoji);
-
-        if (existingIndex > -1) {
-            // Toggle OFF (remove reaction)
-            message.reactions.splice(existingIndex, 1);
-        } else {
-            // Add reaction
-            // Optional: remove other reactions by same user if you only want 1 reaction per user? 
-            // Usually multiple is fine or replacing is fine. 
-            // User requirement implies "react to message". Let's assume unique emoji per user is standard.
-            // If they click '👍' and they already have '👍', remove it.
-            // If they have '❤️', and click '👍', add '👍'.
-            message.reactions.push({ user: userId as any, emoji, createdAt: new Date() });
-        }
-
-        await message.save();
-        // Populate to return full reaction info (names etc if needed, but IDs are usually enough)
-
-        const io = getIO();
-        io.to(`chat_${message.conversationId}`).emit('message_reaction_update', {
-            messageId,
-            conversationId: message.conversationId,
-            reactions: message.reactions
-        });
-
-        res.json(message.reactions);
-    } catch (error: any) {
-        console.error(error);
-        res.status(500).json({ message: 'Error reacting to message' });
+        res.status(500).json({ message: error.message });
     }
 };
 

@@ -104,13 +104,6 @@ router.get('/colleagues', searchColleagues);
 router.post('/conversations/:conversationId/read', protect, markAsRead);
 router.delete('/messages/:messageId', protect, deleteMessage);
 
-// React, Pin, Star
-import { pinMessage, starMessage, getStarredMessages, reactToMessage } from '../controllers/chatController';
-router.post('/conversations/:conversationId/pin/:messageId', protect, pinMessage);
-router.post('/messages/:messageId/star', protect, starMessage);
-router.get('/messages/starred', protect, getStarredMessages); // Must be before /:messageId routes if generic, but here specific enough
-router.post('/messages/:messageId/react', protect, reactToMessage);
-
 // Group Management
 router.put('/conversations/:conversationId', protect, updateGroupInfo);
 router.post('/conversations/:conversationId/participants', protect, addToGroup);

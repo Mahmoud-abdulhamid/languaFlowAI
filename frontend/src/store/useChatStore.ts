@@ -379,6 +379,12 @@ export const useChatStore = create<ChatStore>((set, get) => ({
             const convs = res.data;
             const total = convs.reduce((acc: number, c: any) => acc + (c.unreadCount || 0), 0);
             set({ conversations: convs, totalUnreadCount: total });
+
+            // Join all conversation rooms to receive concurrent updates (typing, etc.)
+            const { socket } = get();
+            if (socket && socket.connected) {
+                convs.forEach((c: any) => socket.emit('join_chat', c._id));
+            }
         } catch (error) {
             console.error('Failed to fetch conversations', error);
         } finally {

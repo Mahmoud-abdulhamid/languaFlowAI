@@ -495,6 +495,9 @@ export const ChatWidget = () => {
                                                                             const msg = conv.lastMessage;
                                                                             const content = msg?.content || '';
 
+                                                                            // 0. Check Deleted
+                                                                            if (msg?.isDeletedForEveryone) return <span className="italic opacity-70 flex items-center gap-1"><Trash2 size={10} /> Message deleted</span>;
+
                                                                             // 1. Check Image Type directly
                                                                             if (msg?.type === 'IMAGE') return '📷 Image';
 

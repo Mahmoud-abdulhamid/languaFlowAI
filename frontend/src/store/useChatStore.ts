@@ -301,6 +301,20 @@ export const useChatStore = create<ChatStore>((set, get) => ({
             }
         });
 
+        // Handle page close/refresh - set status to OFFLINE
+        const handleBeforeUnload = () => {
+            const user = useAuthStore.getState().user;
+            if (socketInstance && user) {
+                socketInstance.emit('change_status', { userId: user.id, status: 'OFFLINE' });
+            }
+        };
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        // Store cleanup function
+        socketInstance.on('disconnect', () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        });
+
         set({ socket: socketInstance });
     },
 

@@ -74,7 +74,14 @@ export const useAuthStore = create<AuthState>()(
                 }
             },
             logout: () => {
-                const { disconnectSocket } = useChatStore.getState();
+                const { socket, disconnectSocket } = useChatStore.getState();
+                const currentUser = get().user;
+
+                // Explicitly set status to OFFLINE before disconnecting
+                if (socket && currentUser) {
+                    socket.emit('change_status', { userId: currentUser.id, status: 'OFFLINE' });
+                }
+
                 disconnectSocket();
                 set({ user: null, token: null });
             },

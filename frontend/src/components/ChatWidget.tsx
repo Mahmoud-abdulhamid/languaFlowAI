@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { useChatStore } from '../store/useChatStore';
 import { useAuthStore } from '../store/useAuthStore';
-import { Send, Paperclip, Smile, MoreVertical, Search, Plus, Phone, Video, Info, FileText, Image as ImageIcon, MessageSquare, X, Minimize2, ChevronLeft, Check, CheckCheck, Trash2, Crown, Shield, Star, Sparkles, UserPlus, LogOut } from 'lucide-react';
+import { Send, Paperclip, Smile, MoreVertical, Search, Plus, Phone, Video, Info, FileText, Image as ImageIcon, MessageSquare, X, Minimize2, ChevronLeft, Check, CheckCheck, Trash2, Crown, Shield, Star, Sparkles, UserPlus, LogOut, Mic } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { UserAvatar } from './UserAvatar';
 import { format } from 'date-fns';
 import api from '../api/axios';
 import { toast } from 'react-hot-toast';
 import { EmojiPicker } from './EmojiPicker';
+import { VoiceRecorder } from './VoiceRecorder';
+import { VoicePlayer } from './VoicePlayer';
 
 const RoleBadge = ({ role }: { role?: string }) => {
     if (!role) return null;
@@ -82,6 +84,9 @@ export const ChatWidget = () => {
     const [selectedParticipants, setSelectedParticipants] = useState<any[]>([]);
     const [isGroupInfoOpen, setIsGroupInfoOpen] = useState(false); // Group Info Modal State
     const [isAddingMember, setIsAddingMember] = useState(false); // Add Member Mode
+
+    // Voice Recording State
+    const [isRecordingVoice, setIsRecordingVoice] = useState(false);
 
     useEffect(() => {
         const timer = setTimeout(async () => {
@@ -185,6 +190,46 @@ export const ChatWidget = () => {
         setMsgInput('');
         setSelectedFiles([]);
         setShowEmojiPicker(false);
+    };
+
+    const handleVoiceNote = async (audioBlob: Blob, duration: number, waveform: number[]) => {
+        if (!activeConversation) return;
+
+        try {
+            setIsUploading(true);
+            setIsRecordingVoice(false);
+
+            // Convert blob to File for upload
+            const audioFile = new File([audioBlob], `voice_${Date.now()}.webm`, { type: 'audio/webm' });
+            const formData = new FormData();
+            formData.append('files', audioFile);
+
+            // Upload audio file
+            const uploadRes = await api.post('/chats/upload', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+
+            const audioUrl = uploadRes.data.urls[0];
+
+            // Send as VOICE message with metadata
+            await api.post(`/chats/conversations/${activeConversation._id}/messages`, {
+                content: '',
+                type: 'VOICE',
+                attachments: [audioUrl],
+                voiceMetadata: {
+                    duration,
+                    waveform
+                }
+            });
+
+            setIsUploading(false);
+            toast.success('Voice note sent!');
+        } catch (error) {
+            console.error('Failed to send voice note:', error);
+            toast.error('Failed to send voice note');
+            setIsUploading(false);
+            setIsRecordingVoice(false);
+        }
     };
 
     const handleSearchUsers = async (query: string) => {
@@ -540,6 +585,19 @@ export const ChatWidget = () => {
                                                                                     const serverRoot = apiBase.replace('/api/v1', '');
                                                                                     const fullUrl = url.startsWith('http') ? url : `${serverRoot}${url}`;
 
+                                                                                    // Render based on message type
+                                                                                    if (msg.type === 'VOICE') {
+                                                                                        return (
+                                                                                            <VoicePlayer
+                                                                                                key={i}
+                                                                                                audioUrl={fullUrl}
+                                                                                                duration={(msg as any).voiceMetadata?.duration || 0}
+                                                                                                waveform={(msg as any).voiceMetadata?.waveform || []}
+                                                                                                isMe={isMe}
+                                                                                            />
+                                                                                        );
+                                                                                    }
+
                                                                                     return msg.type === 'IMAGE' ? (
                                                                                         <img
                                                                                             key={i}
@@ -689,6 +747,16 @@ export const ChatWidget = () => {
                                                 >
                                                     <Paperclip size={20} />
                                                 </button>
+
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setIsRecordingVoice(true)}
+                                                    className="p-2 text-muted hover:text-foreground hover:bg-secondary/10 rounded-lg transition-colors"
+                                                    title="Voice note"
+                                                >
+                                                    <Mic size={20} />
+                                                </button>
+
                                                 <input
                                                     type="file"
                                                     multiple
@@ -972,6 +1040,14 @@ export const ChatWidget = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            {/* Voice Recorder Overlay */}
+            {isRecordingVoice && (
+                <VoiceRecorder
+                    onSend={handleVoiceNote}
+                    onCancel={() => setIsRecordingVoice(false)}
+                />
+            )}
         </>
     );
 };

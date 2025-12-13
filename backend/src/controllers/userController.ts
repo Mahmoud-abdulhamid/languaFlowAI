@@ -317,32 +317,70 @@ export const getAchievements = async (req: AuthRequest, res: Response) => {
 // --- Demo Access ---
 export const getDemoUsers = async (req: Request, res: Response) => {
     try {
-        // Fetch ALL active users for demo purposes as requested
-        // Increased limit to 100 to ensure we capture all roles even if one role has many users
+        // Fetch ALL active users for demo purposes
         const users = await User.find({ isActive: true })
             .select('name email role avatar')
             .limit(100);
 
-        // Custom sort: Super Admin > Admin > Client > Translator
+        // Get project counts for each user
+        const { Project } = await import('../models/Project');
+        const userProjectCounts = await Promise.all(
+            users.map(async (user) => {
+                let projectCount = 0;
+
+                if (user.role === 'CLIENT') {
+                    // Count projects where user is the client
+                    projectCount = await Project.countDocuments({ clientId: user._id });
+                } else if (user.role === 'TRANSLATOR' || user.role === 'HEAD_TRANSLATOR') {
+                    // Count projects where user is assigned as translator
+                    projectCount = await Project.countDocuments({
+                        $or: [
+                            { translators: user._id },
+                            { headTranslator: user._id }
+                        ]
+                    });
+                }
+
+                return { user, projectCount };
+            })
+        );
+
+        // Custom sort: Super Admin > Admin > Translator > Client
+        // Then by project count (descending), then by name
         const rolePriority: { [key: string]: number } = {
             'SUPER_ADMIN': 0,
             'ADMIN': 1,
-            'CLIENT': 2,
-            'TRANSLATOR': 3
+            'HEAD_TRANSLATOR': 2,
+            'TRANSLATOR': 3,
+            'CLIENT': 4
         };
 
-        const sortedUsers = users.sort((a: any, b: any) => {
-            const priorityA = rolePriority[a.role] ?? 99;
-            const priorityB = rolePriority[b.role] ?? 99;
-            return priorityA - priorityB || a.name.localeCompare(b.name);
+        const sortedUsers = userProjectCounts.sort((a, b) => {
+            // Primary sort: role priority
+            const priorityA = rolePriority[a.user.role] ?? 99;
+            const priorityB = rolePriority[b.user.role] ?? 99;
+            if (priorityA !== priorityB) {
+                return priorityA - priorityB;
+            }
+
+            // Secondary sort: project count (descending)
+            if (b.projectCount !== a.projectCount) {
+                return b.projectCount - a.projectCount;
+            }
+
+            // Tertiary sort: name (alphabetical)
+            return a.user.name.localeCompare(b.user.name);
         });
 
-        const demoUsers = sortedUsers.map(user => ({
+        const demoUsers = sortedUsers.map(({ user, projectCount }) => ({
             _id: user._id,
             name: user.name,
             email: user.email,
-            role: user.role === 'SUPER_ADMIN' ? 'Super Admin' : user.role.charAt(0) + user.role.slice(1).toLowerCase(),
+            role: user.role === 'SUPER_ADMIN' ? 'Super Admin' :
+                user.role === 'HEAD_TRANSLATOR' ? 'Head Translator' :
+                    user.role.charAt(0) + user.role.slice(1).toLowerCase(),
             avatar: user.avatar,
+            projectCount,
             // Hardcoded demo password suggestion
             pass: '123456'
         }));

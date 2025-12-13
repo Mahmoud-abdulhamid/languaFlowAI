@@ -122,11 +122,11 @@ export const Login = () => {
             <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] bg-blue-600/20 rounded-full blur-[120px]" />
             <div className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] bg-purple-600/20 rounded-full blur-[120px]" />
 
-            <div className="flex w-full max-w-5xl gap-6 relative z-10 transition-all duration-500">
+            <div className="flex flex-col lg:flex-row w-full max-w-5xl gap-6 relative z-10 transition-all duration-500">
                 {/* Login Form Section */}
                 <motion.div
                     layout
-                    className={clsx("flex-1 transition-all duration-500", showDemo ? "max-w-md mx-auto lg:mx-0" : "max-w-md mx-auto")}
+                    className={clsx("w-full lg:flex-1 transition-all duration-500", showDemo ? "lg:max-w-md mx-auto lg:mx-0" : "max-w-md mx-auto")}
                 >
                     <GlassCard hoverEffect={true} className="p-8 sm:p-10 h-full flex flex-col justify-center">
                         <div className="mb-8 flex flex-col items-center">
@@ -215,9 +215,9 @@ export const Login = () => {
                             animate={{ opacity: 1, x: 0, width: 'auto' }}
                             exit={{ opacity: 0, x: 20, width: 0 }}
                             transition={{ duration: 0.4, ease: "easeInOut" }}
-                            className="hidden lg:block overflow-hidden"
+                            className="w-full lg:w-auto overflow-hidden"
                         >
-                            <div className="w-[380px] h-full">
+                            <div className="w-full lg:w-[380px] h-full">
                                 <GlassCard className="p-8 h-full flex flex-col bg-surface/50 border-glass-border">
                                     <div className="mb-6">
                                         <h3 className="text-xl font-bold text-foreground mb-2">Demo Access</h3>
@@ -244,7 +244,14 @@ export const Login = () => {
                                                             <account.icon size={20} />
                                                         </div>
                                                         <div>
-                                                            <h4 className={clsx("font-bold text-sm", account.color)}>{account.role}</h4>
+                                                            <div className="flex items-center gap-2">
+                                                                <h4 className={clsx("font-bold text-sm", account.color)}>{account.role}</h4>
+                                                                {account.projectCount > 0 && (
+                                                                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-muted/20 text-muted font-mono">
+                                                                        {account.projectCount} {account.projectCount === 1 ? 'project' : 'projects'}
+                                                                    </span>
+                                                                )}
+                                                            </div>
                                                             <p className="text-muted text-xs mt-0.5">{account.email}</p>
                                                         </div>
                                                     </div>

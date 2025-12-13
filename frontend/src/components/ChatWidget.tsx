@@ -760,31 +760,33 @@ export const ChatWidget = () => {
                                                 )}
                                             </AnimatePresence>
 
-                                            <form onSubmit={handleSend} className="flex items-end gap-2 bg-surface rounded-xl border border-glass-border p-1 focus-within:ring-2 ring-blue-500/20 transition-all shadow-sm">
-                                                <button
-                                                    type="button"
-                                                    onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                                                    className={`p-2 rounded-lg transition-colors ${showEmojiPicker ? 'text-blue-500 bg-blue-500/10' : 'text-muted hover:text-foreground hover:bg-secondary/10'}`}
-                                                >
-                                                    <Smile size={20} />
-                                                </button>
+                                            <form onSubmit={handleSend} className="flex items-end gap-1 bg-surface rounded-xl border border-glass-border p-1 focus-within:ring-2 ring-blue-500/20 transition-all shadow-sm">
+                                                <div className="flex items-center gap-0.5 sm:gap-1">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                                                        className={`p-1.5 sm:p-2 rounded-lg transition-colors ${showEmojiPicker ? 'text-blue-500 bg-blue-500/10' : 'text-muted hover:text-foreground hover:bg-secondary/10'}`}
+                                                    >
+                                                        <Smile size={20} />
+                                                    </button>
 
-                                                <button
-                                                    type="button"
-                                                    onClick={() => fileInputRef.current?.click()}
-                                                    className="p-2 text-muted hover:text-foreground hover:bg-secondary/10 rounded-lg transition-colors"
-                                                >
-                                                    <Paperclip size={20} />
-                                                </button>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => fileInputRef.current?.click()}
+                                                        className="p-1.5 sm:p-2 text-muted hover:text-foreground hover:bg-secondary/10 rounded-lg transition-colors"
+                                                    >
+                                                        <Paperclip size={20} />
+                                                    </button>
 
-                                                <button
-                                                    type="button"
-                                                    onClick={() => setIsRecordingVoice(true)}
-                                                    className="p-2 text-muted hover:text-foreground hover:bg-secondary/10 rounded-lg transition-colors"
-                                                    title="Voice note"
-                                                >
-                                                    <Mic size={20} />
-                                                </button>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setIsRecordingVoice(true)}
+                                                        className="p-1.5 sm:p-2 text-muted hover:text-foreground hover:bg-secondary/10 rounded-lg transition-colors"
+                                                        title="Voice note"
+                                                    >
+                                                        <Mic size={20} />
+                                                    </button>
+                                                </div>
 
                                                 <input
                                                     type="file"
@@ -798,13 +800,13 @@ export const ChatWidget = () => {
                                                     value={msgInput}
                                                     onChange={handleInput}
                                                     placeholder="Message..."
-                                                    className="flex-1 bg-transparent border-none outline-none text-sm py-2 px-2 text-foreground placeholder:text-muted"
+                                                    className="flex-1 bg-transparent border-none outline-none text-sm py-2 px-1 sm:px-2 text-foreground placeholder:text-muted min-w-0"
                                                 />
 
                                                 <button
                                                     type="submit"
                                                     disabled={(!msgInput.trim() && selectedFiles.length === 0) || isUploading}
-                                                    className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 disabled:opacity-50 transition-all flex items-center justify-center shrink-0 min-w-[36px]"
+                                                    className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 disabled:opacity-50 transition-all flex items-center justify-center shrink-0 w-9 h-9 sm:w-auto sm:h-auto"
                                                 >
                                                     {isUploading ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Send size={16} />}
                                                 </button>

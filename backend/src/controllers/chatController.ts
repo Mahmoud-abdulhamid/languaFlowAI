@@ -366,6 +366,14 @@ export const markAsRead = async (req: AuthRequest, res: Response) => {
         const io = getIO();
         io.to(`chat_${conversationId}`).emit('messages_read', { conversationId, readBy: userId });
 
+        // Also notify participants individually (for List View updates)
+        const conversation = await Conversation.findById(conversationId);
+        if (conversation) {
+            conversation.participants.forEach((p: any) => {
+                io.to(`user_${p.toString()}`).emit('messages_read', { conversationId, readBy: userId });
+            });
+        }
+
         res.status(200).json({ success: true });
     } catch (error: any) {
         res.status(500).json({ message: error.message });

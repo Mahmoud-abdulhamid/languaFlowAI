@@ -67,6 +67,26 @@ export const initSocket = (httpServer: HttpServer) => {
             socket.leave(`chat_${conversationId}`);
         });
 
+        socket.on('message_received', async ({ messageId, conversationId }: { messageId: string, conversationId: string }) => {
+            try {
+                const { Message } = await import('../models/Message');
+                const message = await Message.findById(messageId);
+                if (message && message.status === 'SENT') {
+                    message.status = 'DELIVERED';
+                    await message.save();
+
+                    // Notify sender (and others in chat)
+                    io.to(`chat_${conversationId}`).emit('message_status_update', {
+                        messageId,
+                        conversationId,
+                        status: 'DELIVERED'
+                    });
+                }
+            } catch (e) {
+                console.error('Error handling message_received', e);
+            }
+        });
+
         socket.on('join_project', (projectId: string) => {
             console.log(`Socket ${socket.id} joining room project_${projectId}`);
             socket.join(`project_${projectId}`);

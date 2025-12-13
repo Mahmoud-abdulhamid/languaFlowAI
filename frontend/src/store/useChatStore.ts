@@ -139,6 +139,15 @@ export const useChatStore = create<ChatStore>((set, get) => ({
 
         socketInstance.on('new_message', (message: Message) => {
             const { activeConversation, messages, conversations, isChatOpen } = get();
+            const currentUserId = useAuthStore.getState().user?.id;
+
+            // Ack delivery if it's not our own message
+            if (message.sender._id !== currentUserId) {
+                socketInstance.emit('message_received', {
+                    messageId: message._id,
+                    conversationId: message.conversationId
+                });
+            }
 
             // If message belongs to active chat AND chat is open, append it
             if (activeConversation?._id === message.conversationId) {
@@ -242,10 +251,11 @@ export const useChatStore = create<ChatStore>((set, get) => ({
         });
 
         socketInstance.on('messages_read', ({ conversationId, readBy }) => {
-            const { messages, activeConversation } = get();
+            const { messages, activeConversation, conversations } = get();
+
+            // 1. Update Active Conversation Messages
             if (activeConversation?._id === conversationId) {
                 const updatedMessages = messages.map(m => {
-                    // If not read by this user, add them
                     if (!m.readBy.includes(readBy)) {
                         return { ...m, readBy: [...m.readBy, readBy], status: 'READ' as const };
                     }
@@ -253,6 +263,42 @@ export const useChatStore = create<ChatStore>((set, get) => ({
                 });
                 set({ messages: updatedMessages });
             }
+
+            // 2. Update Conversation List (lastMessage status)
+            const updatedConvs = conversations.map(c => {
+                if (c._id === conversationId && c.lastMessage) {
+                    // Optimistically mark last message as READ if it was sent by us and now read by them
+                    // Or generically update it.
+                    // If the current user is NOT the one who read it (i.e. we are the sender), show Blue Checks
+                    if (readBy !== useAuthStore.getState().user?.id) {
+                        return {
+                            ...c,
+                            lastMessage: { ...c.lastMessage, status: 'READ' as const, readBy: [...(c.lastMessage.readBy || []), readBy] }
+                        };
+                    }
+                }
+                return c;
+            });
+            set({ conversations: updatedConvs });
+        });
+
+        // Handle generic status updates (e.g. DELIVERED)
+        socketInstance.on('message_status_update', ({ messageId, conversationId, status }) => {
+            const { messages, conversations } = get();
+
+            // Update Messages
+            set({
+                messages: messages.map(m => m._id === messageId ? { ...m, status } : m)
+            });
+
+            // Update Conversation List
+            set({
+                conversations: conversations.map(c =>
+                    c._id === conversationId && c.lastMessage?._id === messageId
+                        ? { ...c, lastMessage: { ...c.lastMessage!, status } }
+                        : c
+                )
+            });
         });
 
         socketInstance.on('message_deleted', ({ messageId, conversationId, deleteForEveryone }) => {

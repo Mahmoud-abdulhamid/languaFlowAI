@@ -161,7 +161,7 @@ export const VoiceRecorder = ({ onSend, onCancel }: VoiceRecorderProps) => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
-                className="absolute bottom-0 left-0 right-0 bg-surface/95 backdrop-blur-xl border-t border-glass-border p-4 shadow-2xl z-[100]"
+                className="bg-surface/95 backdrop-blur-xl border-t border-glass-border p-4 shadow-2xl"
             >
                 <div className="flex items-center gap-3">
                     {/* Mic Icon with Pulse */}

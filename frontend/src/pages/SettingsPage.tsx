@@ -390,10 +390,10 @@ export const SettingsPage = () => {
                             <label className="block text-muted mb-2 text-sm font-medium">Allowed File Types</label>
                             <input
                                 value={Array.isArray(systemSettings.allowed_file_types) ? systemSettings.allowed_file_types.join(', ') : systemSettings.allowed_file_types || ''}
-                                onChange={e => handleSystemSettingChange('allowed_file_types', e.target.value.split(',').map((s: string) => s.trim()))}
+                                onChange={e => handleSystemSettingChange('allowed_file_types', e.target.value.split(/[,\n]+/).map((s: string) => s.trim()).filter(Boolean))}
                                 className="w-full bg-secondary/10 border border-glass-border rounded-lg p-3 text-foreground focus:border-blue-500 outline-none"
                             />
-                            <p className="text-xs text-muted mt-1">Comma separated</p>
+                            <p className="text-xs text-muted mt-1">Comma separated (e.g. jpg, png, pdf)</p>
                         </div>
                     </motion.div>
                 )}
@@ -467,11 +467,11 @@ export const SettingsPage = () => {
                                             <label className="block text-muted mb-2 text-sm font-medium">Allowed Extensions</label>
                                             <input
                                                 value={Array.isArray(systemSettings.chat_allowed_file_types) ? systemSettings.chat_allowed_file_types.join(', ') : (systemSettings.chat_allowed_file_types || 'jpg, jpeg, png, webp, heic, pdf, docx')}
-                                                onChange={e => handleSystemSettingChange('chat_allowed_file_types', e.target.value.split(',').map((s: string) => s.trim()))}
+                                                onChange={e => handleSystemSettingChange('chat_allowed_file_types', e.target.value.split(/[,\n]+/).map((s: string) => s.trim()).filter(Boolean))}
                                                 className="w-full bg-secondary/10 border border-glass-border rounded-lg p-3 text-foreground focus:border-blue-500 outline-none"
                                                 placeholder="jpg, jpeg, png, webp, heic, pdf..."
                                             />
-                                            <p className="text-xs text-muted mt-1">Comma separated</p>
+                                            <p className="text-xs text-muted mt-1">Comma separated or new lines</p>
                                         </div>
                                     </div>
                                 )}

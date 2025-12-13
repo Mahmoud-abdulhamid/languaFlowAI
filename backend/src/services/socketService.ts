@@ -67,6 +67,14 @@ export const initSocket = (httpServer: HttpServer) => {
             socket.leave(`chat_${conversationId}`);
         });
 
+        socket.on('start_typing', ({ conversationId, userId }: { conversationId: string, userId: string }) => {
+            socket.to(`chat_${conversationId}`).emit('user_typing', { conversationId, userId });
+        });
+
+        socket.on('stop_typing', ({ conversationId, userId }: { conversationId: string, userId: string }) => {
+            socket.to(`chat_${conversationId}`).emit('user_stopped_typing', { conversationId, userId });
+        });
+
         socket.on('message_received', async ({ messageId, conversationId }: { messageId: string, conversationId: string }) => {
             try {
                 const { Message } = await import('../models/Message');

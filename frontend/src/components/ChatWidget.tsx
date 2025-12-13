@@ -212,11 +212,12 @@ export const ChatWidget = () => {
             const audioUrl = uploadRes.data.urls[0];
 
             // Send using chat store's sendMessage function
-            // Store metadata in message content as JSON for now
-            const metadata = { duration, waveform };
+            // Use FILE type (backend doesn't support VOICE type yet)
+            // Store metadata in message content as JSON
+            const metadata = { duration, waveform, isVoice: true };
             await sendMessage(
-                JSON.stringify(metadata), // Temporary: store metadata in content
-                'VOICE' as any,
+                JSON.stringify(metadata),
+                'FILE', // Use FILE instead of VOICE for now
                 [audioUrl]
             );
 
@@ -583,16 +584,21 @@ export const ChatWidget = () => {
                                                                                     const serverRoot = apiBase.replace('/api/v1', '');
                                                                                     const fullUrl = url.startsWith('http') ? url : `${serverRoot}${url}`;
 
-                                                                                    // Render based on message type
-                                                                                    if (msg.type === 'VOICE') {
-                                                                                        // Parse metadata from content
-                                                                                        let metadata = { duration: 0, waveform: [] };
-                                                                                        try {
-                                                                                            metadata = JSON.parse(msg.content || '{}');
-                                                                                        } catch (e) {
-                                                                                            console.warn('Failed to parse voice metadata');
+                                                                                    // Check if it's a voice note (sent as FILE type with isVoice flag)
+                                                                                    let isVoiceNote = false;
+                                                                                    let metadata = { duration: 0, waveform: [] };
+                                                                                    try {
+                                                                                        const parsed = JSON.parse(msg.content || '{}');
+                                                                                        if (parsed.isVoice) {
+                                                                                            isVoiceNote = true;
+                                                                                            metadata = parsed;
                                                                                         }
+                                                                                    } catch (e) {
+                                                                                        // Not a voice note
+                                                                                    }
 
+                                                                                    // Render voice player if it's a voice note
+                                                                                    if (isVoiceNote) {
                                                                                         return (
                                                                                             <VoicePlayer
                                                                                                 key={i}

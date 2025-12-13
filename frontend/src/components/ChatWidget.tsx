@@ -168,18 +168,16 @@ export const ChatWidget = () => {
             selectedFiles.forEach(file => formData.append('files', file));
 
             try {
-                const res = await api.post('/chats/upload', formData, {
-                    headers: { 'Content-Type': 'multipart/form-data' }
-                });
+                const res = await api.post('/chats/upload', formData); // Axios sets Content-Type boundary automatically
                 attachments = res.data.urls;
 
                 // Determine type based on first file
                 if (selectedFiles[0].type.startsWith('image/')) type = 'IMAGE';
                 else type = 'FILE';
 
-            } catch (error) {
+            } catch (error: any) {
                 console.error('Upload failed', error);
-                toast.error('Failed to upload files');
+                toast.error(error.response?.data?.message || 'Failed to upload files. Please try again.');
                 setIsUploading(false);
                 return;
             }
@@ -493,14 +491,28 @@ export const ChatWidget = () => {
                                                                     )}
                                                                     <span className="truncate">
                                                                         {conv.lastMessage?.sender._id === user?.id ? 'You: ' : ''}
-                                                                        {conv.lastMessage?.type === 'IMAGE' ? '📷 Image' : (() => {
+                                                                        {(() => {
+                                                                            const msg = conv.lastMessage;
+                                                                            const content = msg?.content || '';
+
+                                                                            // 1. Check Image Type directly
+                                                                            if (msg?.type === 'IMAGE') return '📷 Image';
+
+                                                                            // 2. Check JSON Metadata (Voice, Files, etc)
                                                                             try {
-                                                                                const parsed = JSON.parse(conv.lastMessage?.content || '{}');
+                                                                                const parsed = JSON.parse(content);
                                                                                 if (parsed.isVoice || parsed.type?.startsWith('audio/') || parsed.originalName?.endsWith('.webm') || parsed.originalName?.endsWith('.mp3')) return '🎤 Voice Note';
+                                                                                // If content is just metadata for a file
+                                                                                if (parsed.originalName) return `📎 ${parsed.originalName}`;
                                                                             } catch (e) {
-                                                                                // ignore
+                                                                                // Not JSON
                                                                             }
-                                                                            return conv.lastMessage?.content;
+
+                                                                            // 3. Check for specific content patterns
+                                                                            if (content.startsWith('http') || (msg as any).linkMetadata) return '🔗 Link';
+                                                                            if (msg?.type === 'FILE') return '📎 Attachment';
+
+                                                                            return content;
                                                                         })()}
                                                                     </span>
                                                                 </>

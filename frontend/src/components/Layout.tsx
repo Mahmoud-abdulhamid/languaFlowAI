@@ -377,42 +377,44 @@ export const Layout = () => {
                                                 initial={{ opacity: 0, y: 10, scale: 0.95 }}
                                                 animate={{ opacity: 1, y: 0, scale: 1 }}
                                                 exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                                                className="fixed inset-0 w-full h-full sm:absolute sm:inset-auto sm:right-0 sm:top-full sm:mt-2 sm:w-56 glass-card border border-glass-border sm:rounded-xl shadow-xl z-50 p-2 flex flex-col gap-1 bg-surface"
+                                                className="fixed inset-0 w-full h-[100dvh] sm:h-auto sm:absolute sm:inset-auto sm:right-0 sm:top-full sm:mt-2 sm:w-56 glass-card border border-glass-border sm:rounded-xl shadow-xl z-50 p-2 flex flex-col gap-1 bg-surface"
                                             >
-                                                <div className="flex sm:hidden justify-between items-center p-3 border-b border-glass-border mb-2">
+                                                <div className="flex sm:hidden justify-between items-center p-3 border-b border-glass-border mb-2 shrink-0">
                                                     <h3 className="font-bold text-lg">Profile</h3>
                                                     <button onClick={() => setIsProfileMenuOpen(false)} className="p-1 hover:bg-secondary/10 rounded-full">
                                                         <X size={24} />
                                                     </button>
                                                 </div>
-                                                <div className="px-3 py-2 border-b border-glass-border mb-1">
-                                                    <p className="font-bold text-foreground text-sm truncate">{user.name}</p>
-                                                    <p className="text-xs text-muted truncate">{user.email}</p>
-                                                </div>
+                                                <div className="flex-1 overflow-y-auto w-full">
+                                                    <div className="px-3 py-2 border-b border-glass-border mb-1">
+                                                        <p className="font-bold text-foreground text-sm truncate">{user.name}</p>
+                                                        <p className="text-xs text-muted truncate">{user.email}</p>
+                                                    </div>
 
-                                                <Link
-                                                    to="/profile"
-                                                    onClick={() => setIsProfileMenuOpen(false)}
-                                                    className="flex items-center gap-2 px-3 py-2 text-sm text-muted hover:text-foreground hover:bg-secondary/10 rounded-lg transition-colors"
-                                                >
-                                                    <User size={16} /> My Profile
-                                                </Link>
-                                                {/* Settings for Admins */}
-                                                {(user.role === 'ADMIN' || user.role === 'SUPER_ADMIN') && (
                                                     <Link
-                                                        to="/settings"
+                                                        to="/profile"
                                                         onClick={() => setIsProfileMenuOpen(false)}
                                                         className="flex items-center gap-2 px-3 py-2 text-sm text-muted hover:text-foreground hover:bg-secondary/10 rounded-lg transition-colors"
                                                     >
-                                                        <Settings size={16} /> Settings
+                                                        <User size={16} /> My Profile
                                                     </Link>
-                                                )}
-                                                <button
-                                                    onClick={() => { setIsProfileMenuOpen(false); logout(); }}
-                                                    className="flex items-center gap-2 px-3 py-2 text-sm text-red-500 hover:bg-red-500/10 rounded-lg transition-colors text-left w-full mt-1 border-t border-glass-border"
-                                                >
-                                                    <LogOut size={16} /> Logout
-                                                </button>
+                                                    {/* Settings for Admins */}
+                                                    {(user.role === 'ADMIN' || user.role === 'SUPER_ADMIN') && (
+                                                        <Link
+                                                            to="/settings"
+                                                            onClick={() => setIsProfileMenuOpen(false)}
+                                                            className="flex items-center gap-2 px-3 py-2 text-sm text-muted hover:text-foreground hover:bg-secondary/10 rounded-lg transition-colors"
+                                                        >
+                                                            <Settings size={16} /> Settings
+                                                        </Link>
+                                                    )}
+                                                    <button
+                                                        onClick={() => { setIsProfileMenuOpen(false); logout(); }}
+                                                        className="flex items-center gap-2 px-3 py-2 text-sm text-red-500 hover:bg-red-500/10 rounded-lg transition-colors text-left w-full mt-1 border-t border-glass-border"
+                                                    >
+                                                        <LogOut size={16} /> Logout
+                                                    </button>
+                                                </div>
                                             </motion.div>
                                         </>
                                     )}

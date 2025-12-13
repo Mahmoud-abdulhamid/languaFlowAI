@@ -73,7 +73,7 @@ export const NotificationBell = () => {
                         initial={{ opacity: 0, y: 10, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                        className="fixed inset-0 w-full h-full sm:absolute sm:inset-auto sm:right-0 sm:mt-2 sm:w-96 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-2xl z-[5000] overflow-hidden sm:max-h-[500px] flex flex-col sm:rounded-xl"
+                        className="fixed inset-0 w-full h-[100dvh] sm:h-auto sm:absolute sm:inset-auto sm:right-0 sm:mt-2 sm:w-96 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-2xl z-[5000] overflow-hidden sm:max-h-[500px] flex flex-col sm:rounded-xl"
                     >
                         <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between sticky top-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur z-10 shrink-0">
                             <div className="flex items-center gap-2">

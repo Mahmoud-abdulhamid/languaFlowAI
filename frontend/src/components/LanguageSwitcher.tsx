@@ -44,7 +44,7 @@ export const LanguageSwitcher = () => {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ duration: 0.2 }}
-                        className={`fixed inset-0 w-full h-full sm:absolute sm:inset-auto sm:top-full sm:mt-2 sm:right-0 sm:w-48 sm:rounded-xl shadow-xl border overflow-hidden z-50 flex flex-col ${isDark
+                        className={`fixed inset-0 w-full h-[100dvh] sm:h-auto sm:absolute sm:inset-auto sm:top-full sm:mt-2 sm:right-0 sm:w-48 sm:rounded-xl shadow-xl border overflow-hidden z-50 flex flex-col ${isDark
                             ? 'bg-[#1a1a2e] border-white/10'
                             : 'bg-white border-gray-200'
                             }`}
@@ -55,7 +55,7 @@ export const LanguageSwitcher = () => {
                                 <X size={24} />
                             </button>
                         </div>
-                        <div className="p-1">
+                        <div className="flex-1 overflow-y-auto p-1 custom-scrollbar">
                             {availableLanguages.map((lang) => (
                                 <button
                                     key={lang.code}

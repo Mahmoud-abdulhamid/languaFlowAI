@@ -496,7 +496,7 @@ export const ChatWidget = () => {
                                                                         {conv.lastMessage?.type === 'IMAGE' ? '📷 Image' : (() => {
                                                                             try {
                                                                                 const parsed = JSON.parse(conv.lastMessage?.content || '{}');
-                                                                                if (parsed.isVoice) return '🎤 Voice Note';
+                                                                                if (parsed.isVoice || parsed.type?.startsWith('audio/') || parsed.originalName?.endsWith('.webm') || parsed.originalName?.endsWith('.mp3')) return '🎤 Voice Note';
                                                                             } catch (e) {
                                                                                 // ignore
                                                                             }

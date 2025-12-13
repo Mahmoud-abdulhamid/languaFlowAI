@@ -377,7 +377,7 @@ export const Layout = () => {
                                                 initial={{ opacity: 0, y: 10, scale: 0.95 }}
                                                 animate={{ opacity: 1, y: 0, scale: 1 }}
                                                 exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                                                className="fixed inset-0 w-full h-[100dvh] sm:h-auto sm:absolute sm:inset-auto sm:right-0 sm:top-full sm:mt-2 sm:w-56 glass-card border border-glass-border sm:rounded-xl shadow-xl z-50 p-2 flex flex-col gap-1 bg-surface"
+                                                className="fixed inset-0 w-full h-[100dvh] sm:h-auto sm:absolute sm:inset-auto sm:right-0 sm:top-full sm:mt-2 sm:w-56 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 sm:rounded-xl shadow-xl z-50 p-2 flex flex-col gap-1"
                                             >
                                                 <div className="flex sm:hidden justify-between items-center p-3 border-b border-glass-border mb-2 shrink-0">
                                                     <h3 className="font-bold text-lg">Profile</h3>

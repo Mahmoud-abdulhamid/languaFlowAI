@@ -195,9 +195,12 @@ export const Layout = () => {
                 </div>
                 <div className="flex items-center gap-2">
                     {user?.role !== 'CLIENT' && (
-                        <Link to="/inbox" className="p-2 text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors" title="Messages">
+                        <button onClick={toggleChat} className="p-2 text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors relative" title="Messages">
                             <MessageSquare size={20} />
-                        </Link>
+                            {totalUnreadCount > 0 && (
+                                <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white dark:border-gray-900"></span>
+                            )}
+                        </button>
                     )}
                     <NotificationBell />
                     <button

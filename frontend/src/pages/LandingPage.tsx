@@ -18,7 +18,7 @@ const LandingRoadmap = React.lazy(() => import('../components/landing/LandingRoa
 const LandingVision = React.lazy(() => import('../components/landing/LandingVision').then(module => ({ default: module.LandingVision })));
 import { BackToTop } from '../components/landing/BackToTop';
 
-import { useScrollStepper } from '../hooks/useScrollStepper';
+// import { useScrollStepper } from '../hooks/useScrollStepper';
 import { useLandingTheme } from '../hooks/useLandingTheme';
 import { ThemeProvider, useTheme } from '../contexts/ThemeContext';
 
@@ -28,7 +28,7 @@ const SectionLoader = () => (
     </div>
 );
 
-import { ScrollMouse } from '../components/landing/ScrollMouse';
+// import { ScrollMouse } from '../components/landing/ScrollMouse';
 import { LanguageProvider, useLanguage } from '../contexts/LanguageContext';
 import { LanguageSwitcher } from '../components/LanguageSwitcher';
 
@@ -37,7 +37,7 @@ import { MobileNav } from '../components/landing/MobileNav';
 
 const LandingPageContent = () => {
     const sectionIds = ['hero', 'stats', 'technology', 'roles', 'ai', 'process', 'features', 'roadmap', 'vision', 'contact', 'faq', 'cta', 'footer'];
-    useScrollStepper(sectionIds);
+    // useScrollStepper(sectionIds);
     const { theme, toggleTheme, isDark } = useLandingTheme();
     const { t, language } = useLanguage();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -48,7 +48,7 @@ const LandingPageContent = () => {
             : 'bg-white text-gray-900'
             } ${language === 'ar' ? 'font-cairo' : ''}`}>
 
-            <ScrollMouse isDark={isDark} />
+            {/* <ScrollMouse isDark={isDark} /> */}
             <MobileNav isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} isDark={isDark} />
 
             {/* Navigation Overlay */}

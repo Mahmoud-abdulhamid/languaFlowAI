@@ -114,6 +114,8 @@ export const Login = () => {
     const fillDemo = (email: string, pass: string) => {
         setValue('email', email);
         setValue('password', pass);
+        // Scroll to top on mobile to show the form
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     return (

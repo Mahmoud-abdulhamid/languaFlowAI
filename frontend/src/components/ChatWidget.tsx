@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useChatStore } from '../store/useChatStore';
 import { useAuthStore } from '../store/useAuthStore';
-import { Send, Paperclip, Smile, MoreVertical, Search, Plus, Phone, Video, Info, FileText, Image as ImageIcon, MessageSquare, X, Minimize2, ChevronLeft, Check, CheckCheck, Trash2, Crown, Shield, Star, Sparkles, UserPlus, LogOut, Mic } from 'lucide-react';
+import { Send, Paperclip, Smile, MoreVertical, Search, Plus, Phone, Video, Info, FileText, Image as ImageIcon, MessageSquare, X, Minimize2, ChevronLeft, Check, CheckCheck, Trash2, Crown, Shield, Star, Sparkles, UserPlus, LogOut, Mic, Pin, Reply, Heart, ThumbsUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { UserAvatar } from './UserAvatar';
 import { format } from 'date-fns';
@@ -10,6 +10,7 @@ import { toast } from 'react-hot-toast';
 import { EmojiPicker } from './EmojiPicker';
 import { VoiceRecorder } from './VoiceRecorder';
 import { VoicePlayer } from './VoicePlayer';
+import { StarredMessagesList } from './StarredMessagesList';
 
 const RoleBadge = ({ role }: { role?: string }) => {
     if (!role) return null;
@@ -58,7 +59,15 @@ export const ChatWidget = () => {
         removeParticipant,
         createDirectConversation,
         notification,
-        hideNotification
+        hideNotification,
+        // New Actions
+        pinMessage,
+        starMessage,
+        reactToMessage,
+        replyingTo,
+        setReplyingTo,
+        fetchStarredMessages,
+        starredMessages
     } = useChatStore();
     const { user } = useAuthStore();
 
@@ -70,7 +79,9 @@ export const ChatWidget = () => {
     const [searchResults, setSearchResults] = useState<any[]>([]);
 
     // Media & Emoji State
-    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false); // Input Picker
+    const [showReactionPicker, setShowReactionPicker] = useState<string | null>(null); // Message React (messageId)
+    const [showStarredList, setShowStarredList] = useState(false);
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [isUploading, setIsUploading] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -184,10 +195,13 @@ export const ChatWidget = () => {
             setIsUploading(false);
         }
 
-        await sendMessage(msgInput, type, attachments);
+        // Pass replyingTo ID if replying
+        await sendMessage(msgInput, type, attachments, replyingTo?._id);
+
         setMsgInput('');
         setSelectedFiles([]);
         setShowEmojiPicker(false);
+        setReplyingTo(null); // Clear reply state
     };
 
     const handleVoiceNote = async (audioBlob: Blob, duration: number, waveform: number[]) => {
@@ -389,17 +403,26 @@ export const ChatWidget = () => {
                             </div>
                             <div className="flex items-center gap-1">
                                 {!activeConversation && (
-                                    <button
-                                        onClick={() => {
-                                            setIsNewChatOpen(true);
-                                            setSearchUserQuery('');
-                                            setSearchResults([]);
-                                        }}
-                                        className="p-2 hover:bg-secondary/10 rounded-full transition-colors"
-                                        title="New Chat"
-                                    >
-                                        <Plus size={20} />
-                                    </button>
+                                    <>
+                                        <button
+                                            onClick={() => setShowStarredList(true)}
+                                            className="p-2 hover:bg-secondary/10 rounded-full transition-colors text-yellow-500"
+                                            title="Starred Messages"
+                                        >
+                                            <Star size={20} className={showStarredList ? "fill-current" : ""} />
+                                        </button>
+                                        <button
+                                            onClick={() => {
+                                                setIsNewChatOpen(true);
+                                                setSearchUserQuery('');
+                                                setSearchResults([]);
+                                            }}
+                                            className="p-2 hover:bg-secondary/10 rounded-full transition-colors"
+                                            title="New Chat"
+                                        >
+                                            <Plus size={20} />
+                                        </button>
+                                    </>
                                 )}
                                 {activeConversation?.type === 'GROUP' && (
                                     <button onClick={() => setIsGroupInfoOpen(true)} className="p-2 hover:bg-secondary/10 rounded-full transition-colors" title="Group Info">
@@ -411,6 +434,23 @@ export const ChatWidget = () => {
                                 </button>
                             </div>
                         </div>
+
+                        {/* Pinned Messages Header (Advanced Feature) */}
+                        {activeConversation && activeConversation.pinnedMessages && activeConversation.pinnedMessages.length > 0 && (
+                            <div className="bg-blue-50/50 dark:bg-blue-900/10 border-b border-glass-border px-3 py-1.5 flex items-center gap-2 overflow-x-auto no-scrollbar">
+                                <Pin className="w-3 h-3 text-blue-500 shrink-0 transform rotate-45" />
+                                <div className="flex gap-2">
+                                    {activeConversation.pinnedMessages.map((msg: any) => (
+                                        <div key={msg._id} className="bg-surface/80 hover:bg-surface border border-glass-border px-2 py-1 rounded text-[10px] cursor-pointer whitespace-nowrap shadow-sm transition-all"
+                                            onClick={() => setHighlightMessageId(msg._id)}
+                                        >
+                                            <span className="font-bold text-foreground mr-1">{msg.sender.name}:</span>
+                                            <span className="text-muted">{msg.content?.substring(0, 20) || (msg.attachments?.length ? 'Attachment' : 'Message')}...</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
 
                         {/* Content */}
                         <div className="flex-1 overflow-hidden relative flex flex-col">
@@ -580,6 +620,22 @@ export const ChatWidget = () => {
                                                         </div>
                                                     )}
 
+                                                    {/* Reply Context Bubble */}
+                                                    {msg.replyTo && (
+                                                        <div
+                                                            className={`mb-1 px-3 py-1.5 rounded-xl border-l-2 text-xs cursor-pointer opacity-80 hover:opacity-100 transition-opacity ${isMe ? 'bg-blue-500/10 border-blue-400 text-blue-100 self-end mr-1' : 'bg-surface border-blue-500 text-foreground self-start ml-1'}`}
+                                                            onClick={() => {
+                                                                if (msg.replyTo?._id) {
+                                                                    document.getElementById(`msg-${msg.replyTo._id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                                                    setHighlightMessageId(msg.replyTo._id);
+                                                                }
+                                                            }}
+                                                        >
+                                                            <div className="font-bold opacity-90">{msg.replyTo.sender?.name || 'User'}</div>
+                                                            <div className="truncate opacity-70 italic max-w-[200px]">{msg.replyTo.content || 'Attachment'}</div>
+                                                        </div>
+                                                    )}
+
                                                     <motion.div
                                                         key={msg._id}
                                                         initial={{ opacity: 0, y: 10, scale: 0.95 }}
@@ -590,11 +646,48 @@ export const ChatWidget = () => {
                                                         {!isMe && activeConversation?.type === 'GROUP' && <UserAvatar user={msg.sender} size="xs" />}
 
                                                         <div className={`flex flex-col ${isMe ? 'items-end' : 'items-start'} max-w-[85%]`}>
-                                                            <div className={`px-3 py-2 rounded-2xl shadow-sm text-[15px] ${isMe
-                                                                ? 'bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-br-sm'
-                                                                : 'bg-surface border border-glass-border text-foreground rounded-bl-sm'
-                                                                }`}>
-                                                                {msg.isDeletedForEveryone ? (
+                                                            <div
+                                                                className={`relative group max-w-[100%] rounded-2xl px-4 py-2 shadow-sm ${isMe
+                                                                    ? 'bg-gradient-to-br from-blue-500 to-purple-600 text-white ml-auto rounded-br-sm'
+                                                                    : 'bg-surface border border-glass-border text-foreground mr-auto rounded-bl-sm'
+                                                                    } ${highlightMessageId === msg._id ? 'ring-2 ring-yellow-400 ring-offset-2' : ''}`}
+                                                            >
+                                                                {/* Hover Actions */}
+                                                                <div className={`absolute -top-3 ${isMe ? 'left-0 -translate-x-full' : 'right-0 translate-x-full'} hidden group-hover:flex items-center gap-1 bg-surface border border-glass-border rounded-full p-1 shadow-lg z-10 px-2`}>
+                                                                    <button onClick={() => setReplyingTo(msg)} className="p-1 hover:bg-secondary/20 rounded-full text-muted hover:text-blue-500 transition-colors" title="Reply">
+                                                                        <Reply size={12} />
+                                                                    </button>
+                                                                    <button onClick={() => starMessage(msg._id)} className={`p-1 hover:bg-secondary/20 rounded-full transition-colors ${msg.starredBy?.includes(user?.id || '') ? 'text-yellow-400 fill-current' : 'text-muted hover:text-yellow-400'}`} title="Star">
+                                                                        <Star size={12} />
+                                                                    </button>
+                                                                    <button onClick={() => pinMessage(msg._id)} className={`p-1 hover:bg-secondary/20 rounded-full transition-colors ${activeConversation.pinnedMessages?.some((p: any) => p._id === msg._id || p === msg._id) ? 'text-blue-500 fill-current' : 'text-muted hover:text-blue-500'}`} title="Pin">
+                                                                        <Pin size={12} />
+                                                                    </button>
+                                                                    <div className="relative">
+                                                                        <button
+                                                                            onClick={(e) => { e.stopPropagation(); setShowReactionPicker(showReactionPicker === msg._id ? null : msg._id); }}
+                                                                            className="p-1 hover:bg-secondary/20 rounded-full text-muted hover:text-orange-500 transition-colors"
+                                                                            title="React"
+                                                                        >
+                                                                            <Smile size={12} />
+                                                                        </button>
+                                                                        {/* Reaction Picker */}
+                                                                        {showReactionPicker === msg._id && (
+                                                                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-surface border border-glass-border shadow-xl rounded-lg p-1.5 flex gap-1 z-50 animate-in fade-in zoom-in duration-200">
+                                                                                {['👍', '❤️', '😂', '😮', '😢', '🙏'].map(emoji => (
+                                                                                    <button key={emoji} onClick={() => { reactToMessage(msg._id, emoji); setShowReactionPicker(null); }} className="hover:scale-125 transition-transform text-lg p-0.5">
+                                                                                        {emoji}
+                                                                                    </button>
+                                                                                ))}
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
+                                                                    {(isMe || user?.role === 'ADMIN') && (
+                                                                        <button onClick={() => { if (confirm('Delete message?')) deleteMessage(msg._id, true); }} className="p-1 hover:bg-red-500/10 rounded-full text-muted hover:text-red-500 transition-colors" title="Delete">
+                                                                            <Trash2 size={12} />
+                                                                        </button>
+                                                                    )}
+                                                                </div>{msg.isDeletedForEveryone ? (
                                                                     <span className="italic opacity-50 text-xs flex items-center gap-1"><Trash2 size={12} /> Message deleted</span>
                                                                 ) : (
                                                                     <>
@@ -691,35 +784,36 @@ export const ChatWidget = () => {
                                                             </div>
 
                                                             <div className={`text-[10px] mt-1 flex items-center gap-1 ${isMe ? 'justify-end' : 'justify-start ml-1'}`}>
-                                                                <span className="text-gray-500 dark:text-gray-400">
+                                                                {msg.starredBy?.includes(user?.id || '') && <Star size={10} className="fill-yellow-400 text-yellow-400" />}
+                                                                <span className={isMe ? 'text-blue-100' : 'text-muted'}>
                                                                     {format(new Date(msg.createdAt), 'HH:mm')}
                                                                 </span>
 
-                                                                {/* Admin/Self Delete Action */}
-                                                                {!msg.isDeletedForEveryone && (isMe || (activeConversation?.type === 'GROUP' && activeConversation.admins?.includes(user?.id || ''))) && (
-                                                                    <button
-                                                                        onClick={(e) => {
-                                                                            e.stopPropagation();
-                                                                            if (confirm('Delete this message for everyone?')) {
-                                                                                deleteMessage(msg._id, true);
-                                                                            }
-                                                                        }}
-                                                                        className="opacity-0 group-hover:opacity-100 text-red-500 hover:bg-red-500/10 p-0.5 rounded transition-all ml-1"
-                                                                        title="Delete for everyone"
-                                                                    >
-                                                                        <Trash2 size={12} />
-                                                                    </button>
-                                                                )}
-
                                                                 {isMe && (
                                                                     <span>
-                                                                        {msg.status === 'READ' ? <CheckCheck size={12} className="text-purple-500" /> :
-                                                                            msg.status === 'DELIVERED' ? <CheckCheck size={12} className="text-gray-400" /> :
-                                                                                <Check size={12} className="text-gray-400" />}
+                                                                        {msg.status === 'READ' ? <CheckCheck size={12} className="text-purple-300" /> :
+                                                                            msg.status === 'DELIVERED' ? <CheckCheck size={12} className="text-blue-200/70" /> :
+                                                                                <Check size={12} className="opacity-70" />}
                                                                     </span>
                                                                 )}
                                                             </div>
                                                         </div>
+
+                                                        {/* Message Reactions Bubble */}
+                                                        {msg.reactions && msg.reactions.length > 0 && (
+                                                            <div className={`absolute -bottom-2 ${isMe ? 'right-0' : 'left-0'} flex -space-x-1`}>
+                                                                {msg.reactions.slice(0, 4).map((r: any, i: number) => (
+                                                                    <div key={i} className="bg-surface border border-glass-border rounded-full w-5 h-5 flex items-center justify-center text-[10px] shadow-sm z-10" title={r.user.name}>
+                                                                        {r.emoji}
+                                                                    </div>
+                                                                ))}
+                                                                {msg.reactions.length > 4 && (
+                                                                    <div className="bg-secondary text-foreground rounded-full w-5 h-5 flex items-center justify-center text-[8px] font-bold border border-glass-border shadow-sm z-20">
+                                                                        +{msg.reactions.length - 4}
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                        )}
                                                     </motion.div>
                                                 </>
                                             );
@@ -758,9 +852,25 @@ export const ChatWidget = () => {
                                     )}
 
                                     {/* Input */}
+                                    {/* Reply Banner */}
+                                    {replyingTo && (
+                                        <div className="px-4 py-2 bg-surface/80 border-t border-glass-border flex items-center justify-between backdrop-blur-md">
+                                            <div className="flex items-center gap-3 overflow-hidden">
+                                                <div className="w-1 self-stretch bg-blue-500 rounded-full" />
+                                                <div className="flex flex-col min-w-0">
+                                                    <span className="text-xs font-bold text-blue-500">Replying to {replyingTo.sender?.name}</span>
+                                                    <span className="text-xs text-muted truncate max-w-[300px]">{replyingTo.content || 'Attachment'}</span>
+                                                </div>
+                                            </div>
+                                            <button onClick={() => setReplyingTo(null)} className="p-1 hover:bg-secondary/10 rounded-full text-muted hover:text-foreground">
+                                                <X size={16} />
+                                            </button>
+                                        </div>
+                                    )}
+
                                     {/* Input Area / Read-Only Banner */}
-                                    {(activeConversation?.participants.some(p => p._id === user?.id) || activeConversation?.type === 'DIRECT') ? (
-                                        <div className="p-3 border-t border-glass-border bg-surface/60 backdrop-blur-md relative">
+                                    {(activeConversation?.participants.some((p: any) => p._id === user?.id) || activeConversation?.type === 'DIRECT') ? (
+                                        <div className="p-3 border-t border-glass-border bg-surface/60 backdrop-blur-md relative z-20">
                                             {/* Emoji Picker Popover */}
                                             <AnimatePresence>
                                                 {showEmojiPicker && (
@@ -835,6 +945,13 @@ export const ChatWidget = () => {
                                 </div>
                             )}
                         </div>
+
+                        {/* Starred Messages List Overlay */}
+                        <AnimatePresence>
+                            {showStarredList && (
+                                <StarredMessagesList onClose={() => setShowStarredList(false)} />
+                            )}
+                        </AnimatePresence>
 
                         {/* New Chat Modal Overlay (inside widget) */}
                         {/* New Chat Modal Overlay (inside widget) */}

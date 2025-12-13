@@ -265,12 +265,13 @@ export const sendMessage = async (req: AuthRequest, res: Response) => {
         // Check System Settings (Global Kill Switch)
         const chatEnabled = await SystemSetting.findOne({ key: 'chat_enabled' });
         if (chatEnabled && chatEnabled.value === false) {
+            // Allow Super Admins to bypass? Maybe not for now.
             return res.status(503).json({ message: 'Chat system is currently disabled by administrator.' });
         }
 
         const { conversationId } = req.params;
-        const { content, type = 'TEXT', attachments = [], replyTo } = req.body; // Added replyTo
-        const senderId = req.user.id; // Using non-optional id as established in previous context
+        const { content, type = 'TEXT', attachments = [] } = req.body;
+        const senderId = req.user.id;
 
         const conversation = await Conversation.findOne({
             _id: conversationId,
@@ -298,23 +299,16 @@ export const sendMessage = async (req: AuthRequest, res: Response) => {
             attachments,
             readBy: [senderId],
             status: 'SENT',
-            replyTo, // Add reply relation
             linkMetadata
         });
 
-        // Populate sender details AND replyTo if exists
-        await newMessage.populate('sender', 'name email role avatar');
-        if (replyTo) {
-            await newMessage.populate('replyTo', 'content type sender attachments');
-        }
+        const populatedMsg = await newMessage.populate('sender', 'name email role avatar');
 
         // Update Conversation lastMessage
         await Conversation.findByIdAndUpdate(conversationId, {
             lastMessage: newMessage._id,
             updatedAt: new Date()
         });
-
-        const populatedMsg = newMessage; // Already populated above
 
         // Socket Emit
         try {
@@ -696,129 +690,3 @@ export const updateGroupInfo = async (req: AuthRequest, res: Response) => {
         res.status(500).json({ message: e.message });
     }
 };
-
-// --- New Features (Advanced Chat) ---
-
-export const pinMessage = async (req: AuthRequest, res: Response) => {
-    try {
-        const { conversationId, messageId } = req.params;
-        const userId = req.user.id;
-
-        const conversation = await Conversation.findOne({ _id: conversationId, participants: userId });
-        if (!conversation) return res.status(404).json({ message: 'Conversation not found' });
-
-        const isPinned = conversation.pinnedMessages?.includes(messageId as any);
-
-        if (isPinned) {
-            // Unpin
-            conversation.pinnedMessages = conversation.pinnedMessages.filter(id => id.toString() !== messageId);
-        } else {
-            // Pin (Check limit 3)
-            if (conversation.pinnedMessages && conversation.pinnedMessages.length >= 3) {
-                return res.status(400).json({ message: 'Max 3 pinned messages allowed' });
-            }
-            if (!conversation.pinnedMessages) conversation.pinnedMessages = [];
-            conversation.pinnedMessages.push(messageId as any);
-        }
-
-        await conversation.save();
-        await conversation.populate({
-            path: 'pinnedMessages',
-            populate: { path: 'sender', select: 'name' }
-        });
-
-        const io = getIO();
-        io.to(`chat_${conversationId}`).emit('conversation_updated', conversation);
-        // Specifically emit pin event for UI toast/update optimization
-        io.to(`chat_${conversationId}`).emit('message_pinned', { conversationId, pinnedMessages: conversation.pinnedMessages });
-
-        res.json(conversation.pinnedMessages);
-    } catch (error: any) {
-        console.error(error);
-        res.status(500).json({ message: 'Error pinning message' });
-    }
-};
-
-export const starMessage = async (req: AuthRequest, res: Response) => {
-    try {
-        const { messageId } = req.params;
-        const userId = req.user.id;
-
-        const message = await Message.findById(messageId);
-        if (!message) return res.status(404).json({ message: 'Message not found' });
-
-        // Check access
-        const conversation = await Conversation.findOne({ _id: message.conversationId, participants: userId });
-        if (!conversation) return res.status(403).json({ message: 'Access denied' });
-
-        const isStarred = message.starredBy?.includes(userId as any);
-
-        if (isStarred) {
-            message.starredBy = message.starredBy.filter(id => id.toString() !== userId);
-        } else {
-            if (!message.starredBy) message.starredBy = [];
-            message.starredBy.push(userId as any);
-        }
-
-        await message.save();
-        res.json({ messageId, isStarred: !isStarred });
-    } catch (error: any) {
-        console.error(error);
-        res.status(500).json({ message: 'Error starring message' });
-    }
-};
-
-export const getStarredMessages = async (req: AuthRequest, res: Response) => {
-    try {
-        const userId = req.user.id;
-        const messages = await Message.find({ starredBy: userId })
-            .populate('sender', 'name avatar')
-            .populate('conversationId', 'name type participants groupAvatar')
-            .sort({ createdAt: -1 });
-
-        res.json(messages);
-    } catch (error: any) {
-        console.error(error);
-        res.status(500).json({ message: 'Error fetching starred messages' });
-    }
-};
-
-export const reactToMessage = async (req: AuthRequest, res: Response) => {
-    try {
-        const { messageId } = req.params;
-        const { emoji } = req.body;
-        const userId = req.user.id;
-
-        const message = await Message.findById(messageId);
-        if (!message) return res.status(404).json({ message: 'Message not found' });
-
-        if (!message.reactions) message.reactions = [];
-
-        // Check if user already reacted with THIS emoji
-        const existingIndex = message.reactions.findIndex(r => r.user.toString() === userId && r.emoji === emoji);
-
-        if (existingIndex > -1) {
-            // Toggle OFF (remove reaction)
-            message.reactions.splice(existingIndex, 1);
-        } else {
-            // Add reaction
-            message.reactions.push({ user: userId as any, emoji, createdAt: new Date() });
-        }
-
-        await message.save();
-        await message.populate('reactions.user', 'name'); // Populate user logic if needed
-
-        const io = getIO();
-        io.to(`chat_${message.conversationId}`).emit('message_reaction_update', {
-            messageId,
-            conversationId: message.conversationId,
-            reactions: message.reactions
-        });
-
-        res.json(message.reactions);
-    } catch (error: any) {
-        console.error(error);
-        res.status(500).json({ message: 'Error reacting to message' });
-    }
-};
-

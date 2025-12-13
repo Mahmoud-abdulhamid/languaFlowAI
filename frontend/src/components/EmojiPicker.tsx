@@ -31,7 +31,7 @@ export const EmojiPicker = ({ onSelect }: EmojiPickerProps) => {
     const [activeCategory, setActiveCategory] = useState('smileys');
 
     return (
-        <div className="w-[300px] h-[350px] bg-surface border border-glass-border rounded-xl shadow-xl flex flex-col overflow-hidden">
+        <div className="w-full max-w-[300px] h-[350px] bg-surface border border-glass-border rounded-xl shadow-xl flex flex-col overflow-hidden">
             {/* Categories */}
             <div className="flex items-center justify-between px-2 py-2 bg-secondary/10 border-b border-glass-border">
                 {CATEGORIES.map((cat) => (

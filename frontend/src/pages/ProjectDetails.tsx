@@ -196,13 +196,13 @@ export const ProjectDetails = () => {
     if (error || !project) return <div className="min-h-screen text-foreground flex items-center justify-center">Project not found</div>;
 
     return (
-        <div className="min-h-screen text-foreground p-4 md:p-8 max-w-7xl mx-auto space-y-6">
-            <button onClick={() => navigate('/projects')} className="flex items-center gap-2 text-muted hover:text-foreground transition-colors mb-4">
+        <div className="min-h-screen text-foreground p-2 md:p-8 max-w-7xl mx-auto space-y-3 md:space-y-6">
+            <button onClick={() => navigate('/projects')} className="flex items-center gap-2 text-muted hover:text-foreground transition-colors mb-2 md:mb-4">
                 <ArrowLeft size={20} /> Back to Projects
             </button>
 
             {/* Project Header - Full Width */}
-            <GlassCard className="p-4 md:p-8 relative overflow-hidden">
+            <GlassCard className="p-3 md:p-8 relative overflow-hidden">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div className="flex-1">
                         {isEditing ? (
@@ -315,10 +315,10 @@ export const ProjectDetails = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
                 {/* Left Column: Stats, Files, Notes */}
-                <div className="lg:col-span-2 space-y-6">
+                <div className="lg:col-span-2 space-y-3 md:space-y-6">
 
                     {/* Stats & Files Section */}
-                    <GlassCard className="p-4 md:p-6 md:col-span-2 space-y-8">
+                    <GlassCard className="p-3 md:p-6 md:col-span-2 space-y-4 md:space-y-8">
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                             <div className="p-4 rounded-xl bg-secondary/5 border border-glass-border">
                                 <div className="text-muted text-xs mb-1">Total Words</div>
@@ -476,13 +476,13 @@ export const ProjectDetails = () => {
                 </div>
 
                 {/* Right Column: Widgets */}
-                <div className="space-y-6">
+                <div className="space-y-3 md:space-y-6">
                     {/* Smart Deadline Widget */}
                     <SmartDeadlineWidget deadline={project.deadline} status={project.status} />
 
                     {/* Progress Widget */}
                     {progress && (
-                        <GlassCard className="p-6">
+                        <GlassCard className="p-3 md:p-6">
                             <h3 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
                                 <FileText size={20} className="text-blue-600 dark:text-blue-400" />
                                 Project Progress
@@ -507,7 +507,7 @@ export const ProjectDetails = () => {
                     )}
 
                     {/* Team Widget */}
-                    <GlassCard className="p-6">
+                    <GlassCard className="p-3 md:p-6">
                         <h3 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
                             <Users size={20} className="text-purple-600 dark:text-purple-400" />
                             Team
@@ -624,7 +624,7 @@ export const ProjectDetails = () => {
                     </GlassCard>
 
                     {/* Final Deliverables Widget */}
-                    <GlassCard className="p-6">
+                    <GlassCard className="p-3 md:p-6">
                         <div className="flex justify-between items-center mb-6">
                             <div>
                                 <h2 className="text-lg font-bold font-outfit text-foreground flex items-center gap-2">

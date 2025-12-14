@@ -1,45 +1,16 @@
 @echo off
-setlocal EnableDelayedExpansion
-
+title Git Commit & Push
 echo ==============================
 echo   Git Commit & Push Script
 echo ==============================
 echo.
 
-set /p commit_msg=Enter commit message: 
-
-if "%commit_msg%"=="" (
-    echo ❌ Commit message cannot be empty.
-    goto end
-)
-
-echo.
-echo ▶ Running: git add .
-git add .
-echo.
-
-echo ▶ Running: git commit
-git commit -m "%commit_msg%"
-if errorlevel 1 (
-    echo.
-    echo ❌ Commit failed.
-    goto end
-)
-
-echo.
-echo ▶ Running: git push origin main
-git push origin main
-if errorlevel 1 (
-    echo.
-    echo ❌ Push failed.
-    goto end
-)
-
-echo.
-echo ✅ All commands executed successfully.
-
-:end
-echo.
-echo ==============================
-echo Press any key to exit...
-pause >nul
+powershell -NoExit -Command ^
+  "$msg = Read-Host 'Enter commit message';" ^
+  "if ([string]::IsNullOrWhiteSpace($msg)) { Write-Host 'Commit message is empty'; exit };" ^
+  "git add .;" ^
+  "git commit -m \"$msg\";" ^
+  "if ($LASTEXITCODE -ne 0) { Write-Host 'Commit failed'; exit };" ^
+  "git push origin main;" ^
+  "if ($LASTEXITCODE -ne 0) { Write-Host 'Push failed'; exit };" ^
+  "Write-Host 'Done successfully.'"

@@ -25,7 +25,7 @@ export const GlossaryHighlighter: React.FC<GlossaryHighlighterProps> = ({ text, 
                 const match = sortedTerms.find(t => t.term.toLowerCase() === part.toLowerCase());
                 if (match) {
                     return (
-                        <span key={index} className="relative group/term inline-block cursor-help">
+                        <span key={index} className="relative group/term inline decoration-clone cursor-help">
                             <span className="bg-yellow-500/20 text-yellow-200 decoration-yellow-500/50 underline decoration-dotted rounded px-0.5 transition-colors group-hover/term:bg-yellow-500/30">
                                 {part}
                             </span>

@@ -137,11 +137,6 @@ function App() {
               <RolesPage />
             </ProtectedRoute>
           } />
-          <Route path="roles" element={
-            <ProtectedRoute allowedRoles={['SUPER_ADMIN']}>
-              <RolesPage />
-            </ProtectedRoute>
-          } />
           <Route path="live" element={
             <ProtectedRoute allowedRoles={['ADMIN', 'SUPER_ADMIN']}>
               <LiveDashboard />

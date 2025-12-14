@@ -130,133 +130,133 @@ export const Editor = () => {
     return (
         <div className="h-screen overflow-hidden bg-main text-foreground flex flex-col font-inter">
             {/* Top Bar */}
-            <header className="h-16 border-b border-glass-border bg-main/80 backdrop-blur-md sticky top-0 z-50 flex items-center justify-between px-2 md:px-6">
-                <div className="flex items-center gap-2 md:gap-4">
-                    <button onClick={() => navigate(-1)} className="p-2 hover:bg-secondary/10 rounded-lg text-muted hover:text-foreground transition-colors">
-                        <ArrowLeft size={20} />
-                    </button>
-                    <div>
-                        <div className="flex items-center gap-2">
-                            <h1 className="text-sm font-bold text-gray-900 dark:text-white">{activeProject?.title || `Project #${projectId?.slice(-4)}`}</h1>
-                            {activeFile && (
-                                <>
-                                    <span className="text-gray-400 dark:text-gray-600">/</span>
-                                    <span className="text-sm text-blue-600 dark:text-blue-400 font-medium">{activeFile.originalName}</span>
-                                </>
-                            )}
-                        </div>
-                        <div className="flex items-center gap-2 text-xs text-gray-700 dark:text-gray-400">
-                            <span className="uppercase">{activeProject?.sourceLang || '...'}</span>
-                            <span>→</span>
-                            {/* Language Selector */}
-                            {activeProject?.targetLangs && activeProject.targetLangs.length > 1 ? (
-                                <div className="min-w-[80px]">
-                                    <select
-                                        value={selectedTargetLang}
-                                        onChange={(e) => setSelectedTargetLang(e.target.value)}
-                                        className="w-full bg-transparent border-b border-gray-400 dark:border-white/20 text-xs uppercase text-gray-900 dark:text-primary focus:outline-none focus:border-purple-500 appearance-none cursor-pointer py-1"
-                                    >
-                                        {activeProject.targetLangs.map(lang => (
-                                            <option key={lang} value={lang} className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">{lang}</option>
-                                        ))}
-                                    </select>
-                                </div>
-                            ) : (
-                                <span className="uppercase">{selectedTargetLang || '...'}</span>
-                            )}
-                            <span>•</span>
-                            <span>{segments.length} Segments</span>
+            <header className="h-auto md:h-16 border-b border-glass-border bg-main/80 backdrop-blur-md sticky top-0 z-50 flex flex-col md:flex-row items-stretch md:items-center justify-between px-2 md:px-6 py-2 md:py-0 gap-2 md:gap-0">
+                <div className="flex items-center gap-2 md:gap-4 justify-between md:justify-start w-full md:w-auto">
+                    <div className="flex items-center gap-2 overflow-hidden flex-1">
+                        <button onClick={() => navigate(-1)} className="p-2 hover:bg-secondary/10 rounded-lg text-muted hover:text-foreground transition-colors shrink-0">
+                            <ArrowLeft size={20} />
+                        </button>
+                        <div className="min-w-0 flex-1">
+                            <div className="flex items-center gap-2">
+                                <h1 className="text-sm font-bold text-foreground truncate">{activeFile?.originalName || activeProject?.title || `Project #${projectId?.slice(-4)}`}</h1>
+                            </div>
+                            <div className="flex items-center gap-2 text-xs text-muted truncate">
+                                <span className="uppercase">{activeProject?.sourceLang}</span>
+                                <span className="text-gray-400">→</span>
+                                {/* Language Selector - Compact */}
+                                {activeProject?.targetLangs && activeProject.targetLangs.length > 1 ? (
+                                    <div className="min-w-[50px]">
+                                        <select
+                                            value={selectedTargetLang}
+                                            onChange={(e) => setSelectedTargetLang(e.target.value)}
+                                            className="w-full bg-transparent border-none text-xs uppercase text-blue-500 font-bold focus:outline-none appearance-none cursor-pointer p-0"
+                                        >
+                                            {activeProject.targetLangs.map(lang => (
+                                                <option key={lang} value={lang} className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">{lang}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                ) : (
+                                    <span className="uppercase font-medium text-blue-500">{selectedTargetLang}</span>
+                                )}
+                                <span className="text-gray-400">•</span>
+                                <span>{segments.length}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-4">
-                    {/* Status Filter */}
-                    <div className="w-[180px]">
+                <div className="flex items-center gap-2 justify-between md:justify-end w-full md:w-auto overflow-x-auto no-scrollbar scroll-smooth">
+                    {/* Status Filter - Flexible */}
+                    <div className="w-[120px] md:w-[180px] shrink-0">
                         <select
                             value={filterStatus}
                             onChange={(e) => setFilterStatus(e.target.value as any)}
-                            className="w-full bg-white dark:bg-secondary/5 border border-gray-300 dark:border-glass-border rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-primary focus:outline-none focus:border-purple-500/50 appearance-none cursor-pointer"
+                            className="w-full bg-white dark:bg-secondary/5 border border-gray-300 dark:border-glass-border rounded-lg px-2 py-1.5 text-xs md:text-sm text-foreground focus:outline-none focus:border-purple-500/50 appearance-none cursor-pointer"
                         >
-                            <option value="ALL" className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">All Segments</option>
-                            <option value="UNTRANSLATED" className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">Untranslated</option>
-                            <option value="TRANSLATED" className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">Translated</option>
-                            <option value="CONFIRMED" className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">Confirmed</option>
+                            <option value="ALL">All Segments</option>
+                            <option value="UNTRANSLATED">Untranslated</option>
+                            <option value="TRANSLATED">Translated</option>
+                            <option value="CONFIRMED">Confirmed</option>
                         </select>
                     </div>
-                </div>
 
-                <div className="flex items-center gap-4">
-                    {/* Clear Translations Button */}
-                    {!isReadOnly && user?.role !== 'CLIENT' && (settings.enable_clear_translation !== false && String(settings.enable_clear_translation) !== 'false') && (
-                        <button
-                            disabled={isTranslatingAll || isBackgroundTranslating}
-                            onClick={async () => {
-                                if (window.confirm('DANGER: This will delete ALL translations for this file in the current language.\n\nAre you sure you want to Clear All?')) {
-                                    try {
-                                        // @ts-ignore
-                                        await useEditorStore.getState().clearTranslations(projectId, effectiveFileId, selectedTargetLang);
-                                        toast.success('Translations cleared successfully');
-                                    } catch (e: any) {
-                                        toast.error(e.response?.data?.message || 'Failed to clear translations');
-                                    }
-                                }
-                            }}
-                            className="text-red-400 hover:text-red-300 hover:bg-red-500/10 p-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                            title="Clear All Translations"
-                        >
-                            <Trash2 size={18} />
-                        </button>
-                    )}
-
-                    {/* AI Translate Page Button */}
-                    {!isReadOnly && (settings.enable_ai_translation_all === true || String(settings.enable_ai_translation_all) === 'true') && user?.role !== 'CLIENT' && (
-                        (isTranslatingAll || isBackgroundTranslating) ? (
+                    <div className="flex items-center gap-2 shrink-0">
+                        {/* Clear Translations Button */}
+                        {!isReadOnly && user?.role !== 'CLIENT' && (settings.enable_clear_translation !== false && String(settings.enable_clear_translation) !== 'false') && (
                             <button
+                                disabled={isTranslatingAll || isBackgroundTranslating}
                                 onClick={async () => {
-                                    try {
-                                        // @ts-ignore
-                                        await useEditorStore.getState().stopTranslation(projectId, effectiveFileId);
-                                        toast.success('Stopping translation...');
-                                    } catch (e: any) {
-                                        toast.error('Failed to stop translation');
-                                    }
-                                }}
-                                className="bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-2 transition-colors shadow-lg shadow-red-900/20"
-                            >
-                                <span className="animate-pulse w-2 h-2 bg-white rounded-full"></span>
-                                <span className="hidden sm:inline">Stop Generating</span>
-                            </button>
-                        ) : (
-                            <button
-                                onClick={async () => {
-                                    if (window.confirm(`WARNING: You are about to translate THIS PAGE (${segments.length} segments) using AI.\n\n- Existing unconfirmed segments will be overwritten.\n- This action cannot be undone.\n\nAre you sure you want to proceed?`)) {
+                                    if (window.confirm('DANGER: This will delete ALL translations for this file in the current language.\n\nAre you sure you want to Clear All?')) {
                                         try {
-                                            const currentSegmentIds = segments.map(s => s._id);
                                             // @ts-ignore
-                                            const msg = await useEditorStore.getState().translateAll(projectId, effectiveFileId, selectedTargetLang, currentSegmentIds);
-                                            toast.success(msg || 'Translation started in background');
+                                            await useEditorStore.getState().clearTranslations(projectId, effectiveFileId, selectedTargetLang);
+                                            toast.success('Translations cleared successfully');
                                         } catch (e: any) {
-                                            toast.error(e.response?.data?.message || 'Failed to auto-translate page');
+                                            toast.error(e.response?.data?.message || 'Failed to clear translations');
                                         }
                                     }
                                 }}
-                                className="bg-purple-600 hover:bg-purple-500 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-2 transition-colors shadow-lg shadow-purple-900/20"
+                                className="text-red-400 hover:text-red-300 hover:bg-red-500/10 p-1.5 md:p-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                title="Clear All Translations"
                             >
-                                <Sparkles size={14} />
-                                <span className="hidden sm:inline">AI Translate Page</span>
+                                <Trash2 size={16} />
                             </button>
-                        )
-                    )}
-                    {isReadOnly && <span className="px-3 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded-full border border-yellow-500/20">Read Only View</span>}
-                    <div className="text-xs text-gray-400">
-                        {segments.filter(s => s.status === 'CONFIRMED').length} / {segments.length} Confirmed
-                    </div>
-                    <div className="w-32 h-2 bg-white/10 rounded-full overflow-hidden">
-                        <div
-                            className="h-full bg-blue-500 transition-all duration-500"
-                            style={{ width: `${(segments.filter(s => s.status === 'CONFIRMED').length / segments.length) * 100}%` }}
-                        />
+                        )}
+
+                        {/* AI Translate Page Button */}
+                        {!isReadOnly && (settings.enable_ai_translation_all === true || String(settings.enable_ai_translation_all) === 'true') && user?.role !== 'CLIENT' && (
+                            (isTranslatingAll || isBackgroundTranslating) ? (
+                                <button
+                                    onClick={async () => {
+                                        try {
+                                            // @ts-ignore
+                                            await useEditorStore.getState().stopTranslation(projectId, effectiveFileId);
+                                            toast.success('Stopping translation...');
+                                        } catch (e: any) {
+                                            toast.error('Failed to stop translation');
+                                        }
+                                    }}
+                                    className="bg-red-500 hover:bg-red-600 text-white text-[10px] md:text-xs px-2 md:px-3 py-1.5 rounded-lg flex items-center gap-2 transition-colors shadow-lg shadow-red-900/20 whitespace-nowrap"
+                                >
+                                    <span className="animate-pulse w-1.5 h-1.5 md:w-2 md:h-2 bg-white rounded-full"></span>
+                                    <span className="hidden sm:inline">Stop</span>
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={async () => {
+                                        if (window.confirm(`WARNING: You are about to translate THIS PAGE (${segments.length} segments) using AI.\n\n- Existing unconfirmed segments will be overwritten.\n- This action cannot be undone.\n\nAre you sure you want to proceed?`)) {
+                                            try {
+                                                const currentSegmentIds = segments.map(s => s._id);
+                                                // @ts-ignore
+                                                const msg = await useEditorStore.getState().translateAll(projectId, effectiveFileId, selectedTargetLang, currentSegmentIds);
+                                                toast.success(msg || 'Translation started in background');
+                                            } catch (e: any) {
+                                                toast.error(e.response?.data?.message || 'Failed to auto-translate page');
+                                            }
+                                        }
+                                    }}
+                                    className="bg-purple-600 hover:bg-purple-500 text-white text-[10px] md:text-xs px-2 md:px-3 py-1.5 rounded-lg flex items-center gap-2 transition-colors shadow-lg shadow-purple-900/20 whitespace-nowrap"
+                                >
+                                    <Sparkles size={14} />
+                                    <span className="hidden md:inline">AI Translate Page</span>
+                                    <span className="md:hidden">Auto</span>
+                                </button>
+                            )
+                        )}
+                        {isReadOnly && <span className="px-2 py-1 bg-yellow-500/20 text-yellow-400 text-[10px] rounded-full border border-yellow-500/20 whitespace-nowrap">Read Only</span>}
+                        
+                        {/* Progress Bar - Hidden on very small screens, visible on others */}
+                        <div className="hidden sm:block w-24 md:w-32 h-2 bg-white/10 rounded-full overflow-hidden shrink-0">
+                            <div
+                                className="h-full bg-blue-500 transition-all duration-500"
+                                style={{ width: `${(segments.filter(s => s.status === 'CONFIRMED').length / segments.length) * 100}%` }}
+                            />
+                        </div>
+                        {/* Progress Text - Mobile Only replacement for bar */}
+                        <div className="sm:hidden text-[10px] font-mono text-blue-400">
+                             {Math.round((segments.filter(s => s.status === 'CONFIRMED').length / segments.length) * 100)}%
+                        </div>
                     </div>
                 </div>
             </header >
@@ -282,16 +282,16 @@ export const Editor = () => {
                                 >
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4">
                                         {/* Source */}
-                                        <div className="p-3 md:p-4 border-b md:border-b-0 md:border-r border-gray-100 dark:border-white/5 text-gray-700 dark:text-gray-300 leading-relaxed">
-                                            <span className="text-xs text-gray-400 dark:text-gray-600 font-mono mr-2 select-none">{segment.sequence}</span>
+                                        <div className="p-3 md:p-4 border-b md:border-b-0 md:border-r border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-white/[0.02] md:bg-transparent text-gray-700 dark:text-gray-300 leading-relaxed font-serif md:font-sans text-[15px] md:text-base">
+                                            <span className="text-xs text-blue-400/50 font-mono mr-2 select-none mb-1 block md:inline md:mb-0">#{segment.sequence}</span>
                                             <GlossaryHighlighter text={segment.sourceText} terms={glossaryTerms} />
                                         </div>
 
                                         {/* Target */}
-                                        <div className="p-3 md:p-4 relative">
+                                        <div className="p-3 md:p-4 relative bg-white dark:bg-transparent">
                                             {isActive && !isReadOnly ? (
                                                 <textarea
-                                                    className="w-full bg-transparent border-none outline-none text-gray-900 dark:text-white resize-none h-full min-h-[80px] placeholder-gray-400 dark:placeholder-gray-600"
+                                                    className="w-full bg-transparent border-none outline-none text-gray-900 dark:text-white resize-none h-full min-h-[100px] md:min-h-[80px] placeholder-gray-400 dark:placeholder-gray-600 text-[15px] md:text-base leading-relaxed"
                                                     value={segment.targetText}
                                                     onChange={(e) => updateSegmentLocal(segment._id, e.target.value)}
                                                     onKeyDown={(e) => handleKeyDown(e, segment._id)}
@@ -318,26 +318,27 @@ export const Editor = () => {
                                             animate={{ opacity: 1, height: 'auto' }}
                                             className="border-t border-white/5 bg-black/20 px-4 py-2 flex justify-between items-center rounded-b-xl"
                                         >
-                                            <div className="flex gap-2">
+                                            <div className="flex gap-2 w-full md:w-auto justify-between md:justify-start">
                                                 {(settings.enable_ai_features !== false && String(settings.enable_ai_features) !== 'false') &&
                                                     (settings.enable_ai_single_suggestion !== false && String(settings.enable_ai_single_suggestion) !== 'false') && (
                                                         <button
                                                             onClick={() => generateAI(segment._id)}
                                                             disabled={generatingAiSegmentIds.includes(segment._id)}
-                                                            className="text-xs flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-500/10 text-purple-400 hover:bg-purple-500/20 disabled:opacity-50 transition-colors"
+                                                            className="text-xs flex items-center gap-1.5 px-3 py-2 md:py-1.5 rounded-lg bg-purple-500/10 text-purple-400 hover:bg-purple-500/20 disabled:opacity-50 transition-colors"
                                                         >
                                                             {generatingAiSegmentIds.includes(segment._id) ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} />}
-                                                            AI Suggestion
+                                                            <span className="md:hidden">AI</span>
+                                                            <span className="hidden md:inline">AI Suggestion</span>
                                                         </button>
                                                     )}
 
                                                 {segment.aiSuggestion && (
-                                                    <span className={`text-xs flex items-center ${segment.aiSuggestion.startsWith('[') ? 'text-red-400' : 'text-gray-500'}`}>
-                                                        {segment.aiSuggestion}
+                                                    <span className={`text-xs flex items-center flex-1 mx-2 truncate ${segment.aiSuggestion.startsWith('[') ? 'text-red-400' : 'text-gray-500'}`}>
+                                                        <span className="truncate">{segment.aiSuggestion}</span>
                                                         {!segment.aiSuggestion.startsWith('[') && (
                                                             <button
                                                                 onClick={() => updateSegmentLocal(segment._id, segment.aiSuggestion!)}
-                                                                className="ml-2 text-blue-400 hover:underline"
+                                                                className="ml-2 text-blue-400 hover:underline shrink-0"
                                                             >
                                                                 Use
                                                             </button>

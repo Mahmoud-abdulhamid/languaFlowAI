@@ -1,3 +1,4 @@
+```
 import React, { useEffect } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { LayoutDashboard, FileText, Settings, LogOut, Code2, UserPlus, Languages, Users, Shield, User, Menu, X, Sun, Moon, BookOpen, PanelLeftOpen, PanelLeftClose, MessageSquare, ChevronDown, Activity } from 'lucide-react';
@@ -140,13 +141,6 @@ export const Layout = () => {
             path: '/projects',
             badge: stats?.projects?.total
         },
-        ...(user?.role === 'SUPER_ADMIN' ? [
-            {
-                icon: Activity,
-                label: 'Live Traffic',
-                path: '/live'
-            }
-        ] : []),
         ...(user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN' ? [
             {
                 icon: Users,
@@ -405,6 +399,15 @@ export const Layout = () => {
                                                     >
                                                         <User size={16} /> My Profile
                                                     </Link>
+                                                    {['ADMIN', 'SUPER_ADMIN'].includes(user?.role || '') && (
+                                                        <Link
+                                                            to="/activity"
+                                                            onClick={() => setIsProfileMenuOpen(false)}
+                                                            className="flex items-center gap-2 px-3 py-2 text-sm text-muted hover:text-foreground hover:bg-secondary/10 rounded-lg transition-colors"
+                                                        >
+                                                            <Activity size={16} /> Activity
+                                                        </Link>
+                                                    )}
                                                     {/* Settings for Admins */}
                                                     {(user.role === 'ADMIN' || user.role === 'SUPER_ADMIN') && (
                                                         <Link

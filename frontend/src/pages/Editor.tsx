@@ -333,12 +333,12 @@ export const Editor = () => {
                                                     )}
 
                                                 {segment.aiSuggestion && (
-                                                    <span className={`text-xs flex items-center flex-1 mx-2 truncate ${segment.aiSuggestion.startsWith('[') ? 'text-red-400' : 'text-gray-500'}`}>
-                                                        <span className="truncate">{segment.aiSuggestion}</span>
+                                                    <span className={`text-xs flex flex-col md:flex-row md:items-center flex-1 mx-2 min-w-0 ${segment.aiSuggestion.startsWith('[') ? 'text-red-400' : 'text-gray-500'}`}>
+                                                        <span className="break-words whitespace-pre-wrap">{segment.aiSuggestion}</span>
                                                         {!segment.aiSuggestion.startsWith('[') && (
                                                             <button
                                                                 onClick={() => updateSegmentLocal(segment._id, segment.aiSuggestion!)}
-                                                                className="ml-2 text-blue-400 hover:underline shrink-0"
+                                                                className="mt-1 md:mt-0 md:ml-2 text-blue-400 hover:underline shrink-0 text-left md:text-auto"
                                                             >
                                                                 Use
                                                             </button>

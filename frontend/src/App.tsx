@@ -143,7 +143,7 @@ function App() {
             </ProtectedRoute>
           } />
           <Route path="live" element={
-            <ProtectedRoute allowedRoles={['ADMIN', 'SUPER_ADMIN']}>
+            <ProtectedRoute allowedRoles={['SUPER_ADMIN']}>
               <LiveDashboard />
             </ProtectedRoute>
           } />

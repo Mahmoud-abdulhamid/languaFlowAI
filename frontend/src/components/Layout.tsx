@@ -140,12 +140,14 @@ export const Layout = () => {
             path: '/projects',
             badge: stats?.projects?.total
         },
-        ...(user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN' ? [
+        ...(user?.role === 'SUPER_ADMIN' ? [
             {
                 icon: Activity,
                 label: 'Live Traffic',
                 path: '/live'
-            },
+            }
+        ] : []),
+        ...(user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN' ? [
             {
                 icon: Users,
                 label: 'Users',

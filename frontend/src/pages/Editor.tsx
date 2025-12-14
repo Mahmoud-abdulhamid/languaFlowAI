@@ -282,7 +282,7 @@ export const Editor = () => {
                                 >
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4">
                                         {/* Source */}
-                                        <div className="p-3 md:p-4 border-b md:border-b-0 md:border-r border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-white/[0.02] md:bg-transparent text-gray-700 dark:text-gray-300 leading-relaxed font-serif md:font-sans text-[15px] md:text-base">
+                                        <div className="p-3 md:p-4 border-b md:border-b-0 md:border-r border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-white/[0.02] md:bg-transparent text-gray-700 dark:text-gray-300 leading-relaxed font-serif md:font-sans text-[15px] md:text-base break-words whitespace-pre-wrap">
                                             <span className="text-xs text-blue-400/50 font-mono mr-2 select-none mb-1 block md:inline md:mb-0">#{segment.sequence}</span>
                                             <GlossaryHighlighter text={segment.sourceText} terms={glossaryTerms} />
                                         </div>

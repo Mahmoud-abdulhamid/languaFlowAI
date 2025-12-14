@@ -55,6 +55,24 @@ export const ProjectNotes = ({ projectId }: ProjectNotesProps) => {
     // Auto-scroll effect
     const prevNotesLength = useRef(0);
     const [hasLoadedInitially, setHasLoadedInitially] = useState(false);
+    const savedScrollPos = useRef(0);
+
+    // Handle Full Screen Scroll Behavior
+    useEffect(() => {
+        if (isFullScreen) {
+            savedScrollPos.current = window.scrollY;
+            document.body.style.overflow = 'hidden';
+            window.scrollTo({ top: 0, behavior: 'instant' });
+        } else {
+            document.body.style.overflow = '';
+            if (savedScrollPos.current > 0) {
+                window.scrollTo({ top: savedScrollPos.current, behavior: 'instant' });
+            }
+        }
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [isFullScreen]);
 
     // Auto-scroll effect
     useEffect(() => {
@@ -334,11 +352,11 @@ export const ProjectNotes = ({ projectId }: ProjectNotesProps) => {
     const uniqueUsers = Array.from(new Set(notes.map(n => n.user._id))).map(id => notes.find(n => n.user._id === id)?.user).filter((u): u is Note['user'] => u !== undefined).slice(0, 5);
 
     return (
-        <div className={`transition-all duration-300 ${isFullScreen ? 'fixed inset-0 z-50 bg-background p-0 md:p-4 flex flex-col' : ''}`}>
-            <GlassCard className={`p-0 overflow-hidden transition-all duration-300 ${isExpanded ? '' : 'hover:bg-secondary/5'} ${isFullScreen ? 'h-full flex flex-col' : ''}`}>
+        <div className={`transition-all duration-300 ${isFullScreen ? 'fixed inset-0 z-50 bg-background flex flex-col' : ''}`}>
+            <GlassCard className={`p-0 overflow-hidden transition-all duration-300 ${isExpanded ? '' : 'hover:bg-secondary/5'} ${isFullScreen ? 'h-full flex flex-col !bg-background !backdrop-blur-none !border-none !shadow-none !rounded-none' : ''}`}>
                 {/* Header */}
                 <div
-                    className={`p-6 flex justify-between items-center cursor-pointer ${isExpanded ? `border-b ${isFullScreen ? 'border-gray-200 dark:border-gray-800 bg-surface' : 'border-glass-border bg-secondary/5'}` : ''}`}
+                    className={`p-6 flex justify-between items-center cursor-pointer ${isExpanded ? `border-b ${isFullScreen ? 'border-gray-200 dark:border-gray-800 bg-background' : 'border-glass-border bg-secondary/5'}` : ''}`}
                     onClick={() => setIsExpanded(!isExpanded)}
                 >
                 <div className="flex items-center gap-3">

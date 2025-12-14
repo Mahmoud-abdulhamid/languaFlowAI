@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, FileText, Settings, LogOut, Code2, UserPlus, Languages, Users, Shield, User, Menu, X, Sun, Moon, BookOpen, PanelLeftOpen, PanelLeftClose, MessageSquare, ChevronDown } from 'lucide-react';
+import { LayoutDashboard, FileText, Settings, LogOut, Code2, UserPlus, Languages, Users, Shield, User, Menu, X, Sun, Moon, BookOpen, PanelLeftOpen, PanelLeftClose, MessageSquare, ChevronDown, Activity } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore';
 import clsx from 'clsx';
 import { useSystemStore } from '../store/useSystemStore';
@@ -140,7 +140,14 @@ export const Layout = () => {
             path: '/projects',
             badge: stats?.projects?.total
         },
+import { LayoutDashboard, FileText, Settings, LogOut, Code2, UserPlus, Languages, Users, Shield, User, Menu, X, Sun, Moon, BookOpen, PanelLeftOpen, PanelLeftClose, MessageSquare, ChevronDown, Activity } from 'lucide-react';
+// ...
         ...(user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN' ? [
+            {
+                icon: Activity,
+                label: 'Live Traffic',
+                path: '/live'
+            },
             {
                 icon: Users,
                 label: 'Users',

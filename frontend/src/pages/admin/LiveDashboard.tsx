@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSocketStore } from '../../store/useSocketStore';
+import { useChatStore } from '../../store/useChatStore';
 import { motion } from 'framer-motion';
 import { Users, Globe, Clock, Monitor, Smartphone, MapPin, Activity } from 'lucide-react';
 
@@ -18,7 +18,7 @@ interface Session {
 }
 
 export const LiveDashboard = () => {
-    const { socket } = useSocketStore();
+    const { socket } = useChatStore();
     const [sessions, setSessions] = useState<Session[]>([]);
 
     useEffect(() => {

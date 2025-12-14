@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useSocketStore } from '../store/useSocketStore';
+import { useChatStore } from '../store/useChatStore';
 
 export const usePageTracking = () => {
     const location = useLocation();
-    const { socket } = useSocketStore();
+    const { socket } = useChatStore();
 
     useEffect(() => {
         if (socket) {

@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { NotFoundPage } from './pages/NotFoundPage';
@@ -13,6 +14,18 @@ import { UsersPage } from './pages/admin/Users';
 import { RolesPage } from './pages/admin/Roles';
 import { usePageTracking } from './hooks/usePageTracking';
 import { LiveDashboard } from './pages/admin/LiveDashboard';
+import { Layout } from './components/Layout';
+import { ProtectedRoute } from './components/ProtectedRoute';
+import { LandingPage } from './pages/LandingPage';
+import { PublicProfile } from './pages/PublicProfile';
+import { ProfilePage } from './pages/ProfilePage';
+import { SettingsPage } from './pages/SettingsPage';
+import { GlossaryPage } from './pages/GlossaryPage';
+import { MaintenancePage } from './pages/MaintenancePage';
+import { useAuthStore } from './store/useAuthStore';
+import { useThemeStore } from './store/useThemeStore';
+import { useSystemStore } from './store/useSystemStore';
+import api from './api/axios';
 
 // ...
 

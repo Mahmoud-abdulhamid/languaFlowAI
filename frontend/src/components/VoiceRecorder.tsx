@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Mic, X, Send } from 'lucide-react';
-import { motion, AnimatePresence, PanInfo } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface VoiceRecorderProps {
     onSend: (audioBlob: Blob, duration: number, waveform: number[]) => void;
@@ -133,7 +133,7 @@ export const VoiceRecorder = ({ onSend, onCancel }: VoiceRecorderProps) => {
         }
     };
 
-    const handlePanEnd = (event: any, info: PanInfo) => {
+    const handlePanEnd = (event: any, info: any) => {
         if (info.offset.x < -100) {
             // Swiped left more than 100px - cancel
             stopRecording(false);
@@ -142,7 +142,7 @@ export const VoiceRecorder = ({ onSend, onCancel }: VoiceRecorderProps) => {
         }
     };
 
-    const handlePan = (event: any, info: PanInfo) => {
+    const handlePan = (event: any, info: any) => {
         if (info.offset.x < 0) {
             const progress = Math.min(Math.abs(info.offset.x) / 100, 1);
             setCancelProgress(progress);

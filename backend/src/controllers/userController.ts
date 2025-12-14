@@ -331,13 +331,10 @@ export const getDemoUsers = async (req: Request, res: Response) => {
                 if (user.role === 'CLIENT') {
                     // Count projects where user is the client
                     projectCount = await Project.countDocuments({ clientId: user._id });
-                } else if (user.role === 'TRANSLATOR' || user.role === 'HEAD_TRANSLATOR') {
+                } else if (user.role === 'TRANSLATOR') {
                     // Count projects where user is assigned as translator
                     projectCount = await Project.countDocuments({
-                        $or: [
-                            { translators: user._id },
-                            { headTranslator: user._id }
-                        ]
+                        translators: user._id
                     });
                 }
 
@@ -350,9 +347,8 @@ export const getDemoUsers = async (req: Request, res: Response) => {
         const rolePriority: { [key: string]: number } = {
             'SUPER_ADMIN': 0,
             'ADMIN': 1,
-            'HEAD_TRANSLATOR': 2,
-            'TRANSLATOR': 3,
-            'CLIENT': 4
+            'TRANSLATOR': 2,
+            'CLIENT': 3
         };
 
         const sortedUsers = userProjectCounts.sort((a, b) => {
@@ -377,7 +373,6 @@ export const getDemoUsers = async (req: Request, res: Response) => {
             name: user.name,
             email: user.email,
             role: user.role === 'SUPER_ADMIN' ? 'Super Admin' :
-                user.role === 'HEAD_TRANSLATOR' ? 'Head Translator' :
                     user.role.charAt(0) + user.role.slice(1).toLowerCase(),
             avatar: user.avatar,
             projectCount,

@@ -11,39 +11,10 @@ import { CreateUser } from './pages/admin/CreateUser';
 import { LanguagesPage } from './pages/admin/Languages';
 import { UsersPage } from './pages/admin/Users';
 import { RolesPage } from './pages/admin/Roles';
-import { SettingsPage } from './pages/SettingsPage';
-import { ProfilePage } from './pages/ProfilePage';
-import { PublicProfile } from './pages/PublicProfile';
-import { GlossaryPage } from './pages/GlossaryPage';
-import { Layout } from './components/Layout';
-import { LandingPage } from './pages/LandingPage';
-import { useAuthStore } from './store/useAuthStore';
-import { MaintenancePage } from './pages/MaintenancePage';
-import { useState, useEffect } from 'react';
-import api from './api/axios';
-import { useThemeStore } from './store/useThemeStore';
-import { useSystemStore } from './store/useSystemStore';
+import { usePageTracking } from './hooks/usePageTracking';
+import { LiveDashboard } from './pages/admin/LiveDashboard';
 
-// Protected Route Component
-const ProtectedRoute = ({ children, allowedRoles }: { children: React.ReactNode, allowedRoles?: string[] }) => {
-  const { token, user } = useAuthStore();
-  const location = useLocation();
-
-  if (!token) {
-    return <Navigate to="/login" replace state={{ from: location }} />;
-  }
-
-  // Super Admin Bypass
-  if (user?.role === 'SUPER_ADMIN') {
-    return <>{children}</>;
-  }
-
-  if (allowedRoles && user && !allowedRoles.includes(user.role)) {
-    return <Navigate to="/" replace />; // Redirect to dashboard if unauthorized
-  }
-
-  return <>{children}</>;
-};
+// ...
 
 function App() {
   const [maintenance, setMaintenance] = useState(false);
@@ -51,6 +22,9 @@ function App() {
   const { theme } = useThemeStore();
   const { fetchSettings } = useSystemStore();
   const location = useLocation();
+
+  // Initialize Page Tracking
+  usePageTracking();
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -161,6 +135,16 @@ function App() {
           <Route path="roles" element={
             <ProtectedRoute allowedRoles={['SUPER_ADMIN']}>
               <RolesPage />
+            </ProtectedRoute>
+          } />
+          <Route path="roles" element={
+            <ProtectedRoute allowedRoles={['SUPER_ADMIN']}>
+              <RolesPage />
+            </ProtectedRoute>
+          } />
+          <Route path="live" element={
+            <ProtectedRoute allowedRoles={['ADMIN', 'SUPER_ADMIN']}>
+              <LiveDashboard />
             </ProtectedRoute>
           } />
         </Route>

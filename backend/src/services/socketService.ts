@@ -2,6 +2,7 @@ import { Server as HttpServer } from 'http';
 import { Server, Socket } from 'socket.io';
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
 import { User } from '../models/User';
+import geoip from 'geoip-lite';
 
 let io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>;
 
@@ -13,7 +14,62 @@ export const initSocket = (httpServer: HttpServer) => {
         }
     });
 
+    // Live Tracking Memory Store
+    // socketId -> Session Data
+    const activeSessions = new Map<string, {
+        socketId: string;
+        userId?: string;
+        role?: string;
+        ip: string;
+        country: string;
+        pageTitle?: string;
+        pageUrl?: string;
+        browser?: string;
+        os?: string;
+        connectedAt: Date;
+        lastActive: Date;
+    }>();
+
+    // Broadcast live stats to admins
+    setInterval(() => {
+        const sessions = Array.from(activeSessions.values());
+        io.to('admin_live_dashboard').emit('live_users_update', sessions);
+    }, 2000); // Update every 2 seconds
+
     io.on('connection', (socket: Socket) => {
+        const ip = socket.handshake.headers['x-forwarded-for'] || socket.handshake.address;
+        const userAgent = socket.handshake.headers['user-agent'] || 'Unknown';
+        
+        // Basic parser for OS/Browser from User-Agent (Simple heuristic)
+        let os = 'Unknown OS';
+        if (userAgent.includes('Win')) os = 'Windows';
+        else if (userAgent.includes('Mac')) os = 'MacOS';
+        else if (userAgent.includes('Linux')) os = 'Linux';
+        else if (userAgent.includes('Android')) os = 'Android';
+        else if (userAgent.includes('iOS')) os = 'iOS';
+
+        let browser = 'Unknown Browser';
+        if (userAgent.includes('Chrome')) browser = 'Chrome';
+        else if (userAgent.includes('Firefox')) browser = 'Firefox';
+        else if (userAgent.includes('Safari')) browser = 'Safari';
+        else if (userAgent.includes('Edge')) browser = 'Edge';
+
+        // Resolve Country
+        const geo = geoip.lookup(Array.isArray(ip) ? ip[0] : ip);
+        const country = geo ? geo.country : 'Unknown';
+
+        // Register initial session (Guest)
+        activeSessions.set(socket.id, {
+            socketId: socket.id,
+            ip: Array.isArray(ip) ? ip[0] : ip,
+            country: country,
+            pageUrl: '/connecting...',
+            browser,
+            os,
+            connectedAt: new Date(),
+            lastActive: new Date()
+        });
+
         console.log('Client connected:', socket.id);
 
         socket.on('join_user', async (userId: string) => {
@@ -29,6 +85,15 @@ export const initSocket = (httpServer: HttpServer) => {
                         { status: 'ONLINE', socketId: socket.id, lastSeen: new Date() },
                         { upsert: true }
                     );
+
+                    // Update session memory
+                    const session = activeSessions.get(socket.id);
+                    if (session) {
+                        session.userId = userId;
+                        // Fetch user role if needed, for now assume verified user
+                        // We could fetch role from DB here for perfect accuracy
+                        activeSessions.set(socket.id, session);
+                    }
 
                     // Update User model lastSeen
                     await User.findByIdAndUpdate(userId, { lastSeen: new Date() });
@@ -104,6 +169,35 @@ export const initSocket = (httpServer: HttpServer) => {
             socket.leave(`project_${projectId}`);
         });
 
+        socket.on('leave_project', (projectId: string) => {
+            socket.leave(`project_${projectId}`);
+        });
+
+        // --- Live Dashboard Events ---
+
+        socket.on('page_view', (data: { path: string, title: string }) => {
+            const session = activeSessions.get(socket.id);
+            if (session) {
+                session.pageUrl = data.path;
+                session.pageTitle = data.title;
+                session.lastActive = new Date();
+                activeSessions.set(socket.id, session);
+            }
+        });
+
+        socket.on('admin_subscribe_live', () => {
+            // In a real app, verify admin token/role here!
+            socket.join('admin_live_dashboard');
+            // Send immediate update
+            socket.emit('live_users_update', Array.from(activeSessions.values()));
+        });
+
+        socket.on('admin_unsubscribe_live', () => {
+            socket.leave('admin_live_dashboard');
+        });
+
+        // -----------------------------
+
         // ... inside disconnect ...
         socket.on('disconnect', async () => {
             // Update user status to OFFLINE
@@ -124,6 +218,7 @@ export const initSocket = (httpServer: HttpServer) => {
             } catch (err) {
                 console.error('Failed to update user status on disconnect', err);
             }
+            activeSessions.delete(socket.id);
             // console.log('Client disconnected:', socket.id);
         });
     });

@@ -316,15 +316,15 @@ export const Editor = () => {
                                         <motion.div
                                             initial={{ opacity: 0, height: 0 }}
                                             animate={{ opacity: 1, height: 'auto' }}
-                                            className="border-t border-white/5 bg-black/20 px-4 py-2 flex justify-between items-center rounded-b-xl"
+                                            className="border-t border-white/5 bg-black/20 px-3 py-3 md:px-4 md:py-2 flex flex-col md:flex-row justify-between items-stretch md:items-center gap-3 md:gap-0 rounded-b-xl"
                                         >
-                                            <div className="flex gap-2 w-full md:w-auto justify-between md:justify-start">
+                                            <div className="flex gap-2 items-center w-full md:w-auto overflow-hidden">
                                                 {(settings.enable_ai_features !== false && String(settings.enable_ai_features) !== 'false') &&
                                                     (settings.enable_ai_single_suggestion !== false && String(settings.enable_ai_single_suggestion) !== 'false') && (
                                                         <button
                                                             onClick={() => generateAI(segment._id)}
                                                             disabled={generatingAiSegmentIds.includes(segment._id)}
-                                                            className="text-xs flex items-center gap-1.5 px-3 py-2 md:py-1.5 rounded-lg bg-purple-500/10 text-purple-400 hover:bg-purple-500/20 disabled:opacity-50 transition-colors"
+                                                            className="text-xs flex items-center gap-1.5 px-3 py-2 md:py-1.5 rounded-lg bg-purple-500/10 text-purple-400 hover:bg-purple-500/20 disabled:opacity-50 transition-colors shrink-0"
                                                         >
                                                             {generatingAiSegmentIds.includes(segment._id) ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} />}
                                                             <span className="md:hidden">AI</span>
@@ -346,12 +346,12 @@ export const Editor = () => {
                                                     </span>
                                                 )}
                                             </div>
-                                            <div className="flex gap-2">
+                                            <div className="flex gap-2 justify-end md:justify-start">
                                                 <span className="text-[10px] text-gray-500 uppercase tracking-wider self-center mr-2 hidden sm:block">Ctrl+Enter to Confirm</span>
                                                 <button
                                                     onClick={() => confirmSegment(segment._id)}
                                                     disabled={!segment.targetText || !segment.targetText.trim()}
-                                                    className="text-xs flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-green-600 hover:bg-green-500 text-white font-medium shadow-lg shadow-green-900/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                                    className="w-full md:w-auto text-xs flex items-center justify-center gap-1.5 px-4 py-2 md:py-1.5 rounded-lg bg-green-600 hover:bg-green-500 text-white font-medium shadow-lg shadow-green-900/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                                 >
                                                     <Check size={14} />
                                                     Confirm

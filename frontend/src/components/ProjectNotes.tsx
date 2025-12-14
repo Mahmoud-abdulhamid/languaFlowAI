@@ -338,7 +338,7 @@ export const ProjectNotes = ({ projectId }: ProjectNotesProps) => {
             <GlassCard className={`p-0 overflow-hidden transition-all duration-300 ${isExpanded ? '' : 'hover:bg-secondary/5'} ${isFullScreen ? 'h-full flex flex-col' : ''}`}>
                 {/* Header */}
                 <div
-                    className={`p-6 flex justify-between items-center cursor-pointer ${isExpanded ? 'border-b border-glass-border bg-secondary/5' : ''}`}
+                    className={`p-6 flex justify-between items-center cursor-pointer ${isExpanded ? `border-b ${isFullScreen ? 'border-gray-200 dark:border-gray-800 bg-surface' : 'border-glass-border bg-secondary/5'}` : ''}`}
                     onClick={() => setIsExpanded(!isExpanded)}
                 >
                 <div className="flex items-center gap-3">
@@ -424,7 +424,7 @@ export const ProjectNotes = ({ projectId }: ProjectNotesProps) => {
 
             {/* Content Body (Collapsible) */}
             {isExpanded && (
-                <div className={`bg-secondary/5 ${isFullScreen ? 'flex-1 flex flex-col min-h-0' : ''}`}>
+                <div className={`${isFullScreen ? 'bg-background flex-1 flex flex-col min-h-0' : 'bg-secondary/5'}`}>
                     {isNotesDisabled && (
                         <div className="m-4 mb-0 bg-red-500/10 border border-red-500/20 rounded-lg p-3 flex items-center gap-2 text-sm text-red-200">
                             <EyeOff size={16} />
@@ -437,10 +437,10 @@ export const ProjectNotes = ({ projectId }: ProjectNotesProps) => {
                             <div className="text-center text-muted py-8">No notes yet. Start a discussion!</div>
                         ) : (
                             threads.map(thread => (
-                                <div key={thread._id} className={`bg-secondary/5 rounded-xl p-4 border ${thread.isHidden ? 'border-red-500/20 bg-red-500/5' : 'border-glass-border'}`}>
+                                <div key={thread._id} className={`${isFullScreen ? 'bg-surface border-gray-200 dark:border-gray-800' : 'bg-secondary/5 border-glass-border'} rounded-xl p-4 border ${thread.isHidden ? 'border-red-500/20 bg-red-500/5' : ''}`}>
                                     <NoteItem note={thread} />
                                     {thread.replies.length > 0 && (
-                                        <div className="mt-4 pl-8 space-y-4 relative before:absolute before:left-4 before:top-2 before:bottom-0 before:w-0.5 before:bg-glass-border">
+                                        <div className={`mt-4 pl-8 space-y-4 relative before:absolute before:left-4 before:top-2 before:bottom-0 before:w-0.5 ${isFullScreen ? 'before:bg-gray-200 dark:before:bg-gray-700' : 'before:bg-glass-border'}`}>
                                             {thread.replies.map(reply => (
                                                 <NoteItem key={reply._id} note={reply} isReply={true} />
                                             ))}
@@ -454,7 +454,7 @@ export const ProjectNotes = ({ projectId }: ProjectNotesProps) => {
                                                     value={replyContent}
                                                     onChange={e => setReplyContent(e.target.value)}
                                                     placeholder="Write a reply..."
-                                                    className="flex-1 bg-secondary/10 border border-glass-border rounded-lg px-3 py-2 text-sm text-foreground focus:border-pink-500 outline-none"
+                                                    className={`flex-1 ${isFullScreen ? 'bg-background border-gray-200 dark:border-gray-700' : 'bg-secondary/10 border-glass-border'} border rounded-lg px-3 py-2 text-sm text-foreground focus:border-pink-500 outline-none`}
                                                     onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(thread._id); } }}
                                                 />
                                                 <button
@@ -474,12 +474,12 @@ export const ProjectNotes = ({ projectId }: ProjectNotesProps) => {
                     </div>
 
                     {!isReadOnly && (
-                        <div className="relative p-4 pt-2 border-t border-glass-border bg-secondary/5">
+                        <div className={`relative p-4 pt-2 border-t ${isFullScreen ? 'border-gray-200 dark:border-gray-800 bg-background' : 'border-glass-border bg-secondary/5'}`}>
                             <textarea
                                 value={newNote}
                                 onChange={e => setNewNote(e.target.value)}
                                 placeholder="Add a note to the team..."
-                                className="w-full bg-secondary/10 border border-glass-border rounded-xl p-3 pr-12 pb-10 text-foreground focus:border-pink-500 outline-none min-h-[60px] resize-none text-sm"
+                                className={`w-full ${isFullScreen ? 'bg-surface border-gray-200 dark:border-gray-800' : 'bg-secondary/10 border-glass-border'} border rounded-xl p-3 pr-12 pb-10 text-foreground focus:border-pink-500 outline-none min-h-[60px] resize-none text-sm`}
                                 onKeyDown={e => {
                                     if (e.key === 'Enter') {
                                         if (enterToSend && !e.shiftKey) {

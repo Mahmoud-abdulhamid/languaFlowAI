@@ -140,8 +140,6 @@ export const Layout = () => {
             path: '/projects',
             badge: stats?.projects?.total
         },
-import { LayoutDashboard, FileText, Settings, LogOut, Code2, UserPlus, Languages, Users, Shield, User, Menu, X, Sun, Moon, BookOpen, PanelLeftOpen, PanelLeftClose, MessageSquare, ChevronDown, Activity } from 'lucide-react';
-// ...
         ...(user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN' ? [
             {
                 icon: Activity,

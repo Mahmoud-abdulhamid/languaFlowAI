@@ -40,6 +40,11 @@ export const initSocket = (httpServer: HttpServer) => {
 
     // Helper: Convert IPv6-mapped IPv4 to pure IPv4
     const extractIPv4 = (ip: string): string => {
+        // IPv6 localhost
+        if (ip === '::1') {
+            return '127.0.0.1';
+        }
+        // IPv6-mapped IPv4
         if (ip.startsWith('::ffff:')) {
             return ip.replace('::ffff:', '');
         }
@@ -69,12 +74,12 @@ export const initSocket = (httpServer: HttpServer) => {
 
         // Resolve Country (skip localhost)
         let country = 'Unknown';
-        if (cleanIp !== '127.0.0.1' && cleanIp !== 'localhost' && !cleanIp.startsWith('192.168.')) {
+        if (cleanIp !== '127.0.0.1' && cleanIp !== 'localhost' && !cleanIp.startsWith('192.168.') && !cleanIp.startsWith('10.')) {
             const geo = geoip.lookup(cleanIp);
             country = geo ? geo.country : 'Unknown';
         } else {
             // For localhost/private IPs, set as local
-            country = 'Local';
+            country = 'LOCAL';
         }
 
         // Register initial session (Guest)

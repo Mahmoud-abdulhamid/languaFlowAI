@@ -169,6 +169,7 @@ const StatCard = ({ icon, label, value, color }: any) => (
 // Fallback flag mapper since we don't have real GeoIP for now
 const getFlagEmoji = (countryCode: string) => {
     if (!countryCode || countryCode === 'Unknown') return '🌍';
+    if (countryCode === 'LOCAL' || countryCode === 'Local') return '💻';
     const codePoints = countryCode
         .toUpperCase()
         .split('')

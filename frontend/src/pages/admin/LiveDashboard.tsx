@@ -6,6 +6,8 @@ import { Users, Globe, Clock, Monitor, Smartphone, MapPin, Activity } from 'luci
 interface Session {
     socketId: string;
     userId?: string;
+    userName?: string;
+    userEmail?: string;
     role?: string;
     ip: string;
     country: string;
@@ -99,7 +101,9 @@ export const LiveDashboard = () => {
                                         <div className="flex items-center gap-3">
                                             <div className={`w-2 h-2 rounded-full ${session.userId ? 'bg-purple-400' : 'bg-gray-500'} animate-pulse`} />
                                             <div>
-                                                <div className="font-medium text-white">{session.userId ? `User ${session.userId.slice(-4)}` : 'Guest Visitor'}</div>
+                                                <div className="font-medium text-white">
+                                                    {session.userName || (session.userId ? `User ${session.userId.slice(-4)}` : 'Guest Visitor')}
+                                                </div>
                                                 <div className="text-xs text-gray-500 font-mono">{session.socketId.slice(0, 8)}...</div>
                                             </div>
                                         </div>

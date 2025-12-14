@@ -19,6 +19,8 @@ export const initSocket = (httpServer: HttpServer) => {
     const activeSessions = new Map<string, {
         socketId: string;
         userId?: string;
+        userName?: string;
+        userEmail?: string;
         role?: string;
         ip: string;
         country: string;
@@ -36,8 +38,19 @@ export const initSocket = (httpServer: HttpServer) => {
         io.to('admin_live_dashboard').emit('live_users_update', sessions);
     }, 2000); // Update every 2 seconds
 
+    // Helper: Convert IPv6-mapped IPv4 to pure IPv4
+    const extractIPv4 = (ip: string): string => {
+        if (ip.startsWith('::ffff:')) {
+            return ip.replace('::ffff:', '');
+        }
+        return ip;
+    };
+
     io.on('connection', (socket: Socket) => {
-        const ip = socket.handshake.headers['x-forwarded-for'] || socket.handshake.address;
+        let rawIp = socket.handshake.headers['x-forwarded-for'] || socket.handshake.address;
+        rawIp = Array.isArray(rawIp) ? rawIp[0] : rawIp;
+        const cleanIp = extractIPv4(rawIp);
+        
         const userAgent = socket.handshake.headers['user-agent'] || 'Unknown';
         
         // Basic parser for OS/Browser from User-Agent (Simple heuristic)
@@ -54,14 +67,20 @@ export const initSocket = (httpServer: HttpServer) => {
         else if (userAgent.includes('Safari')) browser = 'Safari';
         else if (userAgent.includes('Edge')) browser = 'Edge';
 
-        // Resolve Country
-        const geo = geoip.lookup(Array.isArray(ip) ? ip[0] : ip);
-        const country = geo ? geo.country : 'Unknown';
+        // Resolve Country (skip localhost)
+        let country = 'Unknown';
+        if (cleanIp !== '127.0.0.1' && cleanIp !== 'localhost' && !cleanIp.startsWith('192.168.')) {
+            const geo = geoip.lookup(cleanIp);
+            country = geo ? geo.country : 'Unknown';
+        } else {
+            // For localhost/private IPs, set as local
+            country = 'Local';
+        }
 
         // Register initial session (Guest)
         activeSessions.set(socket.id, {
             socketId: socket.id,
-            ip: Array.isArray(ip) ? ip[0] : ip,
+            ip: cleanIp,
             country: country,
             pageUrl: '/connecting...',
             browser,
@@ -86,12 +105,17 @@ export const initSocket = (httpServer: HttpServer) => {
                         { upsert: true }
                     );
 
-                    // Update session memory
+                    // Fetch user details from DB
+                    const user = await User.findById(userId).select('name email role');
+
+                    // Update session memory with full user data
                     const session = activeSessions.get(socket.id);
-                    if (session) {
+                    if (session && user) {
                         session.userId = userId;
-                        // Fetch user role if needed, for now assume verified user
-                        // We could fetch role from DB here for perfect accuracy
+                        session.role = user.role;
+                        // Store user name and email for display (optional)
+                        (session as any).userName = user.name;
+                        (session as any).userEmail = user.email;
                         activeSessions.set(socket.id, session);
                     }
 

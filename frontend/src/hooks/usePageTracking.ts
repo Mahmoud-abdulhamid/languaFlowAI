@@ -4,10 +4,18 @@ import { useChatStore } from '../store/useChatStore';
 
 export const usePageTracking = () => {
     const location = useLocation();
-    const { socket } = useChatStore();
+    const { socket, connectSocket } = useChatStore();
 
+    // Auto-connect socket if not connected
     useEffect(() => {
-        if (socket) {
+        if (!socket) {
+            connectSocket();
+        }
+    }, [socket, connectSocket]);
+
+    // Track page views
+    useEffect(() => {
+        if (socket && socket.connected) {
             const pageData = {
                 path: location.pathname,
                 title: document.title

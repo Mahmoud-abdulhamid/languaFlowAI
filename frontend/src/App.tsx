@@ -36,7 +36,7 @@ function App() {
   const { fetchSettings } = useSystemStore();
   const location = useLocation();
 
-  // Initialize Page Tracking
+  // Initialize Page Tracking for ALL pages (including landing & login)
   usePageTracking();
 
   useEffect(() => {

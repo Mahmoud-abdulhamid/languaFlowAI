@@ -51,10 +51,50 @@ export const initSocket = (httpServer: HttpServer) => {
         return ip;
     };
 
+    // Helper: Get real client IP from various sources
+    const getRealClientIP = (socket: Socket): string => {
+        // Try common proxy headers in order of preference
+        const headers = socket.handshake.headers;
+        
+        // CF-Connecting-IP (Cloudflare)
+        if (headers['cf-connecting-ip']) {
+            return Array.isArray(headers['cf-connecting-ip']) 
+                ? headers['cf-connecting-ip'][0] 
+                : headers['cf-connecting-ip'];
+        }
+        
+        // X-Real-IP (Nginx)
+        if (headers['x-real-ip']) {
+            return Array.isArray(headers['x-real-ip']) 
+                ? headers['x-real-ip'][0] 
+                : headers['x-real-ip'];
+        }
+        
+        // X-Forwarded-For (Standard proxy header, first IP is the real client)
+        if (headers['x-forwarded-for']) {
+            const forwarded = Array.isArray(headers['x-forwarded-for']) 
+                ? headers['x-forwarded-for'][0] 
+                : headers['x-forwarded-for'];
+            // X-Forwarded-For can be: "client, proxy1, proxy2"
+            const firstIP = forwarded.split(',')[0].trim();
+            return firstIP;
+        }
+        
+        // Fallback to direct connection address
+        return socket.handshake.address;
+    };
+
     io.on('connection', (socket: Socket) => {
-        let rawIp = socket.handshake.headers['x-forwarded-for'] || socket.handshake.address;
+        let rawIp = getRealClientIP(socket);
         rawIp = Array.isArray(rawIp) ? rawIp[0] : rawIp;
         const cleanIp = extractIPv4(rawIp);
+        
+        // Debug log to see what IP we're getting
+        console.log('Client connected - Raw IP:', rawIp, 'Clean IP:', cleanIp, 'Headers:', {
+            'x-forwarded-for': socket.handshake.headers['x-forwarded-for'],
+            'x-real-ip': socket.handshake.headers['x-real-ip'],
+            'cf-connecting-ip': socket.handshake.headers['cf-connecting-ip']
+        });
         
         const userAgent = socket.handshake.headers['user-agent'] || 'Unknown';
         
@@ -113,14 +153,21 @@ export const initSocket = (httpServer: HttpServer) => {
                     // Fetch user details from DB
                     const user = await User.findById(userId).select('name email role');
 
+                    // Remove old sessions for this user (prevent duplicates)
+                    for (const [sid, session] of activeSessions.entries()) {
+                        if (session.userId === userId && sid !== socket.id) {
+                            activeSessions.delete(sid);
+                            console.log(`Removed old session ${sid} for user ${userId}`);
+                        }
+                    }
+
                     // Update session memory with full user data
                     const session = activeSessions.get(socket.id);
                     if (session && user) {
                         session.userId = userId;
                         session.role = user.role;
-                        // Store user name and email for display (optional)
-                        (session as any).userName = user.name;
-                        (session as any).userEmail = user.email;
+                        session.userName = user.name;
+                        session.userEmail = user.email;
                         activeSessions.set(socket.id, session);
                     }
 

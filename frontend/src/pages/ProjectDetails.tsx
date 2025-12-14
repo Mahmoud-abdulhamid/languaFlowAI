@@ -202,7 +202,7 @@ export const ProjectDetails = () => {
             </button>
 
             {/* Project Header - Full Width */}
-            <GlassCard className="p-6 md:p-8 relative overflow-hidden">
+            <GlassCard className="p-4 md:p-8 relative overflow-hidden">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div className="flex-1">
                         {isEditing ? (
@@ -247,8 +247,8 @@ export const ProjectDetails = () => {
                             </div>
                         ) : (
                             <div>
-                                <div className="flex items-center gap-3 mb-2">
-                                    <h1 className="text-3xl font-bold font-outfit text-foreground">{project.title}</h1>
+                                <div className="flex flex-wrap items-center gap-3 mb-2">
+                                    <h1 className="text-2xl md:text-3xl font-bold font-outfit text-foreground">{project.title}</h1>
                                     <span className={`px-3 py-1 rounded-full text-xs font-bold 
                                             ${project.status === 'COMPLETED' ? 'bg-green-500/20 text-green-600 dark:text-green-400' :
                                             project.status === 'ACTIVE' ? 'bg-blue-500/20 text-blue-600 dark:text-blue-400' :
@@ -281,7 +281,7 @@ export const ProjectDetails = () => {
                             </div>
                         )}
                     </div>
-                    <div className="flex gap-3">
+                    <div className="flex flex-wrap gap-3 mt-4 md:mt-0 w-full md:w-auto">
                         {/* Status Select */}
                         <div className="min-w-[150px]">
                             <select
@@ -318,8 +318,8 @@ export const ProjectDetails = () => {
                 <div className="lg:col-span-2 space-y-6">
 
                     {/* Stats & Files Section */}
-                    <GlassCard className="p-6 md:col-span-2 space-y-8">
-                        <div className="grid grid-cols-3 gap-4">
+                    <GlassCard className="p-4 md:p-6 md:col-span-2 space-y-8">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                             <div className="p-4 rounded-xl bg-secondary/5 border border-glass-border">
                                 <div className="text-muted text-xs mb-1">Total Words</div>
                                 <div className="text-2xl font-bold text-foreground font-outfit">
@@ -327,7 +327,7 @@ export const ProjectDetails = () => {
                                 </div>
                             </div>
                             {(isClient || isAdmin) && (
-                                <div className="p-6 my-4 rounded-xl bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 flex justify-between items-center">
+                                <div className="p-4 md:p-6 my-4 rounded-xl bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                                     <div className="flex items-center gap-3">
                                         <div className="p-2 bg-green-500/20 rounded-lg text-green-600 dark:text-green-400">
                                             <DollarSign size={20} />
@@ -345,7 +345,7 @@ export const ProjectDetails = () => {
                         </div>
 
                         <div>
-                            <div className="flex justify-between items-center mb-4">
+                            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
                                 <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
                                     <FileText size={20} className="text-blue-600 dark:text-blue-400" />
                                     Project Files
@@ -386,7 +386,7 @@ export const ProjectDetails = () => {
                                     <div className="text-muted text-sm p-4 text-center border border-dashed border-glass-border rounded-xl">No files uploaded.</div>
                                 ) : (
                                     project.files.map((file: any, i: number) => (
-                                        <div key={i} className="flex justify-between items-center p-4 rounded-xl bg-secondary/5 border border-glass-border hover:border-glass-border/70 transition-colors">
+                                        <div key={i} className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 rounded-xl bg-secondary/5 border border-glass-border hover:border-glass-border/70 transition-colors gap-4">
                                             <div className="flex items-center gap-3 flex-1">
                                                 <div className="p-2 bg-blue-500/20 rounded-lg text-blue-600 dark:text-blue-400">
                                                     <FileText size={18} />

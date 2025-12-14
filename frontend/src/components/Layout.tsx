@@ -1,12 +1,9 @@
-```
 import React, { useEffect } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { LayoutDashboard, FileText, Settings, LogOut, Code2, UserPlus, Languages, Users, Shield, User, Menu, X, Sun, Moon, BookOpen, PanelLeftOpen, PanelLeftClose, MessageSquare, ChevronDown, Activity } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore';
 import clsx from 'clsx';
 import { useSystemStore } from '../store/useSystemStore';
-import { useDashboardStore } from '../store/useDashboardStore';
-import { useThemeStore } from '../store/useThemeStore';
 import { FaviconManager } from './FaviconManager';
 import { NotificationBell } from './NotificationBell';
 import { useChatStore } from '../store/useChatStore';
@@ -17,6 +14,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { createPortal } from 'react-dom';
 import { formatNumber } from '../utils/formatNumber';
 import { GlassNotification } from './GlassNotification';
+import api from '../api/axios';
 
 // --- Sidebar Item Component with Custom Tooltip ---
 const SidebarItem = ({ item, isCollapsed, isActive }: { item: any, isCollapsed: boolean, isActive: boolean }) => {
@@ -102,11 +100,19 @@ export const Layout = () => {
     const location = useLocation();
     const [isSidebarOpen, setIsSidebarOpen] = React.useState(true);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+    const [isMobileOpen, setIsMobileOpen] = React.useState(false);
+    const [isCollapsed, setIsCollapsed] = React.useState(() => {
+        const saved = localStorage.getItem('sidebar_collapsed');
+        return saved ? JSON.parse(saved) : false;
+    });
     const [isProfileMenuOpen, setIsProfileMenuOpen] = React.useState(false);
-    const { theme, toggleTheme } = useSystemStore();
-    const { settings } = useSystemStore();
+    const { theme, toggleTheme, settings } = useSystemStore();
     const [stats, setStats] = React.useState<any>(null);
     const { totalUnreadCount, toggleChat, connectSocket, fetchConversations, notification, hideNotification, selectConversation } = useChatStore();
+
+    useEffect(() => {
+        localStorage.setItem('sidebar_collapsed', JSON.stringify(isCollapsed));
+    }, [isCollapsed]);
 
     useEffect(() => {
         const fetchStats = async () => {

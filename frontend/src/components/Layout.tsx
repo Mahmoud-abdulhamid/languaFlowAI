@@ -424,7 +424,7 @@ export const Layout = () => {
                     </div>
                 </div>
 
-                <div className="bg-white/80 dark:bg-gray-900/50 backdrop-blur-md border border-glass-border rounded-2xl p-8 min-h-[calc(100vh-8rem)] shadow-sm relative z-0">
+                <div className="bg-white/80 dark:bg-gray-900/50 backdrop-blur-md border border-glass-border rounded-2xl p-0 md:p-8 min-h-[calc(100vh-8rem)] shadow-sm relative z-0">
                     <Outlet />
                 </div>
 

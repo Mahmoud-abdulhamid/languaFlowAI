@@ -356,7 +356,7 @@ export const ProjectNotes = ({ projectId }: ProjectNotesProps) => {
             <GlassCard className={`p-0 overflow-hidden transition-all duration-300 ${isExpanded ? '' : 'hover:bg-secondary/5'} ${isFullScreen ? 'h-full flex flex-col !bg-background !backdrop-blur-none !border-none !shadow-none !rounded-none' : ''}`}>
                 {/* Header */}
                 <div
-                    className={`p-3 md:p-6 flex justify-between items-center cursor-pointer ${isExpanded ? `border-b ${isFullScreen ? 'border-gray-200 dark:border-gray-800 bg-background' : 'border-glass-border bg-secondary/5'}` : ''}`}
+                    className={`p-1 md:p-6 flex justify-between items-center cursor-pointer ${isExpanded ? `border-b ${isFullScreen ? 'border-gray-200 dark:border-gray-800 bg-background' : 'border-glass-border bg-secondary/5'}` : ''}`}
                     onClick={() => setIsExpanded(!isExpanded)}
                 >
                 <div className="flex items-center gap-3">
@@ -450,12 +450,12 @@ export const ProjectNotes = ({ projectId }: ProjectNotesProps) => {
                         </div>
                     )}
 
-                    <div className={`p-3 md:p-4 space-y-3 md:space-y-4 overflow-y-auto pr-2 custom-scrollbar ${isFullScreen ? 'flex-1' : 'max-h-[350px]'}`}>
+                    <div className={`p-1 md:p-4 space-y-1 md:space-y-4 overflow-y-auto pr-2 custom-scrollbar ${isFullScreen ? 'flex-1' : 'max-h-[350px]'}`}>
                         {threads.length === 0 ? (
                             <div className="text-center text-muted py-8">No notes yet. Start a discussion!</div>
                         ) : (
                             threads.map(thread => (
-                                <div key={thread._id} className={`${isFullScreen ? 'bg-surface border-gray-200 dark:border-gray-800' : 'bg-secondary/5 border-glass-border'} rounded-xl p-3 md:p-4 border ${thread.isHidden ? 'border-red-500/20 bg-red-500/5' : ''}`}>
+                                <div key={thread._id} className={`${isFullScreen ? 'bg-surface border-gray-200 dark:border-gray-800' : 'bg-secondary/5 border-glass-border'} rounded-xl p-1 md:p-4 border ${thread.isHidden ? 'border-red-500/20 bg-red-500/5' : ''}`}>
                                     <NoteItem note={thread} />
                                     {thread.replies.length > 0 && (
                                         <div className={`mt-4 pl-8 space-y-4 relative before:absolute before:left-4 before:top-2 before:bottom-0 before:w-0.5 ${isFullScreen ? 'before:bg-gray-200 dark:before:bg-gray-700' : 'before:bg-glass-border'}`}>

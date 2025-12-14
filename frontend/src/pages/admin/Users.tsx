@@ -574,15 +574,19 @@ export const UsersPage = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-0 md:p-4"
                     >
                         <motion.div
                             initial={{ scale: 0.9, y: 20 }}
                             animate={{ scale: 1, y: 0 }}
                             exit={{ scale: 0.9, y: 20 }}
-                            className="w-full max-w-md"
+                            className="w-full h-full md:h-auto md:max-w-md"
                         >
-                            <GlassCard className="p-6 bg-surface">
+                            <GlassCard className="h-full md:h-auto rounded-none md:rounded-2xl p-6 bg-surface overflow-y-auto">
                                 <div className="flex justify-between items-center mb-6">
                                     <h2 className="text-xl font-bold text-foreground">Edit User</h2>
                                     <button onClick={closeModal} className="text-muted hover:text-foreground">

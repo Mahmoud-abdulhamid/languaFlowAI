@@ -334,7 +334,7 @@ export const ProjectNotes = ({ projectId }: ProjectNotesProps) => {
     const uniqueUsers = Array.from(new Set(notes.map(n => n.user._id))).map(id => notes.find(n => n.user._id === id)?.user).filter((u): u is Note['user'] => u !== undefined).slice(0, 5);
 
     return (
-        <div className={`transition-all duration-300 ${isFullScreen ? 'fixed inset-0 z-50 bg-background/95 backdrop-blur-sm p-4 flex flex-col' : ''}`}>
+        <div className={`transition-all duration-300 ${isFullScreen ? 'fixed inset-0 z-50 bg-background p-0 md:p-4 flex flex-col' : ''}`}>
             <GlassCard className={`p-0 overflow-hidden transition-all duration-300 ${isExpanded ? '' : 'hover:bg-secondary/5'} ${isFullScreen ? 'h-full flex flex-col' : ''}`}>
                 {/* Header */}
                 <div

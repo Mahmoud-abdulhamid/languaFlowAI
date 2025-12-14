@@ -130,8 +130,8 @@ export const Editor = () => {
     return (
         <div className="h-screen overflow-hidden bg-main text-foreground flex flex-col font-inter">
             {/* Top Bar */}
-            <header className="h-16 border-b border-glass-border bg-main/80 backdrop-blur-md sticky top-0 z-50 flex items-center justify-between px-6">
-                <div className="flex items-center gap-4">
+            <header className="h-16 border-b border-glass-border bg-main/80 backdrop-blur-md sticky top-0 z-50 flex items-center justify-between px-2 md:px-6">
+                <div className="flex items-center gap-2 md:gap-4">
                     <button onClick={() => navigate(-1)} className="p-2 hover:bg-secondary/10 rounded-lg text-muted hover:text-foreground transition-colors">
                         <ArrowLeft size={20} />
                     </button>
@@ -263,7 +263,7 @@ export const Editor = () => {
 
             {/* Editor Workspace */}
             < div className="flex-1 flex overflow-hidden" >
-                <main className="flex-1 overflow-y-auto p-6 max-w-5xl mx-auto w-full space-y-4 pb-40">
+                <main className="flex-1 overflow-y-auto p-2 md:p-6 max-w-5xl mx-auto w-full space-y-3 md:space-y-4 pb-24 md:pb-40">
                     <AnimatePresence>
                         {segments.map((segment) => {
                             const isActive = segment._id === activeSegmentId;
@@ -282,13 +282,13 @@ export const Editor = () => {
                                 >
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4">
                                         {/* Source */}
-                                        <div className="p-4 border-b md:border-b-0 md:border-r border-gray-100 dark:border-white/5 text-gray-700 dark:text-gray-300 leading-relaxed">
+                                        <div className="p-3 md:p-4 border-b md:border-b-0 md:border-r border-gray-100 dark:border-white/5 text-gray-700 dark:text-gray-300 leading-relaxed">
                                             <span className="text-xs text-gray-400 dark:text-gray-600 font-mono mr-2 select-none">{segment.sequence}</span>
                                             <GlossaryHighlighter text={segment.sourceText} terms={glossaryTerms} />
                                         </div>
 
                                         {/* Target */}
-                                        <div className="p-4 relative">
+                                        <div className="p-3 md:p-4 relative">
                                             {isActive && !isReadOnly ? (
                                                 <textarea
                                                     className="w-full bg-transparent border-none outline-none text-gray-900 dark:text-white resize-none h-full min-h-[80px] placeholder-gray-400 dark:placeholder-gray-600"

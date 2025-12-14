@@ -5,7 +5,7 @@ import { useSystemStore } from '../store/useSystemStore';
 import { useNotificationStore } from '../store/useNotificationStore';
 import { useProjectStore } from '../store/useProjectStore';
 import { GlassCard } from './GlassCard';
-import { MessageSquare, Send, Reply, Trash2, Eye, EyeOff, Paperclip, MoreVertical, ShieldAlert, ChevronDown, ChevronUp } from 'lucide-react';
+import { MessageSquare, Send, Reply, Trash2, Eye, EyeOff, Paperclip, MoreVertical, ShieldAlert, ChevronDown, ChevronUp, Maximize2, Minimize2 } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import * as Popover from '@radix-ui/react-popover';
 import { UserAvatar } from './UserAvatar';
@@ -48,6 +48,7 @@ export const ProjectNotes = ({ projectId }: ProjectNotesProps) => {
     const [autoScroll, setAutoScroll] = useState(true);
     const notesEndRef = useRef<HTMLDivElement>(null);
     const [isExpanded, setIsExpanded] = useState(true); // Default expanded
+    const [isFullScreen, setIsFullScreen] = useState(false);
 
     const isAdmin = user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN';
 
@@ -333,12 +334,13 @@ export const ProjectNotes = ({ projectId }: ProjectNotesProps) => {
     const uniqueUsers = Array.from(new Set(notes.map(n => n.user._id))).map(id => notes.find(n => n.user._id === id)?.user).filter((u): u is Note['user'] => u !== undefined).slice(0, 5);
 
     return (
-        <GlassCard className={`p-0 overflow-hidden transition-all duration-300 ${isExpanded ? '' : 'hover:bg-secondary/5'}`}>
-            {/* Header */}
-            <div
-                className={`p-6 flex justify-between items-center cursor-pointer ${isExpanded ? 'border-b border-glass-border bg-secondary/5' : ''}`}
-                onClick={() => setIsExpanded(!isExpanded)}
-            >
+        <div className={`transition-all duration-300 ${isFullScreen ? 'fixed inset-0 z-50 bg-background/95 backdrop-blur-sm p-4 flex flex-col' : ''}`}>
+            <GlassCard className={`p-0 overflow-hidden transition-all duration-300 ${isExpanded ? '' : 'hover:bg-secondary/5'} ${isFullScreen ? 'h-full flex flex-col' : ''}`}>
+                {/* Header */}
+                <div
+                    className={`p-6 flex justify-between items-center cursor-pointer ${isExpanded ? 'border-b border-glass-border bg-secondary/5' : ''}`}
+                    onClick={() => setIsExpanded(!isExpanded)}
+                >
                 <div className="flex items-center gap-3">
                     <div className={`p-2 rounded-lg bg-pink-500/20 text-pink-600 dark:text-pink-400 transition-colors ${isExpanded ? 'bg-pink-500 text-white' : ''}`}>
                         <MessageSquare size={20} />
@@ -402,15 +404,27 @@ export const ProjectNotes = ({ projectId }: ProjectNotesProps) => {
                         </>
                     )}
 
-                    <div className="text-muted">
-                        {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                    <div className="flex items-center gap-1">
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setIsFullScreen(!isFullScreen);
+                                if (!isExpanded && !isFullScreen) setIsExpanded(true);
+                            }}
+                            className="p-2 text-muted hover:text-foreground hover:bg-secondary/10 rounded-lg transition-colors md:hidden"
+                        >
+                            {isFullScreen ? <Minimize2 size={20} /> : <Maximize2 size={20} />}
+                        </button>
+                        <div className="text-muted p-2">
+                            {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                        </div>
                     </div>
                 </div>
             </div>
 
             {/* Content Body (Collapsible) */}
             {isExpanded && (
-                <div className="bg-secondary/5">
+                <div className={`bg-secondary/5 ${isFullScreen ? 'flex-1 flex flex-col min-h-0' : ''}`}>
                     {isNotesDisabled && (
                         <div className="m-4 mb-0 bg-red-500/10 border border-red-500/20 rounded-lg p-3 flex items-center gap-2 text-sm text-red-200">
                             <EyeOff size={16} />
@@ -418,7 +432,7 @@ export const ProjectNotes = ({ projectId }: ProjectNotesProps) => {
                         </div>
                     )}
 
-                    <div className="p-4 space-y-4 max-h-[350px] overflow-y-auto pr-2 custom-scrollbar">
+                    <div className={`p-4 space-y-4 overflow-y-auto pr-2 custom-scrollbar ${isFullScreen ? 'flex-1' : 'max-h-[350px]'}`}>
                         {threads.length === 0 ? (
                             <div className="text-center text-muted py-8">No notes yet. Start a discussion!</div>
                         ) : (
@@ -549,6 +563,7 @@ export const ProjectNotes = ({ projectId }: ProjectNotesProps) => {
                     )}
                 </div>
             )}
-        </GlassCard>
+            </GlassCard>
+        </div>
     );
 };

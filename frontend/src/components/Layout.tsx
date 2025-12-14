@@ -97,32 +97,29 @@ const SidebarItem = ({ item, isCollapsed, isActive }: { item: any, isCollapsed: 
         </div>
     );
 };
-
 export const Layout = () => {
-    const { logout, user } = useAuthStore();
-    const { settings, fetchSettings } = useSystemStore();
+    const { user, logout } = useAuthStore();
     const location = useLocation();
-
-    const { theme, toggleTheme } = useThemeStore();
-    const [isCollapsed, setIsCollapsed] = React.useState(() => {
-        const saved = localStorage.getItem('sidebar_collapsed');
-        return saved ? JSON.parse(saved) : false;
-    });
-    const [isMobileOpen, setIsMobileOpen] = React.useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = React.useState(true);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
     const [isProfileMenuOpen, setIsProfileMenuOpen] = React.useState(false);
+    const { theme, toggleTheme } = useSystemStore();
+    const { settings } = useSystemStore();
+    const [stats, setStats] = React.useState<any>(null);
+    const { totalUnreadCount, toggleChat, connectSocket, fetchConversations, notification, hideNotification, selectConversation } = useChatStore();
 
     useEffect(() => {
-        localStorage.setItem('sidebar_collapsed', JSON.stringify(isCollapsed));
-    }, [isCollapsed]);
+        const fetchStats = async () => {
+            try {
+                const res = await api.get('/admin/stats');
+                setStats(res.data);
+            } catch (error) {
+                console.error('Failed to fetch stats');
+            }
+        };
 
-    const { stats, fetchStats } = useDashboardStore();
-    const { toggleChat, totalUnreadCount, connectSocket, fetchConversations, notification, hideNotification, selectConversation } = useChatStore();
-
-    // Theme initialization
-    useEffect(() => {
-        fetchSettings();
-        fetchStats(); // Fetch global counts
         if (user) {
+            fetchStats();
             connectSocket(); // Initialize chat socket
             fetchConversations(); // Fetch unread counts
         }
@@ -130,24 +127,14 @@ export const Layout = () => {
 
     // Close mobile menu on route change
     useEffect(() => {
-        setIsMobileOpen(false);
+        setIsMobileMenuOpen(false);
     }, [location.pathname]);
 
     const navItems = [
         { icon: LayoutDashboard, label: 'Overview', path: '/dashboard' },
-        {
-            icon: FileText,
-            label: 'Projects',
-            path: '/projects',
-            badge: stats?.projects?.total
-        },
-        ...(user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN' ? [
-            {
-                icon: Users,
-                label: 'Users',
-                path: '/users',
-                badge: stats?.totalUsers
-            },
+        { icon: FileText, label: 'Projects', path: '/projects', badge: stats?.activeProjects },
+        { icon: Users, label: 'Users', path: '/users', badge: stats?.totalUsers },
+        ...(user?.role === 'SUPER_ADMIN' || user?.role === 'ADMIN' ? [
             {
                 icon: Languages,
                 label: 'Languages',
@@ -167,9 +154,6 @@ export const Layout = () => {
             path: '/glossary',
             badge: stats?.totalGlossaryTerms
         }] : []),
-        ...(user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN' || user?.role === 'TRANSLATOR' ? [
-            // { icon: MessageSquare, label: 'Messages', path: '/inbox' } // Moved to floating widget
-        ] : []),
         ...(user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN' ? [
             { icon: Settings, label: 'Settings', path: '/settings' }
         ] : []),

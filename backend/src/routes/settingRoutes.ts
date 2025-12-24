@@ -21,7 +21,7 @@ publicSettingRoutes.get('/', async (req, res) => {
         const enableClear = await getSystemSetting('enable_clear_translation');
         const enableAIFeatures = await getSystemSetting('enable_ai_features');
         const enableSingle = await getSystemSetting('enable_ai_single_suggestion');
-        const enableSingle = await getSystemSetting('enable_ai_single_suggestion');
+
         const allowClientAssign = await getSystemSetting('allow_client_assign_translators');
         const allowedFileTypes = await getSystemSetting('allowed_file_types');
         const maxFileSize = await getSystemSetting('max_file_size_mb');

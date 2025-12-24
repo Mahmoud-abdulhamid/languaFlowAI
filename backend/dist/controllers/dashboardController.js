@@ -73,7 +73,9 @@ const getDashboardStats = (req, res) => __awaiter(void 0, void 0, void 0, functi
             dateQuery = { createdAt: { $gte: lastYear } };
         }
         // 'all' or undefined = no date filter
-        let query = Object.assign({}, dateQuery);
+        // FIX: We strictly want "All Time" stats for the main widgets, so we do NOT include dateQuery here.
+        // We only apply role-based filters.
+        let query = {};
         // Role-based filtering
         if (user.role === 'CLIENT') {
             query.clientId = user.id;
@@ -81,12 +83,20 @@ const getDashboardStats = (req, res) => __awaiter(void 0, void 0, void 0, functi
         else if (user.role === 'TRANSLATOR') {
             query.assignedTranslators = user.id;
         }
-        // --- 1. Fetch Projects & Basic Stats ---
+        console.log('--- DASHBOARD DEBUG ---');
+        console.log('User:', { id: user.id, role: user.role, email: user.email });
+        console.log('Query:', JSON.stringify(query));
+        console.log('Duration Param:', duration);
+        // --- 1. Fetch Projects & Basic Stats (ALL TIME for Overview) ---
+        // We do NOT apply dateQuery here anymore, so the "Overview" widgets show the actual state of the system
         const projects = yield Project_1.Project.find(query).sort({ updatedAt: -1 });
+        console.log('Projects Found:', projects.length);
         const total = projects.length;
         const pending = projects.filter(p => p.status === 'DRAFT' || p.status === 'ACTIVE').length;
         const review = projects.filter(p => p.status === 'REVIEW').length;
         const completed = projects.filter(p => p.status === 'COMPLETED').length;
+        // Calculated field for Sidebar Badge
+        const activeProjects = pending + review;
         // --- 2. Word Count & AI Metrics ---
         // Calculate total words across all projects
         const totalSystemWords = projects.reduce((acc, project) => {
@@ -161,7 +171,7 @@ const getDashboardStats = (req, res) => __awaiter(void 0, void 0, void 0, functi
         if (user.role === 'ADMIN' || user.role === 'SUPER_ADMIN' || user.role === 'TRANSLATOR') {
             const translators = yield User_1.User.find({ role: 'TRANSLATOR' });
             translatorStats = yield Promise.all(translators.map((t) => __awaiter(void 0, void 0, void 0, function* () {
-                // Apply same date query to translator projects
+                // Apply same date query to translator projects -> KEEP DATE QUERY HERE FOR "Top Translators this week/month"
                 const tQuery = Object.assign(Object.assign({}, dateQuery), { assignedTranslators: t._id });
                 const tProjects = yield Project_1.Project.find(tQuery);
                 const completedCount = tProjects.filter(p => p.status === 'COMPLETED').length;
@@ -201,7 +211,7 @@ const getDashboardStats = (req, res) => __awaiter(void 0, void 0, void 0, functi
         // Efficient count queries
         const totalLanguages = yield Language_1.Language.countDocuments();
         const totalGlossaryTerms = yield Glossary_1.default.countDocuments();
-        res.json(Object.assign(Object.assign({ projects: {
+        res.json(Object.assign(Object.assign({ activeProjects, projects: {
                 total,
                 pending,
                 review,

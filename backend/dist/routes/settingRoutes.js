@@ -66,7 +66,10 @@ exports.publicSettingRoutes.get('/', (req, res) => __awaiter(void 0, void 0, voi
         const enableClear = yield getSystemSetting('enable_clear_translation');
         const enableAIFeatures = yield getSystemSetting('enable_ai_features');
         const enableSingle = yield getSystemSetting('enable_ai_single_suggestion');
+        const enableSingle = yield getSystemSetting('enable_ai_single_suggestion');
         const allowClientAssign = yield getSystemSetting('allow_client_assign_translators');
+        const allowedFileTypes = yield getSystemSetting('allowed_file_types');
+        const maxFileSize = yield getSystemSetting('max_file_size_mb');
         // Only expose safe public info
         res.json({
             system_name: systemName || 'LinguaFlow',
@@ -79,6 +82,8 @@ exports.publicSettingRoutes.get('/', (req, res) => __awaiter(void 0, void 0, voi
             enable_ai_features: enableAIFeatures,
             enable_ai_single_suggestion: enableSingle,
             allow_client_assign_translators: allowClientAssign,
+            allowed_file_types: allowedFileTypes,
+            max_file_size_mb: maxFileSize,
             notes_system_enabled: yield getSystemSetting('notes_system_enabled'),
             notes_replies_enabled: yield getSystemSetting('notes_replies_enabled'),
             notes_allow_attachments: yield getSystemSetting('notes_allow_attachments'),

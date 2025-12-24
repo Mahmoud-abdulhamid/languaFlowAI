@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAvailableModels = void 0;
 const settingController_1 = require("./settingController");
-const crypto_1 = require("../utils/crypto");
 const openai_1 = __importDefault(require("openai"));
 // Helper to get client (similar to aiService but strictly for config testing)
 const getClientForConfig = (provider, apiKey) => __awaiter(void 0, void 0, void 0, function* () {
@@ -37,16 +36,16 @@ const getAvailableModels = (req, res) => __awaiter(void 0, void 0, void 0, funct
         if (!apiKey) {
             // Fallback to stored
             apiKey = yield (0, settingController_1.getSystemSetting)('ai_api_key');
-            if (apiKey && apiKey.includes(':'))
-                apiKey = (0, crypto_1.decrypt)(apiKey);
+            // Decryption removed as requested
+            // if (apiKey && apiKey.includes(':')) apiKey = decrypt(apiKey);
         }
         if (!provider) {
             provider = (yield (0, settingController_1.getSystemSetting)('ai_provider')) || 'openai';
         }
-        if (!apiKey || apiKey === '********') {
-            // Fallback to ENV if completely empty in DB (and not just masked)
-            apiKey = process.env.AI_API_KEY || process.env.OPENAI_API_KEY;
-        }
+        // Env fallback removed as requested
+        // if (!apiKey || apiKey === '********') {
+        //     apiKey = process.env.AI_API_KEY || process.env.OPENAI_API_KEY;
+        // }
         if (!apiKey)
             return res.status(400).json({ message: 'No API Key available to fetch models' });
         const openai = yield getClientForConfig(provider, apiKey);
@@ -59,7 +58,11 @@ const getAvailableModels = (req, res) => __awaiter(void 0, void 0, void 0, funct
         else {
             models = models.filter(m => m.id.includes('gpt'));
         }
-        res.json(models.map(m => ({ id: m.id, name: m.id })));
+        // Strip 'models/' prefix and return
+        res.json(models.map(m => {
+            const cleanId = m.id.replace(/^models\//, '');
+            return { id: cleanId, name: cleanId };
+        }));
     }
     catch (error) {
         console.error('Fetch Models Error:', error);

@@ -334,6 +334,13 @@ const markAsRead = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         // Notify sender that messages were read
         const io = (0, socketService_1.getIO)();
         io.to(`chat_${conversationId}`).emit('messages_read', { conversationId, readBy: userId });
+        // Also notify participants individually (for List View updates)
+        const conversation = yield Conversation_1.Conversation.findById(conversationId);
+        if (conversation) {
+            conversation.participants.forEach((p) => {
+                io.to(`user_${p.toString()}`).emit('messages_read', { conversationId, readBy: userId });
+            });
+        }
         res.status(200).json({ success: true });
     }
     catch (error) {

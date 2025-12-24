@@ -16,26 +16,33 @@ exports.generateBatchTranslation = exports.generateTranslation = void 0;
 const openai_1 = __importDefault(require("openai"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const settingController_1 = require("../controllers/settingController");
-const crypto_1 = require("./crypto");
 dotenv_1.default.config();
 // Helper to get configured OpenAI Client
 const getAIClient = () => __awaiter(void 0, void 0, void 0, function* () {
     let apiKey = yield (0, settingController_1.getSystemSetting)('ai_api_key');
     const globalSwitch = yield (0, settingController_1.getSystemSetting)('enable_ai_features');
-    if (globalSwitch === false) { // Strict check for false, default might be true or null
+    if (globalSwitch === false) {
         throw new Error('AI features are currently disabled by the administrator');
     }
     let provider = yield (0, settingController_1.getSystemSetting)('ai_provider');
     const baseUrl = provider === 'google' ? 'https://generativelanguage.googleapis.com/v1beta/openai/' : 'https://api.openai.com/v1';
-    // Decrypt if it matches encrypted format (roughly contains :)
-    if (apiKey && apiKey.includes(':')) {
-        apiKey = (0, crypto_1.decrypt)(apiKey);
-    }
-    // Fallback to ENV if DB is empty
+    // Decryption removed as requested - using plain text
+    // if (apiKey && apiKey.includes(':')) {
+    //     apiKey = decrypt(apiKey);
+    // }
+    // Use DB only - Fail if missing
     if (!apiKey)
-        apiKey = process.env.AI_API_KEY || process.env.OPENAI_API_KEY;
+        throw new Error('AI API Key not configured in Database Settings');
+    // Deep Debug Logs
+    console.log(`[AI Config] Provider: ${provider}`);
+    console.log(`[AI Config] Key Length: ${apiKey.length}`);
+    if (apiKey) {
+        console.log(`[AI Config] Key First Char Code: ${apiKey.charCodeAt(0)}`);
+        console.log(`[AI Config] Key Last Char Code: ${apiKey.charCodeAt(apiKey.length - 1)}`);
+        console.log(`[AI Config] Key Preview: ${apiKey.substring(0, 5)}...${apiKey.slice(-5)}`);
+    }
     return new openai_1.default({
-        apiKey: apiKey || 'missing',
+        apiKey: apiKey,
         baseURL: baseUrl,
         defaultHeaders: provider === 'google' ? { 'x-goog-api-key': apiKey } : {}
     });
@@ -47,10 +54,14 @@ const generateTranslation = (text, targetLang) => __awaiter(void 0, void 0, void
     while (attempt < maxRetries) {
         try {
             const openai = yield getAIClient();
-            // Check Model from DB or Env
+            // Check Model from DB only (Default to stable gemini if empty)
             let model = yield (0, settingController_1.getSystemSetting)('ai_model');
             if (!model)
-                model = process.env.AI_MODEL || "gpt-3.5-turbo";
+                model = "gemini-2.0-flash-exp";
+            // Clean Model Name (Remove 'models/' prefix if present)
+            if (model.startsWith('models/')) {
+                model = model.replace('models/', '');
+            }
             // Debug Log
             console.log(`[AI Service] Attempt ${attempt + 1}/${maxRetries} | Model: ${model}`);
             const completion = yield openai.chat.completions.create({
@@ -91,7 +102,11 @@ const generateBatchTranslation = (texts, targetLang) => __awaiter(void 0, void 0
             const openai = yield getAIClient();
             let model = yield (0, settingController_1.getSystemSetting)('ai_model');
             if (!model)
-                model = process.env.AI_MODEL || "gpt-3.5-turbo";
+                model = "gemini-2.0-flash-exp";
+            // Clean Model Name (Remove 'models/' prefix if present)
+            if (model.startsWith('models/')) {
+                model = model.replace('models/', '');
+            }
             console.log(`[AI Batch Service] Attempt ${attempt + 1}/${maxRetries} | Batch Size: ${texts.length} | Model: ${model}`);
             const completion = yield openai.chat.completions.create({
                 messages: [

@@ -12,24 +12,30 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.generateGlossaryTerms = exports.detectContactInfo = exports.translateText = void 0;
 const generative_ai_1 = require("@google/generative-ai");
 const SystemSetting_1 = require("../models/SystemSetting");
-const crypto_1 = require("../utils/crypto");
 const getAIConfig = () => __awaiter(void 0, void 0, void 0, function* () {
     const apiKeySetting = yield SystemSetting_1.SystemSetting.findOne({ key: 'ai_api_key' });
     const modelSetting = yield SystemSetting_1.SystemSetting.findOne({ key: 'ai_model' });
     let apiKey = apiKeySetting === null || apiKeySetting === void 0 ? void 0 : apiKeySetting.value;
-    // Fallback to Env
-    if (!apiKey) {
-        apiKey = process.env.AI_API_KEY;
-    }
     if (!apiKey)
-        throw new Error('AI API Key not configured');
-    // Decrypt if it looks encrypted (contains IV separator)
-    if (apiKey && apiKey.includes(':')) {
-        apiKey = (0, crypto_1.decrypt)(apiKey);
+        throw new Error('AI API Key not configured in Database Settings');
+    // Decryption removed as requested - using plain text
+    // if (apiKey && apiKey.includes(':')) {
+    //     apiKey = decrypt(apiKey);
+    // }
+    // Debug Log (Masked Key & Length Check)
+    console.log(`[AI Config] Model: ${(modelSetting === null || modelSetting === void 0 ? void 0 : modelSetting.value) || 'gemini-1.5-flash'}`);
+    if (apiKey) {
+        console.log(`[AI Config] Key Length: ${apiKey.length}`);
+        console.log(`[AI Config] Key First Char Code: ${apiKey.charCodeAt(0)}`);
+        console.log(`[AI Config] Key Last Char Code: ${apiKey.charCodeAt(apiKey.length - 1)}`);
+        console.log(`[AI Config] Key Preview: ${apiKey.substring(0, 5)}...${apiKey.slice(-5)}`);
+    }
+    else {
+        console.log('[AI Config] Key is NULL or UNDEFINED');
     }
     return {
         apiKey,
-        model: (modelSetting === null || modelSetting === void 0 ? void 0 : modelSetting.value) || process.env.AI_MODEL || 'gemini-1.5-flash'
+        model: (modelSetting === null || modelSetting === void 0 ? void 0 : modelSetting.value) || 'gemini-1.5-flash' // Default only if DB is empty, no env
     };
 });
 const translateText = (text, sourceLang, targetLang) => __awaiter(void 0, void 0, void 0, function* () {

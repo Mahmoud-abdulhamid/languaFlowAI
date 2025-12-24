@@ -11,17 +11,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.seedSettings = exports.getSystemSetting = exports.updateSetting = exports.getSettings = void 0;
 const SystemSetting_1 = require("../models/SystemSetting");
-const crypto_1 = require("../utils/crypto");
 const getSettings = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const settings = yield SystemSetting_1.SystemSetting.find({});
         // Convert to simple object { key: value }
         const settingsMap = settings.reduce((acc, curr) => {
             acc[curr.key] = curr.value;
-            // Mask API Key
-            if (curr.key === 'ai_api_key' && acc[curr.key]) {
-                acc[curr.key] = '********'; // Never return actual key
-            }
+            // Removed masking as requested
+            // if (curr.key === 'ai_api_key' && acc[curr.key]) {
+            //     acc[curr.key] = '********'; // Never return actual key
+            // }
             return acc;
         }, {});
         res.json(settingsMap);
@@ -38,13 +37,11 @@ const updateSetting = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         if (req.user.role !== 'ADMIN' && req.user.role !== 'SUPER_ADMIN') {
             return res.status(403).json({ message: 'Not authorized to change system settings' });
         }
-        // Encrypt API Key if changing
-        if (key === 'ai_api_key') {
-            if (value === '********' || !value) {
-                return res.json({ message: 'No change' }); // Ignore placeholder
-            }
-            value = (0, crypto_1.encrypt)(value);
-        }
+        // Removed encryption as requested
+        // if (value === '********' || !value) {
+        //     return res.json({ message: 'No change' }); 
+        // }
+        // value = encrypt(value);
         const setting = yield SystemSetting_1.SystemSetting.findOneAndUpdate({ key }, {
             value,
             updatedBy: req.user.id

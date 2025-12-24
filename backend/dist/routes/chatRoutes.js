@@ -56,8 +56,8 @@ router.post('/upload', (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         const settings = yield SystemSetting_1.SystemSetting.find({
             key: { $in: ['chat_max_file_size', 'chat_allowed_file_types'] }
         });
-        const maxSizeMB = ((_a = settings.find(s => s.key === 'chat_max_file_size')) === null || _a === void 0 ? void 0 : _a.value) || 5;
-        const allowedTypes = ((_b = settings.find(s => s.key === 'chat_allowed_file_types')) === null || _b === void 0 ? void 0 : _b.value) || ['jpg', 'png', 'pdf', 'docx'];
+        const maxSizeMB = ((_a = settings.find(s => s.key === 'chat_max_file_size')) === null || _a === void 0 ? void 0 : _a.value) || 10;
+        const allowedTypes = ((_b = settings.find(s => s.key === 'chat_allowed_file_types')) === null || _b === void 0 ? void 0 : _b.value) || ['jpg', 'jpeg', 'png', 'gif', 'webp', 'pdf', 'docx', 'doc', 'webm', 'mp3', 'm4a', 'ogg', 'heic', 'heif'];
         const validFiles = [];
         const invalidFiles = [];
         for (const file of req.files) {

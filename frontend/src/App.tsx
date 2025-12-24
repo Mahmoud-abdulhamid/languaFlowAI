@@ -112,7 +112,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="projects" element={<Projects />} />
           <Route path="projects/new" element={
-            <ProtectedRoute allowedRoles={['ADMIN', 'CLIENT']}>
+            <ProtectedRoute allowedRoles={['ADMIN', 'CLIENT', 'SUPER_ADMIN']}>
               <CreateProject />
             </ProtectedRoute>
           } />

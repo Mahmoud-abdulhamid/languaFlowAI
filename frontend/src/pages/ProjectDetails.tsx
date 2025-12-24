@@ -359,8 +359,23 @@ export const ProjectDetails = () => {
                                             className="hidden"
                                             onChange={async (e) => {
                                                 if (e.target.files && e.target.files.length > 0) {
+                                                    const rawAllowed = settings.allowed_file_types || ['.pdf', '.docx', '.txt'];
+                                                    const allowedExtensions = rawAllowed.map((ext: string) => ext.startsWith('.') ? ext.toLowerCase() : `.${ext.toLowerCase()}`);
+                                                    
+                                                    const validFiles = Array.from(e.target.files).filter(file => {
+                                                        const ext = '.' + file.name.split('.').pop()?.toLowerCase();
+                                                        if (!allowedExtensions.includes(ext)) {
+                                                            const displayAllowed = allowedExtensions.map((e: string) => e.replace('.', '').toUpperCase());
+                                                            toast.error(`File type ${ext} is not allowed. Allowed: ${displayAllowed.join(', ')}`);
+                                                            return false;
+                                                        }
+                                                        return true;
+                                                    });
+
+                                                    if (validFiles.length === 0) return;
+
                                                     const formData = new FormData();
-                                                    Array.from(e.target.files).forEach(file => formData.append('files', file));
+                                                    validFiles.forEach(file => formData.append('files', file));
                                                     try {
                                                         // @ts-ignore
                                                         await addProjectFiles(project.id, formData);

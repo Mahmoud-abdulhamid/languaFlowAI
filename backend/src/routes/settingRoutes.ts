@@ -21,7 +21,10 @@ publicSettingRoutes.get('/', async (req, res) => {
         const enableClear = await getSystemSetting('enable_clear_translation');
         const enableAIFeatures = await getSystemSetting('enable_ai_features');
         const enableSingle = await getSystemSetting('enable_ai_single_suggestion');
+        const enableSingle = await getSystemSetting('enable_ai_single_suggestion');
         const allowClientAssign = await getSystemSetting('allow_client_assign_translators');
+        const allowedFileTypes = await getSystemSetting('allowed_file_types');
+        const maxFileSize = await getSystemSetting('max_file_size_mb');
 
         // Only expose safe public info
         res.json({
@@ -35,6 +38,8 @@ publicSettingRoutes.get('/', async (req, res) => {
             enable_ai_features: enableAIFeatures,
             enable_ai_single_suggestion: enableSingle,
             allow_client_assign_translators: allowClientAssign,
+            allowed_file_types: allowedFileTypes,
+            max_file_size_mb: maxFileSize,
             notes_system_enabled: await getSystemSetting('notes_system_enabled'),
             notes_replies_enabled: await getSystemSetting('notes_replies_enabled'),
             notes_allow_attachments: await getSystemSetting('notes_allow_attachments'),

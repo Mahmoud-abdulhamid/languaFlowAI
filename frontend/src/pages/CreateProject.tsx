@@ -90,11 +90,16 @@ export const CreateProject = () => {
     };
 
     const validateFile = (file: File) => {
-        const allowedExtensions = settings.allowed_file_types || ['.pdf', '.docx', '.txt'];
+        // Normalize settings: Ensure all have leading dot and are lowercase
+        const rawAllowed = settings.allowed_file_types || ['.pdf', '.docx', '.txt'];
+        const allowedExtensions = rawAllowed.map(ext => ext.startsWith('.') ? ext.toLowerCase() : `.${ext.toLowerCase()}`);
+        
         const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
 
         if (!allowedExtensions.includes(fileExtension)) {
-            toast.error(`File type ${fileExtension} is not allowed. Allowed: ${allowedExtensions.join(', ')}`);
+            // Remove dots for cleaner display message
+            const displayAllowed = allowedExtensions.map(e => e.replace('.', '').toUpperCase());
+            toast.error(`File type ${fileExtension} is not allowed. Allowed: ${displayAllowed.join(', ')}`);
             return false;
         }
 

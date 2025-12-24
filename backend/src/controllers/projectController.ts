@@ -64,8 +64,11 @@ export const createProject = async (req: AuthRequest, res: Response) => {
             const allowedTypes = await getSystemSetting('allowed_file_types') as string[];
             const maxMB = await getSystemSetting('max_file_size_mb') as number;
 
+            // Normalize allowed types (ensure they start with .)
+            const normalizedAllowed = allowedTypes.map(t => t.startsWith('.') ? t.toLowerCase() : `.${t.toLowerCase()}`);
+
             const fileExt = file.originalname.slice(file.originalname.lastIndexOf('.')).toLowerCase();
-            if (allowedTypes && !allowedTypes.includes(fileExt)) {
+            if (normalizedAllowed && !normalizedAllowed.includes(fileExt)) {
                 // Should technically delete the uploaded file here if error
                 throw new Error(`File type ${fileExt} not allowed. Allowed: ${allowedTypes.join(', ')}`);
             }
@@ -616,8 +619,11 @@ export const addProjectFiles = async (req: AuthRequest, res: Response) => {
             const allowedTypes = await getSystemSetting('allowed_file_types') as string[];
             const maxMB = await getSystemSetting('max_file_size_mb') as number;
 
+            // Normalize allowed types (ensure they start with .)
+            const normalizedAllowed = allowedTypes.map(t => t.startsWith('.') ? t.toLowerCase() : `.${t.toLowerCase()}`);
+
             const fileExt = file.originalname.slice(file.originalname.lastIndexOf('.')).toLowerCase();
-            if (allowedTypes && !allowedTypes.includes(fileExt)) {
+            if (normalizedAllowed && !normalizedAllowed.includes(fileExt)) {
                 throw new Error(`File type ${fileExt} not allowed. Allowed: ${allowedTypes.join(', ')}`);
             }
             if (maxMB && file.size > maxMB * 1024 * 1024) {

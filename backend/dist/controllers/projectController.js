@@ -97,8 +97,10 @@ const createProject = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             // Validate Type & Size
             const allowedTypes = yield (0, settingController_1.getSystemSetting)('allowed_file_types');
             const maxMB = yield (0, settingController_1.getSystemSetting)('max_file_size_mb');
+            // Normalize allowed types (ensure they start with .)
+            const normalizedAllowed = allowedTypes.map(t => t.startsWith('.') ? t.toLowerCase() : `.${t.toLowerCase()}`);
             const fileExt = file.originalname.slice(file.originalname.lastIndexOf('.')).toLowerCase();
-            if (allowedTypes && !allowedTypes.includes(fileExt)) {
+            if (normalizedAllowed && !normalizedAllowed.includes(fileExt)) {
                 // Should technically delete the uploaded file here if error
                 throw new Error(`File type ${fileExt} not allowed. Allowed: ${allowedTypes.join(', ')}`);
             }
@@ -591,8 +593,10 @@ const addProjectFiles = (req, res) => __awaiter(void 0, void 0, void 0, function
             // Validate Type & Size
             const allowedTypes = yield (0, settingController_1.getSystemSetting)('allowed_file_types');
             const maxMB = yield (0, settingController_1.getSystemSetting)('max_file_size_mb');
+            // Normalize allowed types (ensure they start with .)
+            const normalizedAllowed = allowedTypes.map(t => t.startsWith('.') ? t.toLowerCase() : `.${t.toLowerCase()}`);
             const fileExt = file.originalname.slice(file.originalname.lastIndexOf('.')).toLowerCase();
-            if (allowedTypes && !allowedTypes.includes(fileExt)) {
+            if (normalizedAllowed && !normalizedAllowed.includes(fileExt)) {
                 throw new Error(`File type ${fileExt} not allowed. Allowed: ${allowedTypes.join(', ')}`);
             }
             if (maxMB && file.size > maxMB * 1024 * 1024) {

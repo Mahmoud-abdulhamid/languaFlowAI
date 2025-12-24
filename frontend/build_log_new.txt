@@ -1,0 +1,24 @@
+
+> frontend@0.0.0 build
+> vite build
+
+[36mvite v7.2.6 [32mbuilding client environment for production...[36m[39m
+transforming...
+
+/grid.svg referenced in /grid.svg didn't resolve at build time, it will remain unchanged to be resolved at runtime
+
+/noise.png referenced in /noise.png didn't resolve at build time, it will remain unchanged to be resolved at runtime
+[32m✓[39m 2696 modules transformed.
+[31m✗[39m Build failed in 8.27s
+[31merror during build:
+[31m[vite:prepare-out-dir] EPERM: operation not permitted, unlink 'D:\TR\translation-system\frontend\dist\assets\admin.png'[31m
+    at unlinkSync (node:fs:1952:11)
+    at _unlinkSync (node:internal/fs/rimraf:215:14)
+    at fixWinEPERMSync (node:internal/fs/rimraf:307:5)
+    at rimrafSync (node:internal/fs/rimraf:201:14)
+    at node:internal/fs/rimraf:254:9
+    at Array.forEach (<anonymous>)
+    at _rmdirSync (node:internal/fs/rimraf:251:7)
+    at fixWinEPERMSync (node:internal/fs/rimraf:305:5)
+    at rimrafSync (node:internal/fs/rimraf:201:14)
+    at Object.rmSync (node:fs:1247:10)[39m

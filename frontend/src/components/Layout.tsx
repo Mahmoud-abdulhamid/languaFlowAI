@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { Outlet, Link, useLocation } from 'react-router-dom';
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, FileText, Settings, LogOut, Code2, UserPlus, Languages, Users, Shield, User, Menu, X, Sun, Moon, BookOpen, PanelLeftOpen, PanelLeftClose, MessageSquare, ChevronDown, Activity } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore';
 import clsx from 'clsx';
 import { useSystemStore } from '../store/useSystemStore';
+import { useThemeStore } from '../store/useThemeStore';
 import { FaviconManager } from './FaviconManager';
 import { NotificationBell } from './NotificationBell';
 import { useChatStore } from '../store/useChatStore';
@@ -98,6 +99,7 @@ const SidebarItem = ({ item, isCollapsed, isActive }: { item: any, isCollapsed: 
 export const Layout = () => {
     const { user, logout } = useAuthStore();
     const location = useLocation();
+    const navigate = useNavigate();
     const [isSidebarOpen, setIsSidebarOpen] = React.useState(true);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
     const [isMobileOpen, setIsMobileOpen] = React.useState(false);
@@ -106,7 +108,8 @@ export const Layout = () => {
         return saved ? JSON.parse(saved) : false;
     });
     const [isProfileMenuOpen, setIsProfileMenuOpen] = React.useState(false);
-    const { theme, toggleTheme, settings } = useSystemStore();
+    const { theme, toggleTheme } = useThemeStore();
+    const { settings } = useSystemStore();
     const [stats, setStats] = React.useState<any>(null);
     const { totalUnreadCount, toggleChat, connectSocket, fetchConversations, notification, hideNotification, selectConversation } = useChatStore();
 
@@ -131,14 +134,18 @@ export const Layout = () => {
         }
     }, [user]);
 
-    // Close mobile menu on route change
     useEffect(() => {
         setIsMobileMenuOpen(false);
     }, [location.pathname]);
 
+    const handleLogout = () => {
+        logout();
+        navigate('/login', { replace: true });
+    };
+
     const navItems = [
         { icon: LayoutDashboard, label: 'Overview', path: '/dashboard' },
-        { icon: FileText, label: 'Projects', path: '/projects', badge: stats?.activeProjects },
+        { icon: FileText, label: 'Projects', path: '/projects', badge: stats?.projects?.total },
         { icon: Users, label: 'Users', path: '/users', badge: stats?.totalUsers },
         ...(user?.role === 'SUPER_ADMIN' || user?.role === 'ADMIN' ? [
             {
@@ -312,7 +319,7 @@ export const Layout = () => {
                         </div>
                     </Link>
                     <button
-                        onClick={logout}
+                        onClick={handleLogout}
                         className={clsx(
                             "flex items-center gap-3 w-full px-4 py-3 text-red-500 hover:bg-red-500/10 rounded-xl transition-colors",
                             isCollapsed && "lg:justify-center lg:px-2"
@@ -412,7 +419,7 @@ export const Layout = () => {
                                                         </Link>
                                                     )}
                                                     <button
-                                                        onClick={() => { setIsProfileMenuOpen(false); logout(); }}
+                                                        onClick={() => { setIsProfileMenuOpen(false); handleLogout(); }}
                                                         className="flex items-center gap-2 px-3 py-2 text-sm text-red-500 hover:bg-red-500/10 rounded-lg transition-colors text-left w-full mt-1 border-t border-glass-border"
                                                     >
                                                         <LogOut size={16} /> Logout

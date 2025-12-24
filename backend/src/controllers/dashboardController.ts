@@ -29,7 +29,9 @@ export const getDashboardStats = async (req: AuthRequest, res: Response) => {
         }
         // 'all' or undefined = no date filter
 
-        let query: any = { ...dateQuery };
+        // FIX: We strictly want "All Time" stats for the main widgets, so we do NOT include dateQuery here.
+        // We only apply role-based filters.
+        let query: any = {};
 
         // Role-based filtering
         if (user.role === 'CLIENT') {
@@ -38,13 +40,25 @@ export const getDashboardStats = async (req: AuthRequest, res: Response) => {
             query.assignedTranslators = user.id;
         }
 
-        // --- 1. Fetch Projects & Basic Stats ---
+        console.log('--- DASHBOARD DEBUG ---');
+        console.log('User:', { id: user.id, role: user.role, email: user.email });
+        console.log('Query:', JSON.stringify(query));
+        console.log('Duration Param:', duration);
+
+        // --- 1. Fetch Projects & Basic Stats (ALL TIME for Overview) ---
+        // We do NOT apply dateQuery here anymore, so the "Overview" widgets show the actual state of the system
         const projects = await Project.find(query).sort({ updatedAt: -1 });
+        console.log('Projects Found:', projects.length);
+
+
 
         const total = projects.length;
         const pending = projects.filter(p => p.status === 'DRAFT' || p.status === 'ACTIVE').length;
         const review = projects.filter(p => p.status === 'REVIEW').length;
         const completed = projects.filter(p => p.status === 'COMPLETED').length;
+        
+        // Calculated field for Sidebar Badge
+        const activeProjects = pending + review;
 
         // --- 2. Word Count & AI Metrics ---
         // Calculate total words across all projects
@@ -132,7 +146,7 @@ export const getDashboardStats = async (req: AuthRequest, res: Response) => {
             const translators = await User.find({ role: 'TRANSLATOR' });
 
             translatorStats = await Promise.all(translators.map(async (t) => {
-                // Apply same date query to translator projects
+                // Apply same date query to translator projects -> KEEP DATE QUERY HERE FOR "Top Translators this week/month"
                 const tQuery = { ...dateQuery, assignedTranslators: t._id };
                 const tProjects = await Project.find(tQuery);
 
@@ -181,6 +195,7 @@ export const getDashboardStats = async (req: AuthRequest, res: Response) => {
         const totalGlossaryTerms = await Glossary.countDocuments();
 
         res.json({
+            activeProjects, // Top level field for frontend sidebar
             projects: {
                 total,
                 pending,

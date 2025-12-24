@@ -1,0 +1,44 @@
+
+> frontend@0.0.0 build
+> vite build
+
+[36mvite v7.2.6 [32mbuilding client environment for production...[36m[39m
+transforming...
+
+/grid.svg referenced in /grid.svg didn't resolve at build time, it will remain unchanged to be resolved at runtime
+
+/noise.png referenced in /noise.png didn't resolve at build time, it will remain unchanged to be resolved at runtime
+
+
+#
+# Fatal process out of memory: Zone
+#
+----- Native stack trace -----
+
+ 1: 00007FF7ABC37487 
+ 2: 00007FF7ABB0CA6F 
+ 3: 00007FF7ACD71DE6 
+ 4: 00007FF7AC6F89A1 
+ 5: 00007FF7AC1DB6BB 
+ 6: 00007FF7ACE9F9B4 
+ 7: 00007FF7ACEA6C23 
+ 8: 00007FF7ACEA2BA8 
+ 9: 00007FF7ACFA262B 
+10: 00007FF7ACF9EFE2 
+11: 00007FF7ACF98CD1 
+12: 00007FF7ACEC13F7 
+13: 00007FF7ACE93BD1 
+14: 00007FF7ACEC0FE8 
+15: 00007FF7ACEC179E 
+16: 00007FF7ACEC1482 
+17: 00007FF7ACE949CF 
+18: 00007FF7ACE8B645 
+19: 00007FF7ACE8C215 
+20: 00007FF7AC675CD4 
+21: 00007FF7AC63C8B2 
+22: 00007FF7AC8FD7D6 
+23: 00007FF7ABB0F7F0 
+24: 00007FF7ABC98593 
+25: 00007FF7AD486D9B 
+26: 00007FFDC5A9E8D7 
+27: 00007FFDC694C53C 

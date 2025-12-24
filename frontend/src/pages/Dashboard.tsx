@@ -218,6 +218,10 @@ const DateWidget = () => {
     );
 };
 
+import { ActivityLogWidget } from '../components/dashboard/ActivityLogWidget';
+
+// ... (existing imports)
+
 export const Dashboard = () => {
     const { user } = useAuthStore();
     const { stats, fetchStats, isLoading } = useDashboardStore();
@@ -240,6 +244,7 @@ export const Dashboard = () => {
 
     // Determine Role Specific Stats
     const isAdmin = user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN';
+    const isSuperAdmin = user?.role === 'SUPER_ADMIN';
     const isClient = user?.role === 'CLIENT';
 
     // Mock sparkline data generators
@@ -268,6 +273,11 @@ export const Dashboard = () => {
 
             {/* Layout Grid - Masonry Style */}
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                
+                {/* 0. SUPER ADMIN: Activity Log (Full Width on Mobile, Col-span-2 on Desktop) */}
+
+
+                {/* 1. New: Active Workload Hub ... */}
 
                 {/* 1. New: Active Workload Hub (Combines Pending, Review) */}
                 <GlassCard className="p-6 relative overflow-hidden group h-full flex flex-col justify-between hover:shadow-lg transition-all border-orange-500/20">

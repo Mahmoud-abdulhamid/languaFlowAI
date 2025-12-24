@@ -29,53 +29,25 @@ import api from './api/axios';
 
 // ...
 
+import { ActivityTracker } from './components/ActivityTracker';
+import { ActivityLogPage } from './pages/admin/ActivityLogPage';
+
 function App() {
   const [maintenance, setMaintenance] = useState(false);
   const { user } = useAuthStore();
   const { theme } = useThemeStore();
-  const { fetchSettings } = useSystemStore();
-  const location = useLocation();
-
-  // Initialize Page Tracking for ALL pages (including landing & login)
-  usePageTracking();
 
   useEffect(() => {
-    const root = window.document.documentElement;
-    root.classList.remove('light', 'dark');
-
-    // Force Light Mode on Landing Page
-    if (location.pathname === '/') {
-      root.classList.add('light');
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
     } else {
-      root.classList.add(theme);
+      document.documentElement.classList.remove('dark');
     }
-  }, [theme, location.pathname]);
-
-  useEffect(() => {
-    const checkMaintenance = async () => {
-      try {
-        const res = await api.get('/public-settings');
-        if (res.data.maintenance_mode) {
-          setMaintenance(true);
-        }
-        if (res.data.system_name) {
-          document.title = res.data.system_name;
-        }
-      } catch (error) {
-        console.error('Failed to fetch public settings');
-      }
-    };
-    checkMaintenance();
-    fetchSettings(); // Load system settings into store
-  }, []);
-
-  // Allow Login page even in maintenance
-  if (maintenance && user?.role !== 'ADMIN' && user?.role !== 'SUPER_ADMIN' && location.pathname !== '/login') {
-    return <MaintenancePage />;
-  }
+  }, [theme]);
 
   return (
     <>
+      <ActivityTracker />
       <Toaster
         position="top-right"
         toastOptions={{
@@ -150,9 +122,9 @@ function App() {
               <RolesPage />
             </ProtectedRoute>
           } />
-          <Route path="live" element={
-            <ProtectedRoute allowedRoles={['ADMIN', 'SUPER_ADMIN']}>
-              <LiveDashboard />
+          <Route path="activity" element={
+            <ProtectedRoute allowedRoles={['SUPER_ADMIN']}>
+              <ActivityLogPage />
             </ProtectedRoute>
           } />
         </Route>

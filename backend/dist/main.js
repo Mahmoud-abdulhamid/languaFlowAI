@@ -68,6 +68,9 @@ const noteRoutes_1 = __importDefault(require("./routes/noteRoutes"));
 app.use('/api/v1/notes', noteRoutes_1.default);
 const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
 app.use('/api/v1/auth', authRoutes_1.default);
+const activityRoutes_1 = __importDefault(require("./routes/activityRoutes"));
+// Helper Routes
+app.use('/api/v1/activity', activityRoutes_1.default); // Activity Log
 const protectedMiddleware = [authMiddleware_1.protect, systemMiddleware_1.checkMaintenanceMode];
 const projectRoutes_1 = __importDefault(require("./routes/projectRoutes"));
 app.use('/api/v1/projects', protectedMiddleware, projectRoutes_1.default);

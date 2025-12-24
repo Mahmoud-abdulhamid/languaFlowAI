@@ -158,8 +158,8 @@ export const Layout = () => {
         ...(user?.role === 'SUPER_ADMIN' ? [
             { icon: Shield, label: 'Roles', path: '/roles' }
         ] : []),
-        ...(['ADMIN', 'SUPER_ADMIN'].includes(user?.role || '') ? [
-            { icon: Activity, label: 'Live Traffic', path: '/live' }
+        ...(user?.role === 'SUPER_ADMIN' ? [
+            { icon: Activity, label: 'Activity Log', path: '/activity' }
         ] : []),
         ...(user?.role !== 'CLIENT' ? [{
             icon: BookOpen,

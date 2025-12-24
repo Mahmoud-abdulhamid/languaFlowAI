@@ -44,6 +44,11 @@ app.use('/api/v1/notes', noteRoutes);
 import authRoutes from './routes/authRoutes';
 app.use('/api/v1/auth', authRoutes);
 
+import activityRoutes from './routes/activityRoutes';
+
+// Helper Routes
+app.use('/api/v1/activity', activityRoutes); // Activity Log
+
 const protectedMiddleware = [protect, checkMaintenanceMode];
 
 import projectRoutes from './routes/projectRoutes';

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { GlassCard } from '../components/GlassCard';
 import { useAuthStore } from '../store/useAuthStore';
 import { Save, User, Lock, Trash2, Globe, Trophy, Smartphone, Monitor, Laptop, Key, Shield, LogOut } from 'lucide-react';
+import { useChatStore } from '../store/useChatStore';
 import api from '../api/axios';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
@@ -144,6 +145,19 @@ export const ProfilePage = () => {
     useEffect(() => {
         if (activeTab === 'sessions') {
             fetchSessions();
+            
+            // Real-time updates
+            const socket = useChatStore.getState().socket;
+            if (socket) {
+                const handleUpdate = () => fetchSessions();
+                socket.on('session_added', handleUpdate);
+                socket.on('session_revoked', handleUpdate);
+                
+                return () => {
+                    socket.off('session_added', handleUpdate);
+                    socket.off('session_revoked', handleUpdate);
+                };
+            }
         }
     }, [activeTab]);
 

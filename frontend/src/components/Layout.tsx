@@ -131,8 +131,25 @@ export const Layout = () => {
             fetchStats();
             connectSocket(); // Initialize chat socket
             fetchConversations(); // Fetch unread counts
+            
+            // Listen for Forced Logout
+            const socket = useChatStore.getState().socket;
+            if (socket) {
+                socket.on('force_logout', () => {
+                    handleLogout();
+                    // Optional: Show toast
+                    alert('Your session has been revoked.');
+                });
+            }
         }
-    }, [user]);
+        
+        return () => {
+             const socket = useChatStore.getState().socket;
+             if (socket) {
+                 socket.off('force_logout');
+             }
+        };
+    }, [user, connectSocket]); // Added connectSocket dependency or handle properly
 
     useEffect(() => {
         setIsMobileMenuOpen(false);

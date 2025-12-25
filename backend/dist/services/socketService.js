@@ -105,17 +105,42 @@ const initSocket = (httpServer) => {
         // Fallback to direct connection address
         return socket.handshake.address;
     };
-    io.on('connection', (socket) => {
+    io.on('connection', (socket) => __awaiter(void 0, void 0, void 0, function* () {
+        var _a, _b, _c;
         let rawIp = getRealClientIP(socket);
         rawIp = Array.isArray(rawIp) ? rawIp[0] : rawIp;
         const cleanIp = extractIPv4(rawIp);
-        // Debug log to see what IP we're getting
-        console.log('Client connected - Raw IP:', rawIp, 'Clean IP:', cleanIp, 'Headers:', {
-            'x-forwarded-for': socket.handshake.headers['x-forwarded-for'],
-            'x-real-ip': socket.handshake.headers['x-real-ip'],
-            'cf-connecting-ip': socket.handshake.headers['cf-connecting-ip']
-        });
         const userAgent = socket.handshake.headers['user-agent'] || 'Unknown';
+        // --- AUTH & SESSION ID EXTRACTION ---
+        let sessionId = '';
+        let userId = '';
+        let role = '';
+        try {
+            const token = ((_a = socket.handshake.auth) === null || _a === void 0 ? void 0 : _a.token) || ((_c = (_b = socket.handshake.headers) === null || _b === void 0 ? void 0 : _b.authorization) === null || _c === void 0 ? void 0 : _c.split(' ')[1]);
+            if (token) {
+                const jwt = require('jsonwebtoken'); // Lazy load
+                const decoded = jwt.verify(token, process.env.JWT_SECRET);
+                if (decoded) {
+                    sessionId = decoded.sessionId;
+                    userId = decoded.id;
+                    role = decoded.role;
+                    if (sessionId) {
+                        socket.join(`session_${sessionId}`);
+                        // Update session DB lastActive
+                        Promise.resolve().then(() => __importStar(require('../models/Session'))).then(m => {
+                            m.Session.findByIdAndUpdate(sessionId, { lastActive: new Date() }).catch(err => console.error(err));
+                        });
+                    }
+                    if (userId) {
+                        socket.join(`user_${userId}`);
+                    }
+                }
+            }
+        }
+        catch (err) {
+            console.error('Socket Auth Failed:', err.message);
+            // We allow connection for guests, but they won't be in session rooms
+        }
         // Basic parser for OS/Browser from User-Agent (Simple heuristic)
         let os = 'Unknown OS';
         if (userAgent.includes('Win'))
@@ -147,9 +172,11 @@ const initSocket = (httpServer) => {
             // For localhost/private IPs, set as local
             country = 'LOCAL';
         }
-        // Register initial session (Guest)
+        // Register initial session
         activeSessions.set(socket.id, {
             socketId: socket.id,
+            userId, // From Token
+            role, // From Token
             ip: cleanIp,
             country: country,
             pageUrl: '/connecting...',
@@ -158,7 +185,7 @@ const initSocket = (httpServer) => {
             connectedAt: new Date(),
             lastActive: new Date()
         });
-        console.log('Client connected:', socket.id);
+        console.log('Client connected:', socket.id, sessionId ? `(Session: ${sessionId})` : '(Guest)');
         socket.on('join_user', (userId) => __awaiter(void 0, void 0, void 0, function* () {
             if (userId) {
                 console.log(`User ${userId} joined room user_${userId}`);
@@ -300,7 +327,7 @@ const initSocket = (httpServer) => {
             activeSessions.delete(socket.id);
             // console.log('Client disconnected:', socket.id);
         }));
-    });
+    }));
     return io;
 };
 exports.initSocket = initSocket;

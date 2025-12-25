@@ -7,6 +7,7 @@ import { Role } from '../models/Role';
 import { z } from 'zod';
 import { Session } from '../models/Session';
 import { UAParser } from 'ua-parser-js';
+import { getIO } from '../services/socketService';
 
 const registerSchema = z.object({
     email: z.string().email(),
@@ -91,6 +92,14 @@ export const login = async (req: Request, res: Response) => {
             { expiresIn: '7d' }
         );
 
+        // Notify User's other devices
+        try {
+            getIO().to(`user_${user._id}`).emit('session_added', {
+                ...session.toObject(),
+                isCurrent: false 
+            });
+        } catch (e) { console.error('Socket emit failed', e); }
+
         res.json({
             token,
             user: {
@@ -129,6 +138,17 @@ export const revokeSession = async (req: AuthRequest, res: Response) => {
         if (!session) return res.status(404).json({ message: 'Session not found' });
         
         await session.deleteOne();
+
+        // 1. Notify Dashboard so list updates
+        try {
+            getIO().to(`user_${req.user.id}`).emit('session_revoked', id);
+        } catch (e) {}
+
+        // 2. Force Logout Target Device
+        try {
+            getIO().to(`session_${id}`).emit('force_logout');
+        } catch (e) {}
+
         res.json({ message: 'Session revoked' });
     } catch (error: any) {
         res.status(500).json({ message: error.message });
@@ -140,6 +160,10 @@ export const logout = async (req: AuthRequest, res: Response) => {
         // Delete current session
         if (req.user.sessionId) {
             await Session.findByIdAndDelete(req.user.sessionId);
+             // Notify others
+             try {
+                getIO().to(`user_${req.user.id}`).emit('session_revoked', req.user.sessionId);
+            } catch (e) {}
         }
         res.json({ message: 'Logged out successfully' });
     } catch (error: any) {

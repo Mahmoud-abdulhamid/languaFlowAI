@@ -20,6 +20,7 @@ const Role_1 = require("../models/Role");
 const zod_1 = require("zod");
 const Session_1 = require("../models/Session");
 const ua_parser_js_1 = require("ua-parser-js");
+const socketService_1 = require("../services/socketService");
 const registerSchema = zod_1.z.object({
     email: zod_1.z.string().email(),
     password: zod_1.z.string().min(6),
@@ -90,6 +91,13 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const permissions = roleDoc ? roleDoc.permissions : [];
         // Include sessionId in token
         const token = jsonwebtoken_1.default.sign({ id: user._id, role: user.role, sessionId: session._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+        // Notify User's other devices
+        try {
+            (0, socketService_1.getIO)().to(`user_${user._id}`).emit('session_added', Object.assign(Object.assign({}, session.toObject()), { isCurrent: false }));
+        }
+        catch (e) {
+            console.error('Socket emit failed', e);
+        }
         res.json({
             token,
             user: {
@@ -127,6 +135,16 @@ const revokeSession = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         if (!session)
             return res.status(404).json({ message: 'Session not found' });
         yield session.deleteOne();
+        // 1. Notify Dashboard so list updates
+        try {
+            (0, socketService_1.getIO)().to(`user_${req.user.id}`).emit('session_revoked', id);
+        }
+        catch (e) { }
+        // 2. Force Logout Target Device
+        try {
+            (0, socketService_1.getIO)().to(`session_${id}`).emit('force_logout');
+        }
+        catch (e) { }
         res.json({ message: 'Session revoked' });
     }
     catch (error) {
@@ -139,6 +157,11 @@ const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         // Delete current session
         if (req.user.sessionId) {
             yield Session_1.Session.findByIdAndDelete(req.user.sessionId);
+            // Notify others
+            try {
+                (0, socketService_1.getIO)().to(`user_${req.user.id}`).emit('session_revoked', req.user.sessionId);
+            }
+            catch (e) { }
         }
         res.json({ message: 'Logged out successfully' });
     }

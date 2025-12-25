@@ -126,8 +126,13 @@ export const useChatStore = create<ChatStore>((set, get) => ({
         if (!token) return;
 
         // Ensure backend URL is correct (use base URL without /api/v1)
+        // Ensure backend URL is correct (use base URL without /api/v1)
         const socketUrl = import.meta.env.VITE_API_URL?.replace('/api/v1', '') || 'http://localhost:4000';
-        const socketInstance = io(socketUrl);
+        const socketInstance = io(socketUrl, {
+            auth: {
+                token
+            }
+        });
 
         socketInstance.on('connect', () => {
             console.log('Chat Socket Connected');

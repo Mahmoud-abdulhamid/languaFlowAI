@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { GlassCard } from '../components/GlassCard';
 import { useAuthStore } from '../store/useAuthStore';
-import { Save, User, Lock, Trash2, Globe, Trophy } from 'lucide-react';
+import { Save, User, Lock, Trash2, Globe, Trophy, Smartphone, Monitor, Laptop, Key, Shield, LogOut } from 'lucide-react';
 import api from '../api/axios';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
@@ -11,6 +11,7 @@ import { toast } from 'react-hot-toast';
 import { FormInput } from '../components/FormInput';
 import { UserAvatar } from '../components/UserAvatar';
 import * as LucideIcons from 'lucide-react';
+import { formatDistanceToNow } from 'date-fns';
 
 // --- Schemas ---
 const profileSchema = z.object({
@@ -43,6 +44,17 @@ const passwordSchema = z.object({
 type ProfileForm = z.infer<typeof profileSchema>;
 type PasswordForm = z.infer<typeof passwordSchema>;
 
+interface Session {
+    _id: string;
+    ip: string;
+    userAgent: string;
+    device: string;
+    browser: string;
+    os: string;
+    lastActive: string;
+    isCurrent: boolean;
+}
+
 import { Skeleton } from '../components/ui/Skeleton';
 import { PROJECT_DOMAINS } from '../constants/domains';
 import { useSystemStore } from '../store/useSystemStore';
@@ -50,7 +62,8 @@ import { useSystemStore } from '../store/useSystemStore';
 export const ProfilePage = () => {
     const { user, setUser, isLoading } = useAuthStore();
     const { settings } = useSystemStore();
-    const [activeTab, setActiveTab] = useState<'profile' | 'public' | 'security' | 'achievements'>('profile');
+    const [activeTab, setActiveTab] = useState<'profile' | 'public' | 'security' | 'sessions' | 'achievements'>('profile');
+    const [sessions, setSessions] = useState<Session[]>([]);
 
     if (isLoading || !user) {
         return (
@@ -127,6 +140,32 @@ export const ProfilePage = () => {
         return () => clearTimeout(timer);
     }, [watchedUsername, user?.username]);
 
+    // Fetch sessions when tab is active
+    useEffect(() => {
+        if (activeTab === 'sessions') {
+            fetchSessions();
+        }
+    }, [activeTab]);
+
+    const fetchSessions = async () => {
+        try {
+            const res = await api.get('/users/sessions');
+            setSessions(res.data);
+        } catch (error) {
+            console.error('Failed to fetch sessions');
+        }
+    };
+
+    const revokeSession = async (id: string) => {
+        try {
+            await api.delete(`/users/sessions/${id}`);
+            toast.success('Session revoked');
+            setSessions(prev => prev.filter(s => s._id !== id));
+        } catch (error) {
+            toast.error('Failed to revoke session');
+        }
+    };
+
     const { register: regPass, handleSubmit: subPass, reset: resetPass, formState: { errors: errPass, isSubmitting: isSubPass } } = useForm<PasswordForm>({
         resolver: zodResolver(passwordSchema)
     });
@@ -159,8 +198,16 @@ export const ProfilePage = () => {
         { id: 'profile', label: 'Profile Settings', icon: User },
         { id: 'public', label: 'Public Profile', icon: Globe },
         { id: 'security', label: 'Security', icon: Lock },
+        { id: 'sessions', label: 'Sessions & Devices', icon: Key },
         { id: 'achievements', label: 'Achievements', icon: Trophy },
     ];
+
+    const getDeviceIcon = (type: string) => {
+        const t = type.toLowerCase();
+        if (t.includes('mobile') || t.includes('phone')) return Smartphone;
+        if (t.includes('tablet')) return Smartphone; // or Tablet icon if available
+        return Monitor;
+    };
 
     return (
         <div className="max-w-4xl mx-auto space-y-8 pb-10">
@@ -457,6 +504,67 @@ export const ProfilePage = () => {
                             <Save size={18} /> {isSubPass ? 'Updating...' : 'Update Password'}
                         </button>
                     </motion.form>
+                )}
+
+                {activeTab === 'sessions' && (
+                    <motion.div
+                        initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                        className="space-y-6"
+                    >
+                         <div className="flex items-center gap-3">
+                            <div className="p-3 bg-blue-500/10 rounded-xl text-blue-500">
+                                <Shield size={24} />
+                            </div>
+                            <div>
+                                <h2 className="text-xl font-bold font-outfit text-foreground">Active Sessions</h2>
+                                <p className="text-sm text-muted">Manage devices that are currently logged into your account.</p>
+                            </div>
+                        </div>
+
+                        <div className="space-y-4">
+                            {sessions.length === 0 ? (
+                                <p className="text-muted text-center py-8">Loading sessions...</p>
+                            ) : (
+                                sessions.map((session) => {
+                                    const DeviceIcon = getDeviceIcon(session.device);
+                                    return (
+                                        <div key={session._id} className="p-4 border border-glass-border bg-secondary/5 rounded-xl flex items-center justify-between group hover:bg-secondary/10 transition-colors">
+                                            <div className="flex items-center gap-4">
+                                                <div className={`p-3 rounded-full ${session.isCurrent ? 'bg-green-500/20 text-green-500' : 'bg-secondary/20 text-muted'}`}>
+                                                    <DeviceIcon size={20} />
+                                                </div>
+                                                <div>
+                                                    <div className="flex items-center gap-2">
+                                                        <h3 className="font-semibold text-foreground">{session.browser} on {session.os}</h3>
+                                                        {session.isCurrent && (
+                                                            <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-green-500/10 text-green-500 border border-green-500/20">
+                                                                THIS DEVICE
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                    <div className="text-sm text-muted flex items-center gap-2 mt-0.5">
+                                                        <span>{session.ip}</span>
+                                                        <span>•</span>
+                                                        <span>{formatDistanceToNow(new Date(session.lastActive), { addSuffix: true })}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {!session.isCurrent && (
+                                                <button
+                                                    onClick={() => revokeSession(session._id)}
+                                                    className="p-2 text-red-500 hover:bg-red-500/10 rounded-lg transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
+                                                    title="Revoke Session"
+                                                >
+                                                    <LogOut size={18} />
+                                                </button>
+                                            )}
+                                        </div>
+                                    );
+                                })
+                            )}
+                        </div>
+                    </motion.div>
                 )}
 
                 {activeTab === 'achievements' && (

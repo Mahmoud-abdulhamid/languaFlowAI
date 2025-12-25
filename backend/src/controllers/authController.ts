@@ -5,6 +5,8 @@ import bcrypt from 'bcryptjs';
 import { User } from '../models/User';
 import { Role } from '../models/Role';
 import { z } from 'zod';
+import { Session } from '../models/Session';
+import { UAParser } from 'ua-parser-js';
 
 const registerSchema = z.object({
     email: z.string().email(),
@@ -64,10 +66,30 @@ export const login = async (req: Request, res: Response) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
+        // --- Create Session ---
+        const userAgent = req.headers['user-agent'] || '';
+        const parser = new UAParser(userAgent);
+        const result = parser.getResult();
+        const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'Unknown';
+
+        const session = await Session.create({
+            user: user._id,
+            ip: Array.isArray(ip) ? ip[0] : ip,
+            userAgent,
+            browser: result.browser.name,
+            os: result.os.name,
+            device: result.device.type || 'desktop'
+        });
+
         const roleDoc = await Role.findOne({ name: user.role });
         const permissions = roleDoc ? roleDoc.permissions : [];
 
-        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET!, { expiresIn: '7d' });
+        // Include sessionId in token
+        const token = jwt.sign(
+            { id: user._id, role: user.role, sessionId: session._id },
+            process.env.JWT_SECRET!,
+            { expiresIn: '7d' }
+        );
 
         res.json({
             token,
@@ -84,6 +106,47 @@ export const login = async (req: Request, res: Response) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+export const getSessions = async (req: AuthRequest, res: Response) => {
+    try {
+        const sessions = await Session.find({ user: req.user.id }).sort({ lastActive: -1 });
+        // Mark current session
+        const currentSessionId = req.user.sessionId;
+        const formatted = sessions.map(s => ({
+            ...s.toObject(),
+            isCurrent: s._id.toString() === currentSessionId
+        }));
+        res.json(formatted);
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const revokeSession = async (req: AuthRequest, res: Response) => {
+    try {
+        const { id } = req.params;
+        const session = await Session.findOne({ _id: id, user: req.user.id });
+        if (!session) return res.status(404).json({ message: 'Session not found' });
+        
+        await session.deleteOne();
+        res.json({ message: 'Session revoked' });
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const logout = async (req: AuthRequest, res: Response) => {
+    try {
+        // Delete current session
+        if (req.user.sessionId) {
+            await Session.findByIdAndDelete(req.user.sessionId);
+        }
+        res.json({ message: 'Logged out successfully' });
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 
 export const createUser = async (req: AuthRequest, res: Response) => {
     try {

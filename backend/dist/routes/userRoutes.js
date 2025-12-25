@@ -24,6 +24,9 @@ router.post('/upload-avatar', authMiddleware_1.protect, uploadMiddleware_1.uploa
 });
 router.put('/profile', authMiddleware_1.protect, userController_1.updateProfile);
 router.put('/change-password', authMiddleware_1.protect, userController_1.changePassword);
+// Session Management
+router.get('/sessions', authMiddleware_1.protect, authController_1.getSessions);
+router.delete('/sessions/:id', authMiddleware_1.protect, authController_1.revokeSession);
 // Admin Routes
 router.get('/', authMiddleware_1.protect, (0, authMiddleware_1.authorize)('ADMIN', 'SUPER_ADMIN'), userController_1.getAllUsers);
 router.put('/:id', authMiddleware_1.protect, (0, authMiddleware_1.authorize)('ADMIN', 'SUPER_ADMIN'), userController_1.updateUser);

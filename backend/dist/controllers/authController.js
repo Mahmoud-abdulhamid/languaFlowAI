@@ -12,12 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createUser = exports.login = exports.register = void 0;
+exports.createUser = exports.logout = exports.revokeSession = exports.getSessions = exports.login = exports.register = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const User_1 = require("../models/User");
 const Role_1 = require("../models/Role");
 const zod_1 = require("zod");
+const Session_1 = require("../models/Session");
+const ua_parser_js_1 = require("ua-parser-js");
 const registerSchema = zod_1.z.object({
     email: zod_1.z.string().email(),
     password: zod_1.z.string().min(6),
@@ -71,9 +73,23 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const isMatch = yield bcryptjs_1.default.compare(password, user.password);
         if (!isMatch)
             return res.status(400).json({ message: 'Invalid credentials' });
+        // --- Create Session ---
+        const userAgent = req.headers['user-agent'] || '';
+        const parser = new ua_parser_js_1.UAParser(userAgent);
+        const result = parser.getResult();
+        const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'Unknown';
+        const session = yield Session_1.Session.create({
+            user: user._id,
+            ip: Array.isArray(ip) ? ip[0] : ip,
+            userAgent,
+            browser: result.browser.name,
+            os: result.os.name,
+            device: result.device.type || 'desktop'
+        });
         const roleDoc = yield Role_1.Role.findOne({ name: user.role });
         const permissions = roleDoc ? roleDoc.permissions : [];
-        const token = jsonwebtoken_1.default.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '7d' });
+        // Include sessionId in token
+        const token = jsonwebtoken_1.default.sign({ id: user._id, role: user.role, sessionId: session._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
         res.json({
             token,
             user: {
@@ -91,6 +107,46 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.login = login;
+const getSessions = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const sessions = yield Session_1.Session.find({ user: req.user.id }).sort({ lastActive: -1 });
+        // Mark current session
+        const currentSessionId = req.user.sessionId;
+        const formatted = sessions.map(s => (Object.assign(Object.assign({}, s.toObject()), { isCurrent: s._id.toString() === currentSessionId })));
+        res.json(formatted);
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+exports.getSessions = getSessions;
+const revokeSession = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const session = yield Session_1.Session.findOne({ _id: id, user: req.user.id });
+        if (!session)
+            return res.status(404).json({ message: 'Session not found' });
+        yield session.deleteOne();
+        res.json({ message: 'Session revoked' });
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+exports.revokeSession = revokeSession;
+const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        // Delete current session
+        if (req.user.sessionId) {
+            yield Session_1.Session.findByIdAndDelete(req.user.sessionId);
+        }
+        res.json({ message: 'Logged out successfully' });
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+exports.logout = logout;
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, password, name, role, languages } = req.body;

@@ -74,6 +74,15 @@ const protect = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
             if (!user || !user.isActive) {
                 return res.status(401).json({ message: 'Not authorized, account inactive' });
             }
+            // Check Session Validity (if token has sessionId)
+            if (decoded.sessionId) {
+                const session = yield Promise.resolve().then(() => __importStar(require('../models/Session'))).then(m => m.Session.findById(decoded.sessionId));
+                if (!session) {
+                    return res.status(401).json({ message: 'Session expired or revoked' });
+                }
+                // Update last active asynchronously
+                session.updateOne({ lastActive: new Date() }).exec();
+            }
             return next();
         }
         catch (error) {

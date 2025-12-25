@@ -267,6 +267,16 @@ const initSocket = (httpServer) => {
         socket.on('admin_unsubscribe_live', () => {
             socket.leave('admin_live_dashboard');
         });
+        // Activity Log Room
+        socket.on('join_super_admin_activity', () => {
+            const session = activeSessions.get(socket.id);
+            if ((session === null || session === void 0 ? void 0 : session.role) === 'SUPER_ADMIN') {
+                socket.join('super_admin_activity');
+            }
+        });
+        socket.on('leave_super_admin_activity', () => {
+            socket.leave('super_admin_activity');
+        });
         // -----------------------------
         // ... inside disconnect ...
         socket.on('disconnect', () => __awaiter(void 0, void 0, void 0, function* () {

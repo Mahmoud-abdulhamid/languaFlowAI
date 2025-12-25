@@ -1,7 +1,7 @@
 import express from 'express';
 import { protect, authorize } from '../middleware/authMiddleware';
 import { getTranslators, getClients, getAllUsers, updateUser, deleteUser, updateProfile, changePassword, toggleUserStatus, checkUsernameAvailability, getDemoUsers } from '../controllers/userController';
-import { createUser } from '../controllers/authController';
+import { createUser, getSessions, revokeSession } from '../controllers/authController';
 import { upload } from '../middleware/uploadMiddleware';
 
 const router = express.Router();
@@ -21,6 +21,10 @@ router.post('/upload-avatar', protect, upload.single('file'), (req, res) => {
 });
 router.put('/profile', protect, updateProfile);
 router.put('/change-password', protect, changePassword);
+
+// Session Management
+router.get('/sessions', protect, getSessions);
+router.delete('/sessions/:id', protect, revokeSession);
 
 // Admin Routes
 router.get('/', protect, authorize('ADMIN', 'SUPER_ADMIN'), getAllUsers);
